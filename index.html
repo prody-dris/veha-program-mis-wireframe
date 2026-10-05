@@ -585,11 +585,12 @@ function animate(root){
   var io=new IntersectionObserver(function(es){es.forEach(function(x){if(x.isIntersecting){x.target.classList.add('in');io.unobserve(x.target)}})},{threshold:.12});
   [].forEach.call(els,function(e){io.observe(e)});
 }
+function lastEntry(rs){if(!rs.length)return 'no entries';var m=Math.max.apply(null,rs.map(function(r){return r.m})),y=FY[F.fy].y+(m>8?1:0),mo=(m+3)%12+1,dd=new Date(y,mo,0).getDate();return dd+'-'+(mo<10?'0':'')+mo+'-'+y}
 function renderDash(){
   renderFilters();
   var rs=pick(),np=uniq(rs.map(function(r){return r.p})).length,nc=uniq(rs.map(function(r){return r.c})).length;
   document.getElementById('d-title').textContent='Program MIS dashboard'+(F.partner?' · '+P[F.partner].name:'')+(F.city?' · '+F.city:'');
-  document.getElementById('meta').innerHTML=[FY[F.fy].range,'entries up to '+FY[F.fy].upto,np+(np===1?' partner':' partners')+' reporting',nc+(nc===1?' city':' cities')].join('<span class="dotsep">·</span>')+'<span class="sample">Sample data for review</span>';
+  document.getElementById('meta').innerHTML=[FY[F.fy].range,'entries up to '+lastEntry(rs),np+(np===1?' partner':' partners')+' reporting',nc+(nc===1?' city':' cities')].join('<span class="dotsep">·</span>')+'<span class="sample">Sample data for review</span>';
   var dash=document.getElementById('dash');dash.innerHTML=dashboard();animate(dash);
   drawer();
 }

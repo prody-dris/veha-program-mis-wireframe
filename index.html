@@ -372,7 +372,18 @@ html{scroll-behavior:smooth}
 .fade{animation:fu .45s cubic-bezier(.2,.8,.2,1) both}
 @keyframes fu{from{opacity:0;transform:translateY(10px)}to{opacity:1;transform:none}}
 @media (prefers-reduced-motion:reduce){*,*:before,*:after{animation:none!important;transition:none!important}.reveal{opacity:1;transform:none}}
-@media print{.sb,.nb{display:none}.desk{display:block}section[data-view]{display:block;page-break-before:always}}
+@media print{@page{size:A4 landscape;margin:10mm}*{-webkit-print-color-adjust:exact;print-color-adjust:exact;animation:none!important;transition:none!important}.sb,.nb,.fl,#drawer,.tabs,.seg,.hint{display:none!important}.desk{display:block}section[data-view]:not(.active){display:none!important}.reveal{opacity:1!important;transform:none!important}.panel{break-inside:avoid}.wrap{padding:0!important;max-width:none}}
+/* v6: clickable everything, export */
+.tb{font-size:12.5px;font-weight:600;color:var(--purple);border:1px solid #DCD3EE;border-radius:7px;padding:6px 10px;cursor:pointer;background:#fff;transition:background .15s}
+.tb:hover{background:#F5F1FB}
+.tsep{width:1px;height:20px;background:#E4E2EA;margin:0 2px}
+.rows .ck{cursor:pointer;border-radius:5px;margin:0 -6px;padding:1px 6px;transition:background .15s}
+.rows .ck:hover{background:rgba(255,255,255,.75);color:var(--ink)}
+.rows .ck:hover span{text-decoration:underline;text-underline-offset:2px}
+.bk{cursor:pointer}.bk .bar{transition:opacity .15s}.bk:hover .bar{opacity:.82}.bk.on .bar{opacity:1;stroke:#2A1F4E;stroke-width:2}
+.hint{font-size:12px;color:var(--ink-3);margin-left:12px}
+.drawer .dr .sub{font-size:12px;color:var(--ink-3);font-weight:400;margin-top:2px}
+.drawer .df{display:flex;align-items:center;gap:12px}.drawer .df .dl{margin-left:auto;font-weight:600;color:var(--ink-2)}
 </style>
 </head>
 <body>
@@ -385,13 +396,13 @@ html{scroll-behavior:smooth}
     <div class="wrap">
       <section data-view="dashboard">
         <div class="top"><h1 id="d-title">Program MIS dashboard</h1>
-          <div class="fl"><select id="f-fy"></select><select id="f-prog"></select><select id="f-partner"></select><select id="f-city"></select><a id="f-reset" onclick="resetF()">Reset</a></div></div>
+          <div class="fl"><select id="f-fy"></select><select id="f-prog"></select><select id="f-partner"></select><select id="f-city"></select><a id="f-reset" onclick="resetF()">Reset</a><span class="tsep"></span><a class="tb" onclick="csvDash()">Export CSV</a><a class="tb" onclick="snapshot()">Snapshot</a></div></div>
         <div class="meta" id="meta"></div>
         <div id="dash"></div>
         <div id="drawer"></div>
       </section>
       <section data-view="records">
-        <div class="top"><h1 id="r-title">Screening Report</h1><a class="back" onclick="go('dashboard')">‹ Back to dashboard</a></div>
+        <div class="top"><h1 id="r-title">Screening Report</h1><a class="tb" onclick="state.rdl&&saveCsv(state.rdl.name,state.rdl.head,state.rdl.rows)">Export CSV</a><a class="back" onclick="go('dashboard')">‹ Back to dashboard</a></div>
         <div class="fchips" id="r-chips"></div>
         <div class="card tw" style="padding:0" id="r-table"></div>
       </section>
@@ -442,10 +453,12 @@ var M={
   reg:['Women registered','#3E1C7A','s'],scr:['Women screened','#582AA2','s'],pos:['Screen positive','#7B52C4','s'],
   thal:['Thal','#11846E','s'],sick:['Sickle cell (SCT/SCD)','#C1A057','s'],oth:['Other haemoglobinopathies','#E8655C','s'],
   husb:['Husbands screened','#B8923F','f'],risk:['At-risk couples','#D97A4A','f'],pnd:['Prenatal diagnosis','#E8655C','f'],
-  aff:['Affected foetuses','#C9463F','f'],couns:['Couples counselled for MTP','#A53D4F','f'],mtp:['MTP done','#7E3459','f'],averted:['Births averted','#2A1F4E','f']
+  aff:['Affected foetuses','#C9463F','f'],couns:['Couples counselled for MTP','#A53D4F','f'],mtp:['MTP done','#7E3459','f'],averted:['Births averted','#2A1F4E','f'],
+  pndc:['PND done by at-risk couples','#E8655C','f'],dec:['Declined PND','#D97A4A','f'],pndr:['PND referred in','#E8655C','f'],cvs:['CVS','#E8655C','f'],amn:['Amniocentesis','#E8655C','f'],
+  affT:['Affected foetuses, Thal','#C9463F','f'],affS:['Affected foetuses, SCD','#C9463F','f'],mtpT:['MTP done, Thal','#7E3459','f'],mtpS:['MTP done, Sickle','#7E3459','f']
 };
 var F={fy:'2026-27',partner:'',city:''};
-var state={tab:'screening',open:null,mode:'month',report:'screening',month:null};
+var state={tab:'screening',open:null,bar:null,mode:'month',report:'screening',month:null,rf:null,print:false};
 
 function n(x){return x==null?'':Number(x).toLocaleString('en-IN')}
 function pc(a,b){if(!b)return '0%';var r=100*a/b;return (r<10&&r%1?r.toFixed(1):Math.round(r))+'%'}
@@ -461,7 +474,7 @@ function agg(rs){
 function uniq(a){return a.filter(function(x,i){return a.indexOf(x)===i})}
 function citiesOf(p){return uniq(DATA.filter(function(r){return !p||r.p===p}).map(function(r){return r.c})).sort()}
 function ring(p,c){var r=19,C=2*Math.PI*r,f=Math.max(0,Math.min(p,1))*C;return '<svg class="ring" width="50" height="50" viewBox="0 0 50 50"><circle cx="25" cy="25" r="'+r+'" fill="none" stroke="#EFEDF3" stroke-width="6"/>'+(f?'<circle cx="25" cy="25" r="'+r+'" fill="none" stroke="'+c+'" stroke-width="6" stroke-linecap="round" stroke-dasharray="'+f+' '+C+'" transform="rotate(-90 25 25)"/>':'')+'</svg>'}
-function rows(list){list=list.filter(function(x){return x});return list.length?'<div class="rows">'+list.map(function(r){return '<div><span>'+r[0]+'</span><b>'+n(r[1])+'</b></div>'}).join('')+'</div>':''}
+function rows(list){list=list.filter(function(x){return x});return list.length?'<div class="rows">'+list.map(function(r){return r[2]?'<div class="ck" onclick="openD(\''+r[2]+'\')"><span>'+r[0]+'</span><b>'+n(r[1])+'</b></div>':'<div><span>'+r[0]+'</span><b>'+n(r[1])+'</b></div>'}).join('')+'</div>':''}
 
 /* filters */
 function opt(v,t,s){return '<option value="'+v+'"'+(s?' selected':'')+'>'+t+'</option>'}
@@ -510,21 +523,22 @@ function chart(){
   for(var g=0;g<=4;g++){var gv=max*g/4;s+='<line x1="'+Lp+'" x2="'+(W-R)+'" y1="'+y(gv)+'" y2="'+y(gv)+'" stroke="#F0F0F3"/><text x="'+(Lp-8)+'" y="'+(y(gv)+4)+'" font-size="11" text-anchor="end" fill="#8A8F98">'+n(Math.round(gv))+'</text>'}
   vals.forEach(function(v,i){
     var bw=cw*(q?.42:.56),x=Lp+i*cw+(cw-bw)/2;
-    if(v!=null){s+='<rect class="bar" style="animation-delay:'+(i*60)+'ms" x="'+x+'" y="'+y(v)+'" width="'+bw+'" height="'+(y(0)-y(v))+'" rx="4" fill="url(#bg)"/><text x="'+(x+bw/2)+'" y="'+(y(v)-6)+'" font-size="11.5" text-anchor="middle" fill="#2A1F4E" font-weight="600">'+n(v)+'</text>'}
+    if(v!=null){s+='<g class="bk'+(state.bar===i?' on':'')+'" onclick="openBar('+i+')"><rect x="'+(Lp+i*cw)+'" y="'+T+'" width="'+cw+'" height="'+(H-T)+'" fill="transparent"/><rect class="bar" style="animation-delay:'+(i*60)+'ms" x="'+x+'" y="'+y(v)+'" width="'+bw+'" height="'+(y(0)-y(v))+'" rx="4" fill="url(#bg)"/><text x="'+(x+bw/2)+'" y="'+(y(v)-6)+'" font-size="11.5" text-anchor="middle" fill="#2A1F4E" font-weight="600">'+n(v)+'</text></g>'}
     else s+='<rect x="'+x+'" y="'+(y(0)-3)+'" width="'+bw+'" height="3" rx="1" fill="#E6E4EC"/>';
     s+='<text x="'+(x+bw/2)+'" y="'+(H-12)+'" font-size="12" text-anchor="middle" fill="#525252">'+L[i]+'</text>';
   });
   
   s+='</svg>';
-  var head='<div class="ch"><div class="sec" style="margin:0;--sa:#2A1F4E">Women registered, April to March</div><div class="seg" style="margin-left:auto"><span class="'+(q?'':'on')+'" onclick="setMode(\'month\')">Month</span><span class="'+(q?'on':'')+'" onclick="setMode(\'quarter\')">Quarter</span></div></div>';
+  var head='<div class="ch"><div class="sec" style="margin:0;--sa:#2A1F4E">Women registered, April to March</div><span class="hint">Click a bar to see that period by partner</span><div class="seg" style="margin-left:auto"><span class="'+(q?'':'on')+'" onclick="setMode(\'month\')">Month</span><span class="'+(q?'on':'')+'" onclick="setMode(\'quarter\')">Quarter</span></div></div>';
   return '<div class="panel chartp reveal">'+head+s+'</div>';
 }
-function setMode(m){state.mode=m;renderDash()}
+function setMode(m){state.mode=m;state.bar=null;renderDash()}
 
 /* drawer: one level down from the current filter */
 function level(){if(!F.partner)return 'partner';if(!F.city&&citiesOf(F.partner).length>1)return 'city';return 'month'}
 function drawer(){
   var el=document.getElementById('drawer'),k=state.open;
+  if(state.bar!=null)return barDrawer(el);
   if(!k){el.innerHTML='';return}
   var lv=level(),rs=pick(),groups={},list=[],kind=M[k][2]==='s'?'screening':'followup';
   rs.forEach(function(r){var g=lv==='partner'?r.p:lv==='city'?r.c:r.m;(groups[g]=groups[g]||[]).push(r)});
@@ -540,9 +554,45 @@ function drawer(){
   var body=list.map(function(r){return r.idle?'<div class="dr muted"><div class="nm"><span class="dot" style="background:#B8BCC4;margin-right:8px"></span>'+r.nm+'</div><div class="val">0</div><div class="shr"></div><div class="act" style="color:#8A8F98;font-weight:400">No entries</div></div>':
     '<div class="dr" style="animation-delay:'+(list.indexOf(r)*45)+'ms" onclick="'+r.click+'"><div class="nm">'+(r.dot?'<span class="dot" style="background:'+r.dot+';margin-right:8px"></span>':'')+r.nm+(r.pg?' <span class="pg">· '+r.pg+'</span>':'')+'</div><div class="val">'+n(r.v)+'</div><div class="shr">'+pc(r.v,tot)+'</div><div class="track"><i style="width:'+(100*r.v/max)+'%;background:'+col+'"></i></div><div class="act">'+r.act+'</div></div>'}).join('');
   el.innerHTML='<div class="scrim" onclick="openD(null)"></div><div class="drawer" style="--dc:'+col+'"><div class="dh"><div class="t">'+ctx+' · by '+lv+'</div><h3>'+M[k][0]+' <b>'+n(tot)+'</b></h3><span class="cl" onclick="openD(null)">✕</span></div><div class="db">'+body+'</div>'+
-    '<div class="df"><a onclick="openReport(\''+kind+'\',null)">Open '+(kind==='screening'?'Screening':'Follow-up')+' Report for '+ctx+' ›</a></div></div>';
+    '<div class="df"><a onclick="openReport(\''+kind+'\',null)">Open '+(kind==='screening'?'Screening':'Follow-up')+' Report for '+ctx+' ›</a><a class="dl" onclick="csvDrawer()">Export CSV</a></div></div>';
+  state.dl={name:M[k][0]+' by '+lv+' '+ctx,head:[lv,M[k][0],'Share'],rows:list.map(function(r){return [r.nm+(r.pg?' ('+r.pg+')':''),r.v,pc(r.v,tot)]})};
 }
-function openD(m){state.open=(state.open===m)?null:m;drawer();markOpen()}
+function periodOf(i){var q=state.mode==='quarter';return {ms:q?[i*3,i*3+1,i*3+2]:[i],label:q?['Q1 Apr-Jun','Q2 Jul-Sep','Q3 Oct-Dec','Q4 Jan-Mar'][i]+' '+F.fy:MF[i]+' '+(FY[F.fy].y+(i>8?1:0))}}
+function barDrawer(el){
+  var p=periodOf(state.bar),rs=pick().filter(function(r){return p.ms.indexOf(r.m)>=0});
+  var g={};rs.forEach(function(r){var key=r.p+'|'+r.c;(g[key]=g[key]||[]).push(r)});
+  var list=Object.keys(g).map(function(key){var a=agg(g[key]),pc_=key.split('|');return {p:pc_[0],c:pc_[1],reg:a.reg,scr:a.scr,pos:a.pos}}).sort(function(a,b){return b.reg-a.reg});
+  var tot=list.reduce(function(a,r){return a+r.reg},0),max=Math.max.apply(null,list.map(function(r){return r.reg}))||1;
+  var ms=JSON.stringify(p.ms);
+  var body=list.map(function(r,i){return '<div class="dr" style="animation-delay:'+(i*45)+'ms" onclick="openReport(\'screening\','+ms+',\''+r.p+'\',\''+r.c.replace(/'/g,"\\'")+'\')"><div class="nm"><span class="dot" style="background:'+P[r.p].c+';margin-right:8px"></span>'+P[r.p].name+' <span class="pg">· '+r.c+'</span><div class="sub">Screened '+n(r.scr)+' · Screen positive '+n(r.pos)+'</div></div><div class="val">'+n(r.reg)+'</div><div class="shr">'+pc(r.reg,tot)+'</div><div class="track"><i style="width:'+(100*r.reg/max)+'%;background:#582AA2"></i></div><div class="act">Screening Report ›</div></div>'}).join('');
+  var ctx=[F.partner?P[F.partner].name:'All partners',F.city||(F.partner?'':'All cities')].filter(function(x){return x}).join(' · ');
+  el.innerHTML='<div class="scrim" onclick="openBar(null)"></div><div class="drawer" style="--dc:#582AA2"><div class="dh"><div class="t">'+p.label+' · '+ctx+' · by register entry</div><h3>Women registered <b>'+n(tot)+'</b></h3><span class="cl" onclick="openBar(null)">✕</span></div><div class="db">'+(body||'<div class="dr muted"><div class="nm">No entries for this period</div></div>')+'</div>'+
+    '<div class="df"><a onclick="openReport(\'screening\','+ms+')">Open Screening Report for '+p.label+' ›</a><a class="dl" onclick="csvDrawer()">Export CSV</a></div></div>';
+  state.dl={name:'Women registered '+p.label+' '+ctx,head:['Partner','City','Women registered','Women screened','Screen positive'],rows:list.map(function(r){return [P[r.p].name,r.c,r.reg,r.scr,r.pos]})};
+}
+function openBar(i){state.bar=(i==null||state.bar===i)?null:i;state.open=null;drawer();markOpen();[].forEach.call(document.querySelectorAll('.bk'),function(e,j){e.classList.toggle('on',state.bar!=null&&e.getAttribute('onclick')==='openBar('+state.bar+')')})}
+/* export */
+function csvCell(v){v=v==null?'':String(v);return /[",\n]/.test(v)?'"'+v.replace(/"/g,'""')+'"':v}
+function saveCsv(name,head,rows){
+  var t=[head].concat(rows).map(function(r){return r.map(csvCell).join(',')}).join('\r\n');
+  var a=document.createElement('a');a.href=URL.createObjectURL(new Blob(['\ufeff'+t],{type:'text/csv'}));a.download=name.replace(/[^A-Za-z0-9 ._-]+/g,'').replace(/ +/g,'-')+'.csv';
+  document.body.appendChild(a);a.click();setTimeout(function(){URL.revokeObjectURL(a.href);a.remove()},500);
+}
+function csvDrawer(){if(state.dl)saveCsv(state.dl.name,state.dl.head,state.dl.rows)}
+var ALLC=[['reg','Women registered'],['scr','Women screened'],['thal','Thal'],['sick','Sickle cell'],['oth','Other haemoglobinopathies'],['husb','Husbands screened'],['risk','At-risk couples'],['dec','Declined PND'],['pndc','PND done by at-risk couples'],['pndr','PND referred in'],['cvs','CVS'],['amn','Amniocentesis'],['affT','Affected Thal'],['affS','Affected SCD'],['couns','Couples counselled for MTP'],['mtpT','MTP Thal'],['mtpS','MTP Sickle']];
+function csvDash(){
+  var rs=pick().slice().sort(function(a,b){return a.m-b.m||a.p.localeCompare(b.p)||a.c.localeCompare(b.c)});
+  saveCsv('Program MIS '+[F.fy,F.partner?P[F.partner].name:'',F.city].filter(function(x){return x}).join(' '),['Month','Partner','Programme','City'].concat(ALLC.map(function(c){return c[1]})),
+    rs.map(function(r){return [MF[r.m]+' '+(FY[F.fy].y+(r.m>8?1:0)),P[r.p].name,P[r.p].prog,r.c].concat(ALLC.map(function(c){return r[c[0]]}))}));
+}
+function snapshot(){
+  state.print=true;state.open=null;state.bar=null;var t=document.title;
+  document.title='Veha Program MIS '+[F.fy,F.partner?P[F.partner].name:'All partners',F.city].filter(function(x){return x}).join(' ');
+  renderDash();
+  var done=function(){state.print=false;document.title=t;renderDash();window.removeEventListener('afterprint',done)};
+  window.addEventListener('afterprint',done);setTimeout(function(){window.print()},60);
+}
+function openD(m){state.open=(state.open===m)?null:m;state.bar=null;drawer();markOpen()}
 function markOpen(){[].forEach.call(document.querySelectorAll('.st'),function(e){e.classList.toggle('open',e.dataset.k===state.open)})}
 
 /* dashboard */
@@ -552,6 +602,7 @@ function dashboard(){
     '<div class="hs" style="--hc:#582AA2" onclick="openD(\'scr\')"><span class="acc"></span><div class="big">'+cupc(d.scr,d.reg)+'</div><div class="t">of registered women were screened</div></div>'+
     '<div class="hs" style="--hc:#11846E" onclick="openD(\'pos\')"><span class="acc"></span><div class="big">'+cupc(d.pos,d.scr)+'</div><div class="t">of screened women were screen positive</div></div>'+
     '<div class="hs" style="--hc:#E8655C" onclick="openD(\'risk\')"><span class="acc"></span><div class="big">'+cu(d.pndc)+'<span class="of">of</span>'+cu(d.risk)+'</div><div class="t">at-risk couples went for prenatal diagnosis</div></div></div>';
+  if(state.print){var keep=state.tab,both='';state.print=false;['screening','followup'].forEach(function(t){state.tab=t;both+=dashboard().replace(/^[\s\S]*?<div class="fade">/,'<div>')});state.tab=keep;state.print=true;return h+both}
   h+='<div class="tabs"><a class="'+(state.tab==='screening'?'on':'')+'" onclick="setTab(\'screening\')">Screening</a><a class="'+(state.tab==='followup'?'on':'')+'" onclick="setTab(\'followup\')">Follow-up</a></div><div class="fade">';
   if(state.tab==='screening'){
     h+='<div class="panel"><div class="sec">Screening data</div>'+stair([{k:'reg'},{k:'scr'},{k:'pos'}],d,[178,148,118])+'</div>';
@@ -560,18 +611,19 @@ function dashboard(){
     h+=chart();
   } else {
     var nr=d.pnd-d.cvs-d.amn,mnr=d.mtp-d.mtpT-d.mtpS;
-    var st=[{k:'husb'},{k:'risk',rows:[['PND done',d.pndc],['Declined PND',d.dec]]},
-      {k:'pnd',rows:[['CVS',d.cvs],['Amniocentesis',d.amn],nr>0?['Test not recorded',nr]:null],rows2:[['From at-risk couples',d.pndc],['Referred in',d.pndr]]},
-      {k:'aff',rows:[['Thal',d.affT],['SCD',d.affS]]}];
+    var st=[{k:'husb'},{k:'risk',rows:[['PND done',d.pndc,'pndc'],['Declined PND',d.dec,'dec']]},
+      {k:'pnd',rows:[['CVS',d.cvs,'cvs'],['Amniocentesis',d.amn,'amn'],nr>0?['Test not recorded',nr]:null],rows2:[['From at-risk couples',d.pndc,'pndc'],['Referred in',d.pndr,'pndr']]},
+      {k:'aff',rows:[['Thal',d.affT,'affT'],['SCD',d.affS,'affS']]}];
     st.push({k:'couns'});
-    st.push({k:'mtp',rows:[['Thal',d.mtpT],['Sickle',d.mtpS],mnr>0?['Type not recorded',mnr]:null]});
+    st.push({k:'mtp',rows:[['Thal',d.mtpT,'mtpT'],['Sickle',d.mtpS,'mtpS'],mnr>0?['Type not recorded',mnr]:null]});
     var hs=st.map(function(_,i){return 200-i*Math.round(80/(st.length-1))});
     h+='<div class="panel"><div class="sec" style="--sa:#E8655C">Follow-up of screen-positive women</div>'+stair(st,d,hs)+'</div>';
   }
   return h+'</div>';
 }
 function animate(root){
-  var reduce=window.matchMedia&&matchMedia('(prefers-reduced-motion: reduce)').matches;
+  var reduce=state.print||(window.matchMedia&&matchMedia('(prefers-reduced-motion: reduce)').matches);
+  if(state.print)[].forEach.call(root.querySelectorAll('.reveal'),function(e){e.classList.add('in')});
   [].forEach.call(root.querySelectorAll('.cu'),function(e){
     var v=+e.dataset.v,dec=+e.dataset.d,suf=e.dataset.s,fmt=function(x){return (dec?x.toFixed(dec):Math.round(x).toLocaleString('en-IN'))+suf};
     if(reduce||!v){e.textContent=fmt(v);return}
@@ -592,32 +644,33 @@ function renderDash(){
   var dash=document.getElementById('dash');dash.innerHTML=dashboard();animate(dash);
   drawer();
 }
-function setTab(t){state.tab=t;state.open=null;renderDash()}
+function setTab(t){state.tab=t;state.open=null;state.bar=null;renderDash()}
 
 /* reports */
-function openReport(kind,m){state.report=kind;state.month=m;state.open=null;document.getElementById('drawer').innerHTML='';go('report-'+kind)}
+function openReport(kind,m,p,c){state.report=kind;state.month=m==null?null:(m.length!=null?m:[m]);state.rf=p?{p:p,c:c}:null;state.bar=null;state.open=null;document.getElementById('drawer').innerHTML='';go('report-'+kind)}
 function renderReport(){
-  var kind=state.report,rs=pick().filter(function(r){return state.month==null||r.m===state.month});
+  var kind=state.report,rs=pick().filter(function(r){return (state.month==null||state.month.indexOf(r.m)>=0)&&(!state.rf||(r.p===state.rf.p&&r.c===state.rf.c))});
   rs.sort(function(a,b){return a.m-b.m||a.p.localeCompare(b.p)||a.c.localeCompare(b.c)});
   var S=kind==='screening'?[['reg','New ANC registered'],['scr','Women screened'],['thal','Thal'],['sick','Sickle cell'],['oth','Other Hb'],['pos','Screen positive']]
     :[['husb','Husbands screened'],['risk','At-risk couples'],['dec','Declined PND'],['pndc','PND (couples)'],['pndr','PND (referred in)'],['cvs','CVS'],['amn','Amnio'],['affT','Affected Thal'],['affS','Affected SCD'],['couns','Counselled MTP'],['mtpT','MTP Thal'],['mtpS','MTP Sickle']];
   document.getElementById('r-title').textContent=kind==='screening'?'Screening Report':'Follow-up Report';
-  document.getElementById('r-chips').innerHTML=['FY '+F.fy,F.partner?'Partner = '+P[F.partner].full:'',F.city?'City = '+F.city:'',state.month!=null?'Month = '+MF[state.month]:''].filter(function(x){return x}).map(function(c){return '<span>'+c+'</span>'}).join('')+'<span style="background:#F1F1F3;color:#555">+ Filter</span>';
+  document.getElementById('r-chips').innerHTML=['FY '+F.fy,(state.rf||F.partner)?'Partner = '+P[state.rf?state.rf.p:F.partner].full:'',(state.rf||F.city)?'City = '+(state.rf?state.rf.c:F.city):'',state.month!=null?(state.month.length>1?'Months = '+MF[state.month[0]]+' to '+MF[state.month[state.month.length-1]]:'Month = '+MF[state.month[0]]):''].filter(function(x){return x}).map(function(c){return '<span>'+c+'</span>'}).join('')+'<span style="background:#F1F1F3;color:#555">+ Filter</span>';
   var tot=agg(rs),cell=function(o,k){return k==='pos'?o.thal+o.sick+o.oth:o[k]};
   document.getElementById('r-table').innerHTML='<table><thead><tr><th>Month</th><th>Partner</th><th>Programme</th><th>City</th>'+S.map(function(s){return '<th class="n">'+s[1]+'</th>'}).join('')+'</tr></thead><tbody>'+
     rs.map(function(r){return '<tr><td style="white-space:nowrap">'+MN[r.m]+' '+(FY[F.fy].y+(r.m>8?1:0))+'</td><td>'+P[r.p].name+'</td><td>'+P[r.p].prog+'</td><td>'+r.c+'</td>'+S.map(function(s){return '<td class="n">'+n(cell(r,s[0]))+'</td>'}).join('')+'</tr>'}).join('')+
     '<tr class="tot"><td colspan="4">Total · '+rs.length+' rows</td>'+S.map(function(s){return '<td class="n">'+n(cell(tot,s[0]))+'</td>'}).join('')+'</tr></tbody></table>';
+  state.rdl={name:document.getElementById('r-title').textContent+' '+F.fy,head:['Month','Partner','Programme','City'].concat(S.map(function(s){return s[1]})),rows:rs.map(function(r){return [MN[r.m]+' '+(FY[F.fy].y+(r.m>8?1:0)),P[r.p].name,P[r.p].prog,r.c].concat(S.map(function(s){return cell(r,s[0])}))})};
 }
 
 function go(v){location.hash='#'+v}
 function show(){
   var id=(location.hash||'#dashboard').slice(1),view=id.indexOf('report-')===0?'records':'dashboard';
-  if(view==='records'){var k=id.slice(7);if(k!==state.report){state.report=k;state.month=null}}
+  if(view==='records'){var k=id.slice(7);if(k!==state.report){state.report=k;state.month=null;state.rf=null}}
   [].forEach.call(document.querySelectorAll('section[data-view]'),function(v){v.classList.toggle('active',v.dataset.view===view)});
   if(view==='dashboard')renderDash();else renderReport();
   window.scrollTo(0,0);
 }
-document.addEventListener('keydown',function(e){if(e.key==='Escape'&&state.open)openD(null)});
+document.addEventListener('keydown',function(e){if(e.key==='Escape'){if(state.bar!=null)openBar(null);else if(state.open)openD(null)}});
 sidebar();bindFilters();window.addEventListener('hashchange',show);show();
 
 </script>

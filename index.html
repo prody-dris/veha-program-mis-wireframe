@@ -374,6 +374,26 @@ html{scroll-behavior:smooth}
 @media (prefers-reduced-motion:reduce){*,*:before,*:after{animation:none!important;transition:none!important}.reveal{opacity:1;transform:none}}
 @media print{@page{size:A4 landscape;margin:10mm}*{-webkit-print-color-adjust:exact;print-color-adjust:exact;animation:none!important;transition:none!important}.sb,.nb,.fl,#drawer,.tabs,.seg,.hint{display:none!important}.desk{display:block}section[data-view]:not(.active){display:none!important}.reveal{opacity:1!important;transform:none!important}.panel{break-inside:avoid}.wrap{padding:0!important;max-width:none}}
 /* v6: clickable everything, export */
+.drawer.wide{width:min(1240px,96vw)}
+.drawer .dh{position:relative}.drawer .dh .dlb{position:absolute;right:56px;top:20px}
+.strip{display:flex;flex-wrap:wrap;gap:8px;align-items:center;margin-top:14px}
+.strip .sl{font-size:12px;color:var(--ink-3);margin-right:2px}
+.strip a{display:inline-flex;align-items:center;gap:7px;border:1px solid #E4E2EA;border-radius:999px;padding:5px 12px;font-size:13px;cursor:pointer;background:#fff;transition:border-color .15s,background .15s}
+.strip a:hover{border-color:var(--dc);background:#FBFAFD}
+.strip a b{font-variant-numeric:tabular-nums}.strip a em{font-style:normal;color:var(--ink-3);font-size:12px}
+.strip .dot{width:8px;height:8px;border-radius:50%;display:inline-block}
+.drawer .db{padding:0}
+table.dt{width:100%;border-collapse:collapse;font-size:13px}
+table.dt th{position:sticky;top:0;background:#FAF9FC;text-align:left;font-weight:600;color:var(--ink-2);font-size:12px;padding:10px 10px;border-bottom:1px solid var(--line);white-space:nowrap;z-index:1}
+table.dt td{padding:9px 10px;border-bottom:1px solid #F0EEF4;white-space:nowrap}
+table.dt tbody tr{animation:fu .35s ease-out both}
+table.dt tbody tr:hover td{background:#FBFAFD}
+table.dt .n{text-align:right;font-variant-numeric:tabular-nums}
+table.dt td.hi{font-weight:700;color:var(--dc)}table.dt th.hi{color:var(--dc)}
+table.dt td:first-child{font-family:ui-monospace,SFMono-Regular,Menlo,monospace;font-size:12px;color:var(--ink-2)}
+table.dt th:first-child,table.dt td:first-child{padding-left:22px}table.dt th:last-child,table.dt td:last-child{padding-right:22px}
+.drawer .empty{padding:40px 22px;color:var(--ink-3)}
+.drawer .df .cnt{font-size:12.5px;color:var(--ink-3);margin-right:auto}
 .tb{font-size:12.5px;font-weight:600;color:var(--purple);border:1px solid #DCD3EE;border-radius:7px;padding:6px 10px;cursor:pointer;background:#fff;transition:background .15s}
 .tb:hover{background:#F5F1FB}
 .tsep{width:1px;height:20px;background:#E4E2EA;margin:0 2px}
@@ -455,7 +475,7 @@ var M={
   husb:['Husbands screened','#B8923F','f'],risk:['At-risk couples','#D97A4A','f'],pnd:['Prenatal diagnosis','#E8655C','f'],
   aff:['Affected foetuses','#C9463F','f'],couns:['Couples counselled for MTP','#A53D4F','f'],mtp:['MTP done','#7E3459','f'],averted:['Births averted','#2A1F4E','f'],
   pndc:['PND done by at-risk couples','#E8655C','f'],dec:['Declined PND','#D97A4A','f'],pndr:['PND referred in','#E8655C','f'],cvs:['CVS','#E8655C','f'],amn:['Amniocentesis','#E8655C','f'],
-  affT:['Affected foetuses, Thal','#C9463F','f'],affS:['Affected foetuses, SCD','#C9463F','f'],mtpT:['MTP done, Thal','#7E3459','f'],mtpS:['MTP done, Sickle','#7E3459','f']
+  affT:['Affected foetuses, Thal','#C9463F','f'],affS:['Affected foetuses, SCD','#C9463F','f'],mtpT:['MTP done, Thal','#7E3459','f'],mtpS:['MTP done, Sickle','#7E3459','f'],pndnr:['PND, test not recorded','#E8655C','f']
 };
 var F={fy:'2026-27',partner:'',city:''};
 var state={tab:'screening',open:null,bar:null,mode:'month',report:'screening',month:null,rf:null,print:false};
@@ -503,7 +523,7 @@ var TINT={reg:['#F1ECFA','#E9E1F7','#3E1C7A'],scr:['#ECE4F9','#E1D5F4','#582AA2'
 function cu(v,dec,suf){return '<span class="cu" data-v="'+v+'" data-d="'+(dec||0)+'" data-s="'+(suf||'')+'">0</span>'}
 function cupc(a,b){if(!b)return cu(0,0,'%');var r=100*a/b,d=(r<10&&r%1)?1:0;return cu(d?+r.toFixed(1):Math.round(r),d,'%')}
 function stair(stages,d,heights){
-  var cols='repeat('+stages.length+',1fr)',by=F.partner?(level()==='city'?'By city':'By month'):'By partner';
+  var cols='repeat('+stages.length+',1fr)',by='View records';
   var top=stages.map(function(s,i){var T=TINT[s.k];
     return '<div class="st'+(state.open===s.k?' open':'')+'" data-k="'+s.k+'" style="height:'+heights[i]+'px;--bg:'+T[0]+';--bg2:'+T[1]+';--a:'+T[2]+';animation-delay:'+(i*90)+'ms" onclick="openD(\''+s.k+'\')"><div class="lk">'+M[s.k][0]+tip(s.tip)+'</div><div class="v">'+cu(d[s.k])+'</div><span class="go">'+by+' ›</span></div>'}).join('');
   var dets=stages.some(function(s){return s.rows})?'<div class="dets" style="grid-template-columns:'+cols+'">'+stages.map(function(s,i){return '<div class="det" style="animation-delay:'+(300+i*90)+'ms">'+(s.rows?rows(s.rows):'')+(s.rows2?'<div class="grp">'+rows(s.rows2)+'</div>':'')+'</div>'}).join('')+'</div>':'';
@@ -529,48 +549,95 @@ function chart(){
   });
   
   s+='</svg>';
-  var head='<div class="ch"><div class="sec" style="margin:0;--sa:#2A1F4E">Women registered, April to March</div><span class="hint">Click a bar to see that period by partner</span><div class="seg" style="margin-left:auto"><span class="'+(q?'':'on')+'" onclick="setMode(\'month\')">Month</span><span class="'+(q?'on':'')+'" onclick="setMode(\'quarter\')">Quarter</span></div></div>';
+  var head='<div class="ch"><div class="sec" style="margin:0;--sa:#2A1F4E">Women registered, April to March</div><span class="hint">Click a bar for that period\'s entries</span><div class="seg" style="margin-left:auto"><span class="'+(q?'':'on')+'" onclick="setMode(\'month\')">Month</span><span class="'+(q?'on':'')+'" onclick="setMode(\'quarter\')">Quarter</span></div></div>';
   return '<div class="panel chartp reveal">'+head+s+'</div>';
 }
 function setMode(m){state.mode=m;state.bar=null;renderDash()}
 
-/* drawer: one level down from the current filter */
-function level(){if(!F.partner)return 'partner';if(!F.city&&citiesOf(F.partner).length>1)return 'city';return 'month'}
+/* follow-up records: one per woman, generated from the register rows so every count matches */
+var PFX={fogsi:'FOG',sion:'SIO',wadia:'WAD',cmc:'CMC'};
+function rng(s){return function(){s=(s*16807)%2147483647;return s/2147483647}}
+function shuf(a,r){for(var i=a.length-1;i>0;i--){var j=Math.floor(r()*(i+1)),t=a[i];a[i]=a[j];a[j]=t}return a}
+var FUR=(function(){
+  var out=[],seq={},wc={};
+  DATA.forEach(function(r,ri){
+    var R=rng(ri*7919+13),fy2=r.fy.slice(2,4);seq[r.fy]=seq[r.fy]||0;wc[r.p]=wc[r.p]||1000;
+    var mk=function(src,ct){seq[r.fy]++;wc[r.p]+=1+Math.floor(R()*7);
+      return {id:'FUR-'+fy2+'-'+('0000'+seq[r.fy]).slice(-5),wc:PFX[r.p]+'-'+wc[r.p],p:r.p,c:r.c,fy:r.fy,m:r.m,src:src,ct:ct,hs:'',hr:'',risk:false,pnd:'',test:'',fr:'',couns:'',mtp:''}};
+    var types=[];['thal','sick','oth'].forEach(function(t){for(var i=0;i<r[t];i++)types.push(t)});shuf(types,R);
+    var w=types.map(function(t){return mk('Screened here',t)});
+    w.forEach(function(x,i){if(i<r.husb){x.hs='Yes';x.hr=i<r.risk?'Carrier':'Normal';x.risk=i<r.risk}else{x.hs='No';x.hr=''}});
+    var risk=w.filter(function(x){return x.risk});
+    risk.forEach(function(x,i){x.pnd=i<r.pndc?'Done':i<r.pndc+r.dec?'Declined':'Pending'});
+    for(var i=0;i<r.pndr;i++){var x=mk('Referred in',R()<.8?'thal':'sick');x.pnd='Done';w.push(x)}
+    var pnd=w.filter(function(x){return x.pnd==='Done'});shuf(pnd,R);
+    pnd.forEach(function(x,i){x.test=i<r.cvs?'CVS':i<r.cvs+r.amn?'Amniocentesis':'Not recorded';x.fr=i<r.affT?'Major, Thal':i<r.affT+r.affS?'Major, SCD':'Minor or normal'});
+    var aT=pnd.filter(function(x){return x.fr==='Major, Thal'}),aS=pnd.filter(function(x){return x.fr==='Major, SCD'}),aff=aT.concat(aS);
+    aT.forEach(function(x,i){x.mtp=i<r.mtpT?'Yes':'No'});aS.forEach(function(x,i){x.mtp=i<r.mtpS?'Yes':'No'});
+    var cn=0;aff.forEach(function(x){x.couns='No';if(x.mtp==='Yes'){x.couns='Yes';cn++}});
+    aff.forEach(function(x){if(x.couns==='No'&&cn<r.couns){x.couns='Yes';cn++}});
+    out=out.concat(w);
+  });
+  return out;
+})();
+var CT={thal:'Thal',sick:'Sickle cell',oth:'Other Hb'};
+var FSEL={husb:function(x){return x.hs==='Yes'},risk:function(x){return x.risk},dec:function(x){return x.pnd==='Declined'},
+  pnd:function(x){return x.pnd==='Done'},pndc:function(x){return x.pnd==='Done'&&x.src!=='Referred in'},pndr:function(x){return x.src==='Referred in'},
+  cvs:function(x){return x.test==='CVS'},amn:function(x){return x.test==='Amniocentesis'},pndnr:function(x){return x.test==='Not recorded'},
+  aff:function(x){return x.fr.indexOf('Major')===0},affT:function(x){return x.fr==='Major, Thal'},affS:function(x){return x.fr==='Major, SCD'},
+  couns:function(x){return x.couns==='Yes'},mtp:function(x){return x.mtp==='Yes'},mtpT:function(x){return x.mtp==='Yes'&&x.fr==='Major, Thal'},mtpS:function(x){return x.mtp==='Yes'&&x.fr==='Major, SCD'}};
+var FCOL={id:'Record ID',wc:"Woman's code",p:'Partner',c:'City',m:'Screening month',src:'Source',ct:'Carrier type',hs:'Husband screened',hr:'Husband result',pnd:'PND',test:'Test',fr:'Foetus result',couns:'Counselled for MTP',mtp:'MTP done'};
+function fcols(k){
+  var base=['id','wc','p','c','m'];
+  if(k==='husb')return base.concat(['ct','hr']);
+  if(k==='risk'||k==='dec')return base.concat(['ct','hr','pnd']);
+  if(/^(pnd|pndc|pndr|cvs|amn|pndnr)$/.test(k))return base.concat(['src','test','fr']);
+  return base.concat(['test','fr','couns','mtp']);
+}
+function monthLabel(fy,m){return MN[m]+' '+(FY[fy].y+(m>8?1:0))}
+function inScope(x,ms){return x.fy===F.fy&&(!F.partner||x.p===F.partner)&&(!F.city||x.c===F.city)&&(!ms||ms.indexOf(x.m)>=0)}
+var SCOL=[['reg','Women registered'],['scr','Women screened'],['thal','Thal'],['sick','Sickle cell'],['oth','Other Hb'],['pos','Screen positive']];
+
+/* drill-down: indicator -> partner strip + report table with identifiers + download */
+function level(){if(!F.partner)return 'partner';if(!F.city&&citiesOf(F.partner).length>1)return 'city';return ''}
 function drawer(){
   var el=document.getElementById('drawer'),k=state.open;
-  if(state.bar!=null)return barDrawer(el);
   if(!k){el.innerHTML='';return}
-  var lv=level(),rs=pick(),groups={},list=[],kind=M[k][2]==='s'?'screening':'followup';
-  rs.forEach(function(r){var g=lv==='partner'?r.p:lv==='city'?r.c:r.m;(groups[g]=groups[g]||[]).push(r)});
-  Object.keys(groups).forEach(function(g){var v=agg(groups[g])[k];
-    if(lv==='partner')list.push({dot:P[g].c,nm:P[g].name,pg:P[g].prog,v:v,act:'Show '+P[g].name+' ›',click:"setF('partner','"+g+"')"});
-    else if(lv==='city')list.push({nm:g,v:v,act:'Show '+g+' ›',click:"setF('city','"+g.replace(/'/g,"\\'")+"')"});
-    else list.push({nm:MF[g]+' '+(FY[F.fy].y+(g>8?1:0)),v:v,m:+g,act:(kind==='screening'?'Screening':'Follow-up')+' Report ›',click:"openReport('"+kind+"',"+g+")"});
-  });
-  if(lv==='month')list.sort(function(a,b){return a.m-b.m});else list.sort(function(a,b){return b.v-a.v});
-  if(lv==='partner')Object.keys(P).forEach(function(p){if(!groups[p])list.push({dot:'#B8BCC4',nm:P[p].name,v:0,idle:1})});
-  var tot=list.reduce(function(a,r){return a+r.v},0),max=Math.max.apply(null,list.map(function(r){return r.v}))||1,col=M[k][1];
-  var ctx=['FY '+F.fy,F.partner?P[F.partner].name:'All partners',F.city||(F.partner?'':'All cities')].filter(function(x){return x}).join(' · ');
-  var body=list.map(function(r){return r.idle?'<div class="dr muted"><div class="nm"><span class="dot" style="background:#B8BCC4;margin-right:8px"></span>'+r.nm+'</div><div class="val">0</div><div class="shr"></div><div class="act" style="color:#8A8F98;font-weight:400">No entries</div></div>':
-    '<div class="dr" style="animation-delay:'+(list.indexOf(r)*45)+'ms" onclick="'+r.click+'"><div class="nm">'+(r.dot?'<span class="dot" style="background:'+r.dot+';margin-right:8px"></span>':'')+r.nm+(r.pg?' <span class="pg">· '+r.pg+'</span>':'')+'</div><div class="val">'+n(r.v)+'</div><div class="shr">'+pc(r.v,tot)+'</div><div class="track"><i style="width:'+(100*r.v/max)+'%;background:'+col+'"></i></div><div class="act">'+r.act+'</div></div>'}).join('');
-  el.innerHTML='<div class="scrim" onclick="openD(null)"></div><div class="drawer" style="--dc:'+col+'"><div class="dh"><div class="t">'+ctx+' · by '+lv+'</div><h3>'+M[k][0]+' <b>'+n(tot)+'</b></h3><span class="cl" onclick="openD(null)">✕</span></div><div class="db">'+body+'</div>'+
-    '<div class="df"><a onclick="openReport(\''+kind+'\',null)">Open '+(kind==='screening'?'Screening':'Follow-up')+' Report for '+ctx+' ›</a><a class="dl" onclick="csvDrawer()">Export CSV</a></div></div>';
-  state.dl={name:M[k][0]+' by '+lv+' '+ctx,head:[lv,M[k][0],'Share'],rows:list.map(function(r){return [r.nm+(r.pg?' ('+r.pg+')':''),r.v,pc(r.v,tot)]})};
+  var ms=state.bar!=null?periodOf(state.bar):null,scr=M[k][2]==='s',col=M[k][1],lv=level(),head,rows,val,grp,keyOf;
+  if(scr){
+    var rs=pick().filter(function(r){return !ms||ms.ms.indexOf(r.m)>=0}).map(function(r){var o={};for(var c in r)o[c]=r[c];o.pos=r.thal+r.sick+r.oth;return o}).filter(function(r){return r[k]>0});
+    rs.sort(function(a,b){return a.m-b.m||a.p.localeCompare(b.p)||a.c.localeCompare(b.c)});
+    head=['Entry ID','Partner','Programme','City','Month'].concat(SCOL.map(function(s){return s[1]}));
+    rows=rs.map(function(r){return ['SR-'+r.fy.slice(2,4)+'-'+('000'+(DATA.indexOf(DATA.filter(function(d){return d.p===r.p&&d.c===r.c&&d.fy===r.fy&&d.m===r.m})[0])+1)).slice(-4),P[r.p].name,P[r.p].prog,r.c,monthLabel(r.fy,r.m)].concat(SCOL.map(function(s){return r[s[0]]}))});
+    var hi=5+SCOL.map(function(s){return s[0]}).indexOf(k);
+    val=rs.reduce(function(a,r){return a+r[k]},0);grp=rs;keyOf=function(r){return r[k]};
+    var unit='register entries';
+  } else {
+    var fs=FUR.filter(function(x){return inScope(x,ms&&ms.ms)&&FSEL[k](x)});
+    fs.sort(function(a,b){return a.m-b.m||a.id.localeCompare(b.id)});
+    var cs=fcols(k);head=cs.map(function(c){return FCOL[c]});
+    rows=fs.map(function(x){return cs.map(function(c){return c==='p'?P[x.p].name:c==='m'?monthLabel(x.fy,x.m):c==='ct'?CT[x.ct]:x[c]||'-'})});
+    val=fs.length;grp=fs;keyOf=function(){return 1};var hi=-1,unit='women';
+  }
+  var strip='';
+  if(lv){var g={};grp.forEach(function(r){var key=lv==='partner'?r.p:r.c;g[key]=(g[key]||0)+keyOf(r)});
+    var ks=Object.keys(g).sort(function(a,b){return g[b]-g[a]});
+    strip='<div class="strip"><span class="sl">By '+lv+'</span>'+ks.map(function(key){var nm=lv==='partner'?P[key].name:key;
+      return '<a onclick="drillTo(\''+lv+'\',\''+key.replace(/'/g,"\\'")+'\')">'+(lv==='partner'?'<span class="dot" style="background:'+P[key].c+'"></span>':'')+nm+' <b>'+n(g[key])+'</b><em>'+pc(g[key],val)+'</em></a>'}).join('')+'</div>';}
+  var ctx=['FY '+F.fy,ms?ms.label:'',F.partner?P[F.partner].name:'All partners',F.city||(F.partner?'':'All cities')].filter(function(x){return x}).join(' · ');
+  var tbl='<table class="dt"><thead><tr>'+head.map(function(h,i){return '<th'+(i>=5&&scr?' class="n'+(i===hi?' hi':'')+'"':'')+'>'+h+'</th>'}).join('')+'</tr></thead><tbody>'+
+    rows.map(function(r,ri){return '<tr style="animation-delay:'+Math.min(ri,14)*30+'ms">'+r.map(function(v,i){return '<td'+(i>=5&&scr?' class="n'+(i===hi?' hi':'')+'"':'')+'>'+(typeof v==='number'?n(v):v)+'</td>'}).join('')+'</tr>'}).join('')+'</tbody></table>';
+  el.innerHTML='<div class="scrim" onclick="closeD()"></div><div class="drawer wide" style="--dc:'+col+'"><div class="dh"><div class="t">'+ctx+'</div><h3>'+M[k][0]+' <b>'+n(val)+'</b></h3>'+
+    '<a class="tb dlb" onclick="csvDrawer()">Download</a><span class="cl" onclick="closeD()">✕</span>'+strip+'</div>'+
+    '<div class="db">'+(rows.length?tbl:'<div class="empty">No entries for this selection</div>')+'</div>'+
+    '<div class="df"><span class="cnt">'+n(rows.length)+' '+(scr?'register entries':'records')+'</span><a onclick="openReport(\''+(scr?'screening':'followup')+'\','+(ms?JSON.stringify(ms.ms):'null')+')">Open full '+(scr?'Screening':'Follow-up')+' Report ›</a></div></div>';
+  state.dl={name:M[k][0]+' '+ctx,head:head,rows:rows};
 }
-function periodOf(i){var q=state.mode==='quarter';return {ms:q?[i*3,i*3+1,i*3+2]:[i],label:q?['Q1 Apr-Jun','Q2 Jul-Sep','Q3 Oct-Dec','Q4 Jan-Mar'][i]+' '+F.fy:MF[i]+' '+(FY[F.fy].y+(i>8?1:0))}}
-function barDrawer(el){
-  var p=periodOf(state.bar),rs=pick().filter(function(r){return p.ms.indexOf(r.m)>=0});
-  var g={};rs.forEach(function(r){var key=r.p+'|'+r.c;(g[key]=g[key]||[]).push(r)});
-  var list=Object.keys(g).map(function(key){var a=agg(g[key]),pc_=key.split('|');return {p:pc_[0],c:pc_[1],reg:a.reg,scr:a.scr,pos:a.pos}}).sort(function(a,b){return b.reg-a.reg});
-  var tot=list.reduce(function(a,r){return a+r.reg},0),max=Math.max.apply(null,list.map(function(r){return r.reg}))||1;
-  var ms=JSON.stringify(p.ms);
-  var body=list.map(function(r,i){return '<div class="dr" style="animation-delay:'+(i*45)+'ms" onclick="openReport(\'screening\','+ms+',\''+r.p+'\',\''+r.c.replace(/'/g,"\\'")+'\')"><div class="nm"><span class="dot" style="background:'+P[r.p].c+';margin-right:8px"></span>'+P[r.p].name+' <span class="pg">· '+r.c+'</span><div class="sub">Screened '+n(r.scr)+' · Screen positive '+n(r.pos)+'</div></div><div class="val">'+n(r.reg)+'</div><div class="shr">'+pc(r.reg,tot)+'</div><div class="track"><i style="width:'+(100*r.reg/max)+'%;background:#582AA2"></i></div><div class="act">Screening Report ›</div></div>'}).join('');
-  var ctx=[F.partner?P[F.partner].name:'All partners',F.city||(F.partner?'':'All cities')].filter(function(x){return x}).join(' · ');
-  el.innerHTML='<div class="scrim" onclick="openBar(null)"></div><div class="drawer" style="--dc:#582AA2"><div class="dh"><div class="t">'+p.label+' · '+ctx+' · by register entry</div><h3>Women registered <b>'+n(tot)+'</b></h3><span class="cl" onclick="openBar(null)">✕</span></div><div class="db">'+(body||'<div class="dr muted"><div class="nm">No entries for this period</div></div>')+'</div>'+
-    '<div class="df"><a onclick="openReport(\'screening\','+ms+')">Open Screening Report for '+p.label+' ›</a><a class="dl" onclick="csvDrawer()">Export CSV</a></div></div>';
-  state.dl={name:'Women registered '+p.label+' '+ctx,head:['Partner','City','Women registered','Women screened','Screen positive'],rows:list.map(function(r){return [P[r.p].name,r.c,r.reg,r.scr,r.pos]})};
-}
-function openBar(i){state.bar=(i==null||state.bar===i)?null:i;state.open=null;drawer();markOpen();[].forEach.call(document.querySelectorAll('.bk'),function(e,j){e.classList.toggle('on',state.bar!=null&&e.getAttribute('onclick')==='openBar('+state.bar+')')})}
+function drillTo(lv,v){if(lv==='partner'){F.partner=v;if(F.city&&citiesOf(v).indexOf(F.city)<0)F.city=''}else F.city=v;renderDash()}
+function closeD(){state.open=null;state.bar=null;drawer();markOpen();markBar()}
+function periodOf(i){var q=state.mode==='quarter';return {ms:q?[i*3,i*3+1,i*3+2]:[i],label:q?['Q1 Apr-Jun','Q2 Jul-Sep','Q3 Oct-Dec','Q4 Jan-Mar'][i]:MF[i]+' '+(FY[F.fy].y+(i>8?1:0))}}
+function openBar(i){if(i==null||state.bar===i)return closeD();state.bar=i;state.open='reg';drawer();markOpen();markBar()}
+function markBar(){[].forEach.call(document.querySelectorAll('.bk'),function(e){e.classList.toggle('on',state.bar!=null&&e.getAttribute('onclick')==='openBar('+state.bar+')')})}
 /* export */
 function csvCell(v){v=v==null?'':String(v);return /[",\n]/.test(v)?'"'+v.replace(/"/g,'""')+'"':v}
 function saveCsv(name,head,rows){
@@ -592,7 +659,7 @@ function snapshot(){
   var done=function(){state.print=false;document.title=t;renderDash();window.removeEventListener('afterprint',done)};
   window.addEventListener('afterprint',done);setTimeout(function(){window.print()},60);
 }
-function openD(m){state.open=(state.open===m)?null:m;state.bar=null;drawer();markOpen()}
+function openD(m){state.open=(state.open===m&&state.bar==null)?null:m;state.bar=null;drawer();markOpen();markBar()}
 function markOpen(){[].forEach.call(document.querySelectorAll('.st'),function(e){e.classList.toggle('open',e.dataset.k===state.open)})}
 
 /* dashboard */
@@ -612,7 +679,7 @@ function dashboard(){
   } else {
     var nr=d.pnd-d.cvs-d.amn,mnr=d.mtp-d.mtpT-d.mtpS;
     var st=[{k:'husb'},{k:'risk',rows:[['PND done',d.pndc,'pndc'],['Declined PND',d.dec,'dec']]},
-      {k:'pnd',rows:[['CVS',d.cvs,'cvs'],['Amniocentesis',d.amn,'amn'],nr>0?['Test not recorded',nr]:null],rows2:[['From at-risk couples',d.pndc,'pndc'],['Referred in',d.pndr,'pndr']]},
+      {k:'pnd',rows:[['CVS',d.cvs,'cvs'],['Amniocentesis',d.amn,'amn'],nr>0?['Test not recorded',nr,'pndnr']:null],rows2:[['From at-risk couples',d.pndc,'pndc'],['Referred in',d.pndr,'pndr']]},
       {k:'aff',rows:[['Thal',d.affT,'affT'],['SCD',d.affS,'affS']]}];
     st.push({k:'couns'});
     st.push({k:'mtp',rows:[['Thal',d.mtpT,'mtpT'],['Sickle',d.mtpS,'mtpS'],mnr>0?['Type not recorded',mnr]:null]});
@@ -670,7 +737,7 @@ function show(){
   if(view==='dashboard')renderDash();else renderReport();
   window.scrollTo(0,0);
 }
-document.addEventListener('keydown',function(e){if(e.key==='Escape'){if(state.bar!=null)openBar(null);else if(state.open)openD(null)}});
+document.addEventListener('keydown',function(e){if(e.key==='Escape'&&(state.open||state.bar!=null))closeD()});
 sidebar();bindFilters();window.addEventListener('hashchange',show);show();
 
 </script>

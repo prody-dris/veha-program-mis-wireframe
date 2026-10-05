@@ -374,8 +374,11 @@ html{scroll-behavior:smooth}
 @media (prefers-reduced-motion:reduce){*,*:before,*:after{animation:none!important;transition:none!important}.reveal{opacity:1;transform:none}}
 @media print{@page{size:A4 landscape;margin:10mm}*{-webkit-print-color-adjust:exact;print-color-adjust:exact;animation:none!important;transition:none!important}.sb,.nb,.fl,#drawer,.tabs,.seg,.hint{display:none!important}.desk{display:block}section[data-view]:not(.active){display:none!important}.reveal{opacity:1!important;transform:none!important}.panel{break-inside:avoid}.wrap{padding:0!important;max-width:none}}
 /* v6: clickable everything, export */
-.drawer.wide{width:min(1240px,96vw)}
-.drawer .dh{position:relative}.drawer .dh .dlb{position:absolute;right:56px;top:20px}
+.ib{display:inline-flex;align-items:center;justify-content:center;width:32px;height:32px;border:1px solid #DCD3EE;border-radius:8px;color:var(--purple);background:#fff;cursor:pointer;position:relative;transition:background .15s,border-color .15s}
+.ib:hover{background:#F5F1FB;border-color:#C9BCE6}
+.ib[data-tt]:hover::after{content:attr(data-tt);position:absolute;top:calc(100% + 6px);left:50%;transform:translateX(-50%);background:#2A1F4E;color:#fff;font-size:11.5px;font-weight:500;white-space:nowrap;padding:4px 8px;border-radius:6px;pointer-events:none;z-index:50}
+.drawer.wide{width:min(860px,94vw)}
+.drawer .dh{position:relative}.drawer .dh .dlb{position:absolute;right:54px;top:15px}
 .strip{display:flex;flex-wrap:wrap;gap:8px;align-items:center;margin-top:14px}
 .strip .sl{font-size:12px;color:var(--ink-3);margin-right:2px}
 .strip a{display:inline-flex;align-items:center;gap:7px;border:1px solid #E4E2EA;border-radius:999px;padding:5px 12px;font-size:13px;cursor:pointer;background:#fff;transition:border-color .15s,background .15s}
@@ -383,9 +386,9 @@ html{scroll-behavior:smooth}
 .strip a b{font-variant-numeric:tabular-nums}.strip a em{font-style:normal;color:var(--ink-3);font-size:12px}
 .strip .dot{width:8px;height:8px;border-radius:50%;display:inline-block}
 .drawer .db{padding:0}
-table.dt{width:100%;border-collapse:collapse;font-size:13px}
-table.dt th{position:sticky;top:0;background:#FAF9FC;text-align:left;font-weight:600;color:var(--ink-2);font-size:12px;padding:10px 10px;border-bottom:1px solid var(--line);white-space:nowrap;z-index:1}
-table.dt td{padding:9px 10px;border-bottom:1px solid #F0EEF4;white-space:nowrap}
+table.dt{width:100%;border-collapse:collapse;font-size:12.5px}
+table.dt th{position:sticky;top:0;background:#FAF9FC;text-align:left;font-weight:600;color:var(--ink-2);font-size:12px;padding:10px 8px;border-bottom:1px solid var(--line);white-space:nowrap;z-index:1}
+table.dt td{padding:9px 8px;border-bottom:1px solid #F0EEF4;white-space:nowrap}
 table.dt tbody tr{animation:fu .35s ease-out both}
 table.dt tbody tr:hover td{background:#FBFAFD}
 table.dt .n{text-align:right;font-variant-numeric:tabular-nums}
@@ -416,13 +419,13 @@ table.dt th:first-child,table.dt td:first-child{padding-left:22px}table.dt th:la
     <div class="wrap">
       <section data-view="dashboard">
         <div class="top"><h1 id="d-title">Program MIS dashboard</h1>
-          <div class="fl"><select id="f-fy"></select><select id="f-prog"></select><select id="f-partner"></select><select id="f-city"></select><a id="f-reset" onclick="resetF()">Reset</a><span class="tsep"></span><a class="tb" onclick="csvDash()">Export CSV</a><a class="tb" onclick="snapshot()">Snapshot</a></div></div>
+          <div class="fl"><select id="f-fy"></select><select id="f-prog"></select><select id="f-partner"></select><select id="f-city"></select><a id="f-reset" onclick="resetF()">Reset</a><span class="tsep"></span><a class="ib" onclick="csvDash()" data-tt="Export CSV" aria-label="Export CSV"><svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"><path d="M12 4v11"/><path d="M7 10l5 5 5-5"/><path d="M5 19h14"/></svg></a><a class="ib" onclick="snapshot()" data-tt="Snapshot (PDF)" aria-label="Snapshot"><svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"><path d="M4 8h3l2-3h6l2 3h3v11H4z"/><circle cx="12" cy="13" r="3.5"/></svg></a></div></div>
         <div class="meta" id="meta"></div>
         <div id="dash"></div>
         <div id="drawer"></div>
       </section>
       <section data-view="records">
-        <div class="top"><h1 id="r-title">Screening Report</h1><a class="tb" onclick="state.rdl&&saveCsv(state.rdl.name,state.rdl.head,state.rdl.rows)">Export CSV</a><a class="back" onclick="go('dashboard')">‹ Back to dashboard</a></div>
+        <div class="top"><h1 id="r-title">Screening Report</h1><a class="ib" onclick="state.rdl&&saveCsv(state.rdl.name,state.rdl.head,state.rdl.rows)" data-tt="Export CSV" aria-label="Export CSV"><svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"><path d="M12 4v11"/><path d="M7 10l5 5 5-5"/><path d="M5 19h14"/></svg></a><a class="back" onclick="go('dashboard')">‹ Back to dashboard</a></div>
         <div class="fchips" id="r-chips"></div>
         <div class="card tw" style="padding:0" id="r-table"></div>
       </section>
@@ -586,7 +589,7 @@ var FSEL={husb:function(x){return x.hs==='Yes'},risk:function(x){return x.risk},
   cvs:function(x){return x.test==='CVS'},amn:function(x){return x.test==='Amniocentesis'},pndnr:function(x){return x.test==='Not recorded'},
   aff:function(x){return x.fr.indexOf('Major')===0},affT:function(x){return x.fr==='Major, Thal'},affS:function(x){return x.fr==='Major, SCD'},
   couns:function(x){return x.couns==='Yes'},mtp:function(x){return x.mtp==='Yes'},mtpT:function(x){return x.mtp==='Yes'&&x.fr==='Major, Thal'},mtpS:function(x){return x.mtp==='Yes'&&x.fr==='Major, SCD'}};
-var FCOL={id:'Record ID',wc:"Woman's code",p:'Partner',c:'City',m:'Screening month',src:'Source',ct:'Carrier type',hs:'Husband screened',hr:'Husband result',pnd:'PND',test:'Test',fr:'Foetus result',couns:'Counselled for MTP',mtp:'MTP done'};
+var FCOL={id:'Record ID',wc:"Woman's code",p:'Partner',c:'City',m:'Month',src:'Source',ct:'Carrier type',hs:'Husband screened',hr:'Husband result',pnd:'PND',test:'Test',fr:'Foetus result',couns:'Counselled',mtp:'MTP'};
 function fcols(k){
   var base=['id','wc','p','c','m'];
   if(k==='husb')return base.concat(['ct','hr']);
@@ -596,7 +599,7 @@ function fcols(k){
 }
 function monthLabel(fy,m){return MN[m]+' '+(FY[fy].y+(m>8?1:0))}
 function inScope(x,ms){return x.fy===F.fy&&(!F.partner||x.p===F.partner)&&(!F.city||x.c===F.city)&&(!ms||ms.indexOf(x.m)>=0)}
-var SCOL=[['reg','Women registered'],['scr','Women screened'],['thal','Thal'],['sick','Sickle cell'],['oth','Other Hb'],['pos','Screen positive']];
+var SCOL=[['reg','Registered'],['scr','Screened'],['thal','Thal'],['sick','Sickle'],['oth','Other Hb'],['pos','Positive']];
 
 /* drill-down: indicator -> partner strip + report table with identifiers + download */
 function level(){if(!F.partner)return 'partner';if(!F.city&&citiesOf(F.partner).length>1)return 'city';return ''}
@@ -625,10 +628,10 @@ function drawer(){
     strip='<div class="strip"><span class="sl">By '+lv+'</span>'+ks.map(function(key){var nm=lv==='partner'?P[key].name:key;
       return '<a onclick="drillTo(\''+lv+'\',\''+key.replace(/'/g,"\\'")+'\')">'+(lv==='partner'?'<span class="dot" style="background:'+P[key].c+'"></span>':'')+nm+' <b>'+n(g[key])+'</b><em>'+pc(g[key],val)+'</em></a>'}).join('')+'</div>';}
   var ctx=['FY '+F.fy,ms?ms.label:'',F.partner?P[F.partner].name:'All partners',F.city||(F.partner?'':'All cities')].filter(function(x){return x}).join(' · ');
-  var tbl='<table class="dt"><thead><tr>'+head.map(function(h,i){return '<th'+(i>=5&&scr?' class="n'+(i===hi?' hi':'')+'"':'')+'>'+h+'</th>'}).join('')+'</tr></thead><tbody>'+
-    rows.map(function(r,ri){return '<tr style="animation-delay:'+Math.min(ri,14)*30+'ms">'+r.map(function(v,i){return '<td'+(i>=5&&scr?' class="n'+(i===hi?' hi':'')+'"':'')+'>'+(typeof v==='number'?n(v):v)+'</td>'}).join('')+'</tr>'}).join('')+'</tbody></table>';
+  var tbl='<table class="dt"><thead><tr>'+head.map(function(h,i){if(scr&&i===2)return '';return '<th'+(i>=5&&scr?' class="n'+(i===hi?' hi':'')+'"':'')+'>'+h+'</th>'}).join('')+'</tr></thead><tbody>'+
+    rows.map(function(r,ri){return '<tr style="animation-delay:'+Math.min(ri,14)*30+'ms">'+r.map(function(v,i){if(scr&&i===2)return '';return '<td'+(i>=5&&scr?' class="n'+(i===hi?' hi':'')+'"':'')+'>'+(typeof v==='number'?n(v):v)+'</td>'}).join('')+'</tr>'}).join('')+'</tbody></table>';
   el.innerHTML='<div class="scrim" onclick="closeD()"></div><div class="drawer wide" style="--dc:'+col+'"><div class="dh"><div class="t">'+ctx+'</div><h3>'+M[k][0]+' <b>'+n(val)+'</b></h3>'+
-    '<a class="tb dlb" onclick="csvDrawer()">Download</a><span class="cl" onclick="closeD()">✕</span>'+strip+'</div>'+
+    '<a class="ib dlb" onclick="csvDrawer()" data-tt="Download CSV" aria-label="Download CSV"><svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"><path d="M12 4v11"/><path d="M7 10l5 5 5-5"/><path d="M5 19h14"/></svg></a><span class="cl" onclick="closeD()">✕</span>'+strip+'</div>'+
     '<div class="db">'+(rows.length?tbl:'<div class="empty">No entries for this selection</div>')+'</div>'+
     '<div class="df"><span class="cnt">'+n(rows.length)+' '+(scr?'register entries':'records')+'</span><a onclick="openReport(\''+(scr?'screening':'followup')+'\','+(ms?JSON.stringify(ms.ms):'null')+')">Open full '+(scr?'Screening':'Follow-up')+' Report ›</a></div></div>';
   state.dl={name:M[k][0]+' '+ctx,head:head,rows:rows};

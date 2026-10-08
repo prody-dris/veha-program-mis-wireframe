@@ -972,9 +972,7 @@ function chartsFor(tab,d){
     '<div class="cgrid one">'+cpanel('Women screened by month','var(--tab1)',heat(gr,960),heatLegend())+'</div>';
   if(tab==='followup')return '<div class="cgrid one">'+
     cpanel('At-risk couple outcomes','var(--aff1)',stack([{k:'pnd',l:'Prenatal diagnosis',v:d.pnd,c:'var(--tab1)'},{k:'dec',l:'Declined prenatal diagnosis',v:d.dec,c:'var(--neg)'},{k:'ltfu',l:'Lost to follow-up',v:d.ltfu,c:'var(--neg2)'}],1100,d.risk))+'</div>';
-  return '<div class="cgrid one">'+cpanel('At-risk couple pathway','var(--aff1)',sankey(d,1100,420),'<span class="lg"><i class="lgs"></i>Good · Process · Attention · Serious</span><span class="lg"><i style="background:var(--neg)"></i>Declined prenatal diagnosis</span><span class="lg"><i style="background:var(--neg2)"></i>Lost to follow-up</span><span class="lg lgd">Decision</span><span class="lg"><i style="background:var(--slate)"></i>Medical termination of pregnancy</span><span class="lg"><i style="background:var(--slate2)"></i>Continued pregnancy</span>')+'</div>'+
-    '<div class="cgrid one">'+
-    cpanel('Type of prenatal diagnosis, '+(gr.by==='partner'?'partner-wise':'city-wise'),'var(--tab1)',typeStack(gr,d,960,[['cvs','var(--tab1)',1],['amn','var(--tab2)',1],['pndnr','var(--nr)',1]],'pnd'))+'</div>';
+  return '<div class="cgrid one">'+cpanel('At-risk couple pathway','var(--aff1)',sankey(d,1100,420),'<span class="lg"><i class="lgs"></i>Good · Process · Attention · Serious</span><span class="lg"><i style="background:var(--neg)"></i>Declined prenatal diagnosis</span><span class="lg"><i style="background:var(--neg2)"></i>Lost to follow-up</span><span class="lg lgd">Decision</span><span class="lg"><i style="background:var(--slate)"></i>Medical termination of pregnancy</span><span class="lg"><i style="background:var(--slate2)"></i>Continued pregnancy</span>')+'</div>';
 }
 /* tooltip follows the cursor and hides when it leaves a mark */
 (function(){var t=document.createElement('div');t.id='ctip';document.body.appendChild(t);

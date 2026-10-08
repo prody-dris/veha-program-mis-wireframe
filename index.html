@@ -825,7 +825,7 @@ function mark(k,f,v,label,inner,cls,extra){
 }
 function sh(c,p){return 'color-mix(in srgb,'+c+' '+p+'%,#FFFFFF)'}
 var TYC={thal:'var(--ty1)',sick:'var(--ty2)',scdd:'var(--ty3)',oth:'var(--ty4)'};
-function typeItems(d){return ['thal','sick','oth','scdd'].map(function(k){return {k:k,l:M[k][0],v:d[k],c:TYC[k]}})}
+function typeItems(d){return ['thal','sick','scdd','oth'].map(function(k){return {k:k,l:M[k][0],v:d[k],c:TYC[k]}})}
 function groups(){
   var sp=scopePartners(F);
   if(sp.length>1)return {by:'partner',g:sp.map(function(p){return {l:P[p].name,f:{partner:p}}})};
@@ -859,7 +859,7 @@ function waffle(d){
 }
 /* type of hemoglobinopathy by partner (or city): 100% stacked bars in the four orange shades, total at the end of each bar */
 function typeStack(gr,d,W,spec,tk){
-  spec=spec||[['thal','var(--ty1)',1],['sick','var(--ty2)',0],['oth','var(--ty4)',0],['scdd','var(--ty3)',1]];tk=tk||'pos';
+  spec=spec||[['thal','var(--ty1)',1],['sick','var(--ty2)',0],['scdd','var(--ty3)',1],['oth','var(--ty4)',0]];tk=tk||'pos';
   var LW=96,TW=tk==='pos'?0:52,bw=W-LW-TW,CH=42,H=gr.g.length*CH+4,KS=spec.map(function(x){return x[0]}),DK={};spec.forEach(function(x){DK[x[0]]=x[2]});var s='<svg class="ch2 tstk" viewBox="0 0 '+W+' '+H+'" width="100%" role="img" aria-label="'+(tk==='pos'?'Type of hemoglobinopathy':'Type of prenatal diagnosis')+' by '+gr.by+'">';
   gr.g.forEach(function(g,i){var a=agg(pick(Object.assign({},F,g.f))),tot=KS.reduce(function(t,k){return t+a[k]},0),y=i*CH+4,x0=LW,nm=g.l.length>13?g.l.slice(0,12)+'…':g.l;
     s+='<text x="0" y="'+(y+21)+'" font-size="13.5" fill="#1F2328">'+nm+'</text>';
@@ -1139,7 +1139,7 @@ function dashboard(){
     var rsp=function(t,ka,kb,c){var tot=d[ka]+d[kb];return '<div class="rg"><div class="rgt">'+t+'</div><div class="rbar"><i style="width:'+(tot?100*d[ka]/tot:0)+'%;background:'+M[ka][1]+'"></i><i style="width:'+(tot?100*d[kb]/tot:0)+'%;background:'+c+'"></i></div><div class="types rc">'+[ka,kb].map(function(t2){return '<div class="ty" onclick="openD(\''+t2+'\')"><div class="lk">'+M[t2][0]+'</div><div class="v">'+cu(d[t2])+'</div><div class="p">'+cupc(d[t2],d.reg)+' of registered</div></div>'}).join('')+'</div></div>'};
     h+='<div class="panel"><div class="sec" style="--sa:var(--tab1)">Registration and screening</div>'+stair([{k:'reg'},{k:'scr',gap:'gscr',gl:'not screened'},{k:'pos'}],d,[178,148,118])+
       '<div class="rsplit">'+rsp('Registration type','nivf','ivf','var(--tab2)')+rsp('Gestational age at registration','le12','gt12','var(--tab2)')+'</div></div>';
-    var ty=['thal','sick','oth','scdd'];
+    var ty=['thal','sick','scdd','oth'];
     h+='<div class="panel reveal"><div class="sec" style="--sa:var(--att)">Type of hemoglobinopathy</div><div class="types t4">'+ty.map(function(t,i){return '<div class="ty" onclick="openD(\''+t+'\')"><div class="lk"><span class="dot" style="background:'+TYC[t]+(t==='oth'?';box-shadow:inset 0 0 0 1px var(--ty2)':'')+'"></span>'+M[t][0]+'</div><div class="v">'+cu(d[t])+'</div><div class="p">'+cupc(d[t],d.pos)+' of women identified as carriers</div><div class="mini"><i style="width:'+(d.pos?100*d[t]/d.pos:0)+'%;background:'+TYC[t]+(t==='oth'?';box-shadow:inset 0 0 0 1px var(--ty2)':'')+';animation-delay:'+(250+i*120)+'ms"></i></div></div>'}).join('')+'</div></div>';
   } else if(state.tab==='followup'){
     h+='<div class="panel"><div class="sec" style="--sa:var(--tab2)">Partner screened and at-risk couples</div>'+stair([{k:'padv',gap:'gadv',gl:'partners not advised'},{k:'pscr',gap:'gpsc',gl:'partners not screened'},{k:'risk'}],d,[190,150,110])+'</div>';

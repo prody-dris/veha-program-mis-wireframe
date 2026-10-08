@@ -7,11 +7,11 @@
 <title>Program MIS Dashboard · Veha Foundation</title>
 <style>
 :root{
-  /* One token system. Severity: good green, process blue and teal, attention orange (carriers, partner advised testing), serious deep orange (at-risk couple, Sickle cell disease), most serious red (Thalassemia major), failure reds (Declined, Lost to follow-up), decision slates, Not available grey. Navbar purple is the only purple. Opacity scale: 100, 40 (ribbons), 10 (tracks, empty), 6 (tints). */
+  /* One token system. Severity: good green, process blue and teal, attention orange (carriers, partner advised testing), serious deep orange (at-risk couple, Sickle cell disease), most serious red (Thalassemia major), failure reds (Declined, Lost to follow-up), decision plums, Not available grey. Navbar purple is the only purple. Opacity scale: 100, 40 (ribbons), 10 (tracks, empty), 6 (tints). */
   --brand:#2863AB; --brand-d:#2863AB; --brand-2:#2863AB; --brand-3:#98A6B8;
   --tab1:#2863AB; --tab1d:#2863AB; --tab2:#008893; --tab2d:#00828D; --tab3:#2863AB; --tab3d:#2863AB;
   --good:#118659; --goodd:#118659; --att:#C9690C; --attd:#B85900; --aff1:#B74B21; --l4:#AC3031; --neg:#C74B47; --neg2:#6E2826;
-  --slate:#4A5666; --slate2:#98A6B8; --nr:#A0A5AB; --nrd:#6B7280;
+  --dec1:#6C5289; --dec2:#9D86BA; --nr:#A0A5AB; --nrd:#6B7280;
   --att-t:#FCF6F0; --ty1:#C9690C; --ty2:#E1A263; --ty3:#B74B21; --ty4:#EFD3AC; --tyd:#5A2E05;
   --soft:color-mix(in srgb,var(--brand) 6%,#FFFFFF); --soft2:color-mix(in srgb,var(--brand) 10%,#FFFFFF); --brand-line:#D1D5DB;
   --ink-d:#374151; --navy:#374151;
@@ -606,6 +606,7 @@ svg.ch2 path:hover,svg.ch2 .sg:hover{opacity:1}
 @container (max-width:440px){.donut{flex-direction:column;align-items:flex-start;gap:14px}.donut .dl2{width:100%}.donut svg.wf{width:150px;height:150px}}
 @media (max-width:1279px){.cgrid.even{grid-template-columns:1fr}}
 .rkr .tr i{background:var(--good)}.rkr b{color:var(--goodd)}.rkr.tot .tr i{background:var(--goodd)}
+.clg:has(.sklg){justify-content:flex-start;gap:0}.sklg{display:flex;flex-wrap:wrap;align-items:center;justify-content:flex-start;gap:8px 20px;font-size:12px;color:var(--ink-2)}.sklg .lg{display:inline-flex;flex-direction:row;align-items:center;gap:6px;margin:0;font-size:12px;white-space:nowrap}.sklg .lg i{display:inline-block;flex:none;width:10px;height:10px;border-radius:2px;margin:0}.sklg .lg i.lgs{width:96px;height:8px;border-radius:999px}.sklg .lg.lgd{margin:0;font-weight:600}
 </style>
 </head>
 <body>
@@ -708,7 +709,7 @@ var M={
   dec:['Declined prenatal diagnosis','var(--neg)','f'],ltfu:['Lost to follow-up','var(--neg2)','f'],
   pnd:['Prenatal diagnosis','var(--tab1)','f'],cvs:['Chorionic villus sampling (CVS)','var(--tab1)','f'],amn:['Amniocentesis','var(--tab2)','f'],pndnr:['Type of prenatal diagnosis, Not available','var(--nr)','f'],
   unaff:['Not affected by hemoglobinopathy','var(--good)','f'],aff:['Thalassemia major or sickle cell disease','var(--l4)','f'],affT:['Thalassemia major','var(--l4)','f'],affS:['Sickle cell disease','var(--aff1)','f'],
-  couns:['Couple counselled','var(--tab2)','f'],cont:['Continued pregnancy','var(--slate2)','f'],cltf:['Lost to follow-up after counselling','var(--neg2)','f'],mtp:['Medical termination of pregnancy','var(--slate)','f'],
+  couns:['Couple counselled','var(--tab2)','f'],cont:['Continued pregnancy','var(--dec2)','f'],cltf:['Lost to follow-up after counselling','var(--neg2)','f'],mtp:['Medical termination of pregnancy','var(--dec1)','f'],
   mtpT:['Medical termination of pregnancy, thalassemia major','var(--l4)','f'],mtpS:['Medical termination of pregnancy, sickle cell disease','var(--aff1)','f']
 };
 M.gscr=['Women not screened','var(--att)','s'];M.gadv=['Partner not advised testing','var(--att)','f'];M.gpsc=['Partner not screened','var(--att)','f'];M.gcouns=['Couple not counselled','var(--aff1)','f'];
@@ -801,7 +802,7 @@ function mixc(a,p){return 'color-mix(in srgb,'+a+' '+p+'%,#FFFFFF)'}
 function tn(a,ad,p1,p2){return [mixc(a,p1),mixc(a,p2),a,ad]}
 var TINT={reg:tn('var(--tab1)','var(--tab1d)',8,14),scr:tn('var(--tab1)','var(--tab1d)',11,18),pos:tn('var(--att)','var(--attd)',14,22),
   padv:tn('var(--att)','var(--attd)',8,14),pscr:tn('var(--tab2)','var(--tab2d)',11,18),risk:tn('var(--aff1)','var(--aff1)',14,22),
-  pnd:tn('var(--tab1)','var(--tab1d)',8,14),aff:tn('var(--l4)','var(--l4)',11,18),couns:tn('var(--tab2)','var(--tab2d)',14,22),mtp:tn('var(--slate)','#4A5666',17,26)};
+  pnd:tn('var(--tab1)','var(--tab1d)',8,14),aff:tn('var(--l4)','var(--l4)',11,18),couns:tn('var(--tab2)','var(--tab2d)',14,22),mtp:tn('var(--dec1)','#6C5289',17,26)};
 function cu(v,dec,suf){return '<span class="cu" data-v="'+v+'" data-d="'+(dec||0)+'" data-s="'+(suf||'')+'">0</span>'}
 function cupc(a,b){if(!b)return cu(0,0,'%');var r=100*a/b,d=(r<10&&r%1)?1:0;return cu(d?+r.toFixed(1):Math.round(r),d,'%')}
 function sub(t,list,tot,a){list=list.filter(function(x){return x});if(!list.length)return '';
@@ -940,27 +941,27 @@ function ringChart(v,of){
    affected = couple counselled + not counselled; couple counselled = medical termination + continued pregnancy + lost to follow-up. */
 function sankey(d,W,H){
   if(!d.risk)return '<div class="empty" style="padding:30px 0">No at-risk couples in this selection</div>';
-  var nw=18,G=28,T=30,Bm=10,aff=d.affT+d.affS,sc=(H-T-Bm-4*G-16)/d.risk,x=[205,335,510,670,790],gid=0,defs='',
+  var nw=18,G=28,T=66,Bm=10,aff=d.affT+d.affS,sc=(H-T-Bm-4*G-16)/d.risk,x=[205,335,510,670,790],gid=0,defs='',
     mn=function(v){return v?Math.max(3,v*sc):0},mt=function(v){return v?Math.max(8,v*sc):0},
     hT=mn(d.affT),hS=mn(d.affS),hU=mn(d.unaff),hP=d.pnd*sc,hD=mt(d.dec),hL=mt(d.ltfu),hR=hP+hD+hL,hC=mn(d.couns),hM=mn(d.mtp),hK=mn(d.cont),hO=mn(d.cltf),sM=d.couns?hC*d.mtp/d.couns:0,sK=d.couns?hC*d.cont/d.couns:0,
     cs=aff?d.couns/aff:0,nT=d.affT*(1-cs),nS=d.affS*(1-cs),hN=mt(aff-d.couns),
     yT=T,yS=yT+hT+G,yU=yS+hS+G,y1=T+((yU+hU-T)-hP)/2,yR=T,yD=yU+hU+G,yL=yD+hD+G,yC=T,yM=T,yK=yM+hM+16,yO=yK+hK+16,yN=yC+hC+G+20,
-    kR='var(--aff1)',kP='var(--tab1)',kD='var(--neg)',kL='var(--neg2)',kT='var(--l4)',kS='var(--aff1)',kU='var(--good)',kC='var(--tab2)',kM='var(--slate)',kK='var(--slate2)',kN='var(--aff1)',
-    rb=function(xa,ya0,ya1,xb,yb0,yb1,col,k,v,l,src){if(!v)return '';var m=(xa+xb)/2,id='skg'+(++gid);defs+='<linearGradient id="'+id+'" gradientUnits="userSpaceOnUse" x1="'+xa+'" x2="'+xb+'" y1="0" y2="0"><stop offset="0" style="stop-color:'+(src||col)+'"/><stop offset="1" style="stop-color:'+col+'"/></linearGradient>';return mark(k,null,v,l,'<path d="M'+xa+' '+ya0+' C'+m+' '+ya0+' '+m+' '+yb0+' '+xb+' '+yb0+' L'+xb+' '+yb1+' C'+m+' '+yb1+' '+m+' '+ya1+' '+xa+' '+ya1+' Z" style="fill:url(#'+id+');fill-opacity:.4"/>')},
+    kR='var(--aff1)',kP='var(--tab1)',kD='var(--neg)',kL='var(--neg2)',kT='var(--l4)',kS='var(--aff1)',kU='var(--good)',kC='var(--tab2)',kM='var(--dec1)',kK='var(--dec2)',kN='var(--aff1)',
+    rb=function(xa,ya0,ya1,xb,yb0,yb1,col,k,v,l,src){if(!v)return '';var m=(xa+xb)/2,id='skg'+(++gid);return mark(k,null,v,l,'<path d="M'+xa+' '+ya0+' C'+m+' '+ya0+' '+m+' '+yb0+' '+xb+' '+yb0+' L'+xb+' '+yb1+' C'+m+' '+yb1+' '+m+' '+ya1+' '+xa+' '+ya1+' Z" style="fill:'+col+';fill-opacity:.35"/>')},
     lab=function(xx,yy,anchor,l,v,nc){return '<text x="'+xx+'" y="'+yy+'" text-anchor="'+anchor+'" font-size="14" fill="#1F2328" stroke="#FFFFFF" stroke-width="4" stroke-linejoin="round" paint-order="stroke">'+l+' <tspan font-weight="700" style="fill:'+nc+'">'+n(v)+'</tspan></text>'},
-    nd=function(xx,yy,hh,col,k,v,l,pos,nc){if(!v)return '';var tx=pos==='left'?xx-9:pos==='right'?xx+nw+9:xx,ty=pos==='above'?yy-9:pos==='below'?yy+hh+19:yy+hh/2+5;
-      return mark(k,null,v,l,'<rect x="'+xx+'" y="'+yy+'" width="'+nw+'" height="'+hh+'" rx="3" style="fill:'+col+'"/>'+lab(tx,ty,pos==='left'?'end':'start',l,v,nc||col))},
+    nd=function(xx,yy,hh,col,k,v,l,pos,nc){if(!v)return '';var tx=pos==='left'?xx-9:pos==='right'?xx+nw+9:xx,ty=pos==='above'?yy-9:pos==='below'?yy+hh+23:pos==='lift'?T-26:yy+hh/2+5,ld=pos==='lift'?'<line x1="'+(xx+nw/2)+'" x2="'+(xx+nw/2)+'" y1="'+(T-20)+'" y2="'+(yy-2)+'" stroke="#9CA3AF" stroke-width="1"/>':'';
+      return mark(k,null,v,l,ld+'<rect x="'+xx+'" y="'+yy+'" width="'+nw+'" height="'+hh+'" rx="3" style="fill:'+col+'"/>'+lab(tx,ty,pos==='left'?'end':'start',l,v,nc||col))},
     cT=d.affT*cs*sc,cS=d.affS*cs*sc,fT=nT+nS>0?nT/(nT+nS):0,s='';
   s+=rb(x[0]+nw,yR,yR+hP,x[1],y1,y1+hP,kP,'pnd',d.pnd,'Prenatal diagnosis',kR)+rb(x[0]+nw,yR+hP,yR+hP+hD,x[1],yD,yD+hD,kD,'dec',d.dec,'Declined prenatal diagnosis',kR)+rb(x[0]+nw,yR+hP+hD,yR+hR,x[1],yL,yL+hL,kL,'ltfu',d.ltfu,'Lost to follow-up',kR);
   s+=rb(x[1]+nw,y1,y1+hT,x[2],yT,yT+hT,kT,'affT',d.affT,'Thalassemia major',kP)+rb(x[1]+nw,y1+hT,y1+hT+hS,x[2],yS,yS+hS,kS,'affS',d.affS,'Sickle cell disease',kP)+rb(x[1]+nw,y1+hT+hS,y1+hP,x[2],yU,yU+hU,kU,'unaff',d.unaff,'Not affected',kP);
   s+=rb(x[2]+nw,yT,yT+cT,x[3],yC,yC+cT,kC,'couns',d.couns,'Couple counselled',kT)+rb(x[2]+nw,yS,yS+cS,x[3],yC+cT,yC+cT+cS,kC,'couns',d.couns,'Couple counselled',kS);
   if(aff>d.couns)s+=rb(x[2]+nw,yT+cT,yT+hT,x[3],yN,yN+hN*fT,kN,'gcouns',aff-d.couns,'Couple not counselled',kT)+rb(x[2]+nw,yS+cS,yS+hS,x[3],yN+hN*fT,yN+hN,kN,'gcouns',aff-d.couns,'Couple not counselled',kS);
   s+=rb(x[3]+nw,yC,yC+sM,x[4],yM,yM+hM,kM,'mtp',d.mtp,'Medical termination of pregnancy',kC)+rb(x[3]+nw,yC+sM,yC+sM+sK,x[4],yK,yK+hK,kK,'cont',d.cont,'Continued pregnancy',kC)+rb(x[3]+nw,yC+sM+sK,yC+hC,x[4],yO,yO+hO,kL,'cltf',d.cltf,'Lost to follow-up after counselling',kC);
-  s+=nd(x[0],yR,hR,kR,'risk',d.risk,'At-risk couple','left')+nd(x[1],y1,hP,kP,'pnd',d.pnd,'Prenatal diagnosis','above')+nd(x[1],yD,hD,kD,'dec',d.dec,'Declined prenatal diagnosis','right','#AC3031')+nd(x[1],yL,hL,kL,'ltfu',d.ltfu,'Lost to follow-up','right')+
+  s+=nd(x[0],yR,hR,kR,'risk',d.risk,'At-risk couple','left')+nd(x[1],y1,hP,kP,'pnd',d.pnd,'Prenatal diagnosis','lift')+nd(x[1],yD,hD,kD,'dec',d.dec,'Declined prenatal diagnosis','right','#AC3031')+nd(x[1],yL,hL,kL,'ltfu',d.ltfu,'Lost to follow-up','right')+
     nd(x[2],yT,hT,kT,'affT',d.affT,'Thalassemia major','above')+nd(x[2],yS,hS,kS,'affS',d.affS,'Sickle cell disease','below')+nd(x[2],yU,hU,kU,'unaff',d.unaff,'Not affected','right')+
     nd(x[3],yC,hC,kC,'couns',d.couns,'Couple counselled','above','var(--tab2d)')+nd(x[3],yN,hN,kN,'gcouns',aff-d.couns,'Couple not counselled','right')+
-    nd(x[4],yM,hM,kM,'mtp',d.mtp,'Medical termination of pregnancy','right')+nd(x[4],yK,hK,kK,'cont',d.cont,'Continued pregnancy','right','var(--slate)')+nd(x[4],yO,hO,kL,'cltf',d.cltf,'Lost to follow-up','right');
-  return '<svg class="ch2 sk" viewBox="0 0 '+W+' '+H+'" width="100%" role="img" aria-label="Flow from at-risk couple to prenatal diagnosis, affected result, counselling and decision"><defs>'+defs+'</defs>'+s+'</svg>';
+    nd(x[4],yM,hM,kM,'mtp',d.mtp,'Medical termination of pregnancy','right')+nd(x[4],yK,hK,kK,'cont',d.cont,'Continued pregnancy','right','var(--dec1)')+nd(x[4],yO,hO,kL,'cltf',d.cltf,'Lost to follow-up','right');
+  return '<svg class="ch2 sk" viewBox="0 0 '+W+' '+H+'" width="100%" role="img" aria-label="Flow from at-risk couple to prenatal diagnosis, affected result, counselling and decision">'+s+'</svg>';
 }
 function cpanel(title,sa,body,lg){return '<div class="panel cpan reveal"><div class="sec" style="--sa:'+sa+'">'+title+'</div>'+body+(lg?'<div class="clg">'+lg+'</div>':'')+'</div>'}
 function chartsFor(tab,d){
@@ -972,7 +973,7 @@ function chartsFor(tab,d){
     '<div class="cgrid one">'+cpanel('Women screened by month','var(--tab1)',heat(gr,960),heatLegend())+'</div>';
   if(tab==='followup')return '<div class="cgrid one">'+
     cpanel('At-risk couple outcomes','var(--aff1)',stack([{k:'pnd',l:'Prenatal diagnosis',v:d.pnd,c:'var(--tab1)'},{k:'dec',l:'Declined prenatal diagnosis',v:d.dec,c:'var(--neg)'},{k:'ltfu',l:'Lost to follow-up',v:d.ltfu,c:'var(--neg2)'}],1100,d.risk))+'</div>';
-  return '<div class="cgrid one">'+cpanel('At-risk couple pathway','var(--aff1)',sankey(d,1100,420),'<span class="lg"><i class="lgs"></i>Good · Process · Attention · Serious</span><span class="lg"><i style="background:var(--neg)"></i>Declined prenatal diagnosis</span><span class="lg"><i style="background:var(--neg2)"></i>Lost to follow-up</span><span class="lg lgd">Decision</span><span class="lg"><i style="background:var(--slate)"></i>Medical termination of pregnancy</span><span class="lg"><i style="background:var(--slate2)"></i>Continued pregnancy</span>')+'</div>';
+  return '<div class="cgrid one">'+cpanel('At-risk couple pathway','var(--aff1)',sankey(d,1100,450),'<span class="sklg"><span class="lg"><i class="lgs"></i>Good · Process · Attention · Serious</span><span class="lg"><i style="background:var(--neg)"></i>Declined prenatal diagnosis</span><span class="lg"><i style="background:var(--neg2)"></i>Lost to follow-up</span><span class="lg lgd">Decision:</span><span class="lg"><i style="background:var(--dec1)"></i>Medical termination of pregnancy</span><span class="lg"><i style="background:var(--dec2)"></i>Continued pregnancy</span></span>')+'</div>';
 }
 /* tooltip follows the cursor and hides when it leaves a mark */
 (function(){var t=document.createElement('div');t.id='ctip';document.body.appendChild(t);

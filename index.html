@@ -7,25 +7,21 @@
 <title>Program MIS Dashboard · Veha Foundation</title>
 <style>
 :root{
-  /* palette A (default): Lagoon. Teal and gold from Veha's secondary colours, brightened, plus one clean blue. */
-  --brand:#0F8470; --brand-d:#0A5B4D; --brand-2:#3AA591; --brand-3:color-mix(in srgb,var(--tab1) 45%,#fff);
-  --tab1:#0F8470; --tab1d:#0A5B4D;
-  --tab2:#1869C9; --tab2d:#0F4A94;
-  --tab3:#E5A100; --tab3d:#865400;
-  --ty1:#1553B8; --ty2:#F5B800; --ty3:#3F4E5E; --ty4:#6CC24A;
-  --cx1:#0A7C8A; --cx2:#F0A04B; --nr:#7B8794;
+  /* colour semantics: blue for every descriptive number (one blue family per tab), green only for a good result, red only for a bad result, no amber. Navbar purple is the only purple. */
+  --brand:#1A5FD1; --brand-d:#123F94; --brand-2:#4A86E6; --brand-3:color-mix(in srgb,var(--tab1) 45%,#fff);
+  --tab1:#1A5FD1; --tab1d:#123F94;
+  --tab2:#0891B2; --tab2d:#0B5C73;
+  --tab3:#1E3A8A; --tab3d:#14275E;
+  --ty1:#123F94; --ty2:#8AB4F0; --ty3:#475569; --ty4:#22B8D6;
+  --cx1:#14275E; --cx2:#8E9BC7; --nr:#7B8794;
   --neg:#D93B3B; --neg-soft:#FCEBEB;
   --soft:color-mix(in srgb,var(--brand) 9%,#fff); --soft2:color-mix(in srgb,var(--brand) 16%,#fff); --brand-line:color-mix(in srgb,var(--brand) 32%,#fff);
   --ink-d:#1F2A37; --navy:#0A2540;
   --ink:#1F2328; --ink-2:#525252; --ink-3:#6B7280; --line:#E8E8EC; --side:#F8F8F8; --bg:#FFFFFF;
-  --good:#1E7B4F; --good-soft:#E3F4EA; --warn:#9A5B00; --warn-soft:#FBF0DC; --bad:#B3261E; --bad-soft:#FAE3E1;
-  --gold:#C1A057; --gold-soft:#FBF4E4;
+  --good:#15803D; --goodd:#14532D; --good-soft:#E3F4EA; --warn:#334155; --warn-soft:#EEF1F5; --bad:#B3261E; --bad-soft:#FAE3E1;
+  --gold:#64748B; --gold-soft:#EEF1F5;
   --sans:InterVariable,Inter,-apple-system,BlinkMacSystemFont,"Segoe UI",Roboto,Helvetica,Arial,sans-serif;
 }
-/* palette B: Meadow (green, harbour blue, orange) */
-:root[data-pal="b"]{--brand:#198538;--brand-d:#12602A;--brand-2:#3FA35B;--tab1:#198538;--tab1d:#12602A;--tab2:#0B6FA8;--tab2d:#084F78;--tab3:#F08A1C;--tab3d:#8F4A00;--ty1:#1E40AF;--ty2:#FBBF24;--ty3:#475569;--ty4:#4ADE80;--cx1:#0E7490;--cx2:#FB923C}
-/* palette C: Sunrise (amber-brown, teal, blue) */
-:root[data-pal="c"]{--brand:#B5560A;--brand-d:#7F3A04;--brand-2:#D97A2B;--tab1:#B5560A;--tab1d:#7F3A04;--tab2:#0E7490;--tab2d:#0A5368;--tab3:#2F6BDB;--tab3d:#1F4AA3;--ty1:#1D4ED8;--ty2:#F2C200;--ty3:#3B4A5A;--ty4:#7BC043;--cx1:#0A6F7C;--cx2:#F3A35B}
 *{box-sizing:border-box}
 html,body{height:100%}
 body{margin:0;background:var(--bg);color:var(--ink);font:14px/1.5 var(--sans);-webkit-font-smoothing:antialiased;color-scheme:light}
@@ -136,12 +132,12 @@ section[data-view].active{display:block}
 .mid{display:flex;flex-direction:column;align-items:center;justify-content:center;color:var(--ink-3);font-size:12px;text-align:center}
 .mid b{color:var(--gold);font-size:14px}
 .flag{display:flex;gap:8px;align-items:flex-start;border-radius:8px;padding:8px 10px;font-size:12.5px;margin-top:10px}
-.flag.w{background:var(--warn-soft);color:#6B4300}
+.flag.w{background:var(--warn-soft);color:#334155}
 .flag.b{background:var(--bad-soft);color:#7A1C16}
 .flag.g{background:var(--good-soft);color:#14583A}
 .flag .fi{font-weight:700}
 .mini{display:flex;flex-wrap:wrap;gap:6px;margin-top:8px}
-.mini span{background:var(--gold-soft);color:#6E5520;border-radius:6px;padding:2px 8px;font-size:12px}
+.mini span{background:var(--gold-soft);color:#334155;border-radius:6px;padding:2px 8px;font-size:12px}
 
 /* pnd chain */
 .chain{display:grid;grid-template-columns:repeat(5,minmax(0,1fr));gap:10px;align-items:stretch}
@@ -314,7 +310,7 @@ tr.muted td{color:var(--ink-3)}
 .fl a{font-size:13px;color:var(--brand);cursor:pointer;font-weight:600;padding:0 4px}
 .meta{display:flex;align-items:center;gap:8px;flex-wrap:wrap;font-size:12.5px;color:var(--ink-3);margin:0 0 16px}
 .meta .dotsep{color:#C9CBD1}
-.meta .sample{margin-left:auto;background:#FBF4E4;color:#8A6A22;border:1px solid #EAD9AE;border-radius:999px;padding:2px 10px;font-weight:600}
+.meta .sample{margin-left:auto;background:#EEF2FB;color:#2B4A8B;border:1px solid #C9D6F2;border-radius:999px;padding:2px 10px;font-weight:600}
 .tabs{position:sticky;top:47px;background:#fff;z-index:4}
 .fade{animation:fd .22s ease-out}
 html{scroll-behavior:smooth}
@@ -331,8 +327,8 @@ html{scroll-behavior:smooth}
 .meta{margin:0 0 22px}
 .hero{display:grid;grid-template-columns:repeat(2,1fr);border-radius:18px;margin:0 0 30px;position:relative;overflow:hidden}
 .hs{padding:30px 38px 32px;cursor:pointer;position:relative;transition:filter .2s;color:#fff}
-.hs:nth-child(1){background:var(--tab1)}
-.hs:nth-child(2){background:var(--tab2)}
+.hs:nth-child(1){background:var(--good)}
+.hs:nth-child(2){background:var(--tab1)}
 .hs:hover{filter:brightness(1.06)}
 .hs .acc{display:block;width:34px;height:4px;border-radius:3px;background:rgba(255,255,255,.85);margin-bottom:14px}
 .hs .big{font-size:48px;font-weight:700;line-height:1;letter-spacing:-.02em;color:#fff;font-variant-numeric:tabular-nums}
@@ -416,7 +412,7 @@ html{scroll-behavior:smooth}
 .pop .crt{font-size:12px;font-weight:600;color:var(--ink-2);margin-bottom:8px}
 .pop .crr{display:flex;gap:8px;margin-bottom:10px}.pop .crr label{flex:1;font-size:11.5px;color:var(--ink-3);display:flex;flex-direction:column;gap:4px}
 .pop .crr input{font:inherit;font-size:12.5px;border:1px solid #DCDCE0;border-radius:6px;padding:5px 6px}
-.top .sample{background:#FBF4E4;color:#8A6A22;border:1px solid #EAD9AE;border-radius:999px;padding:2px 10px;font-weight:600;font-size:11.5px;margin-right:auto}
+.top .sample{background:#EEF2FB;color:#2B4A8B;border:1px solid #C9D6F2;border-radius:999px;padding:2px 10px;font-weight:600;font-size:11.5px;margin-right:auto}
 .top h1{margin-right:0!important}
 .fl select{height:32px;padding-top:0;padding-bottom:0}
 #f-reset{font-size:12.5px;color:var(--ink-3);cursor:pointer}#f-reset:hover{color:var(--brand)}
@@ -481,11 +477,6 @@ table.dt th:first-child,table.dt td:first-child{padding-left:20px}table.dt th:la
 @media print{.pth{display:block}}
 
 /* v7: palette switcher, charts, partner-first drill */
-.pal{display:inline-flex;align-items:center;gap:4px;font-size:11.5px;background:rgba(255,255,255,.16);border:1px dashed rgba(255,255,255,.65);border-radius:999px;padding:2px 4px 2px 10px;color:#fff;white-space:nowrap}
-.pal em{font-style:normal;opacity:.85;margin-right:2px}
-.pal a{display:inline-grid;place-items:center;width:22px;height:20px;border-radius:999px;font-weight:700;color:#fff;cursor:pointer}
-.pal a.on{background:#fff;color:#582AA2}
-.pal a:not(.on):hover{background:rgba(255,255,255,.28)}
 .cgrid{display:grid;grid-template-columns:minmax(0,1.25fr) minmax(0,1fr);gap:28px;align-items:stretch;margin-bottom:28px}
 .cgrid.one{grid-template-columns:1fr}
 .cgrid .panel{margin-bottom:0}
@@ -537,7 +528,7 @@ table.dt th.n{white-space:normal;max-width:96px;line-height:1.25}
 table.dt.fu th{white-space:normal;line-height:1.25;vertical-align:bottom}
 table.dt.fu td{white-space:normal}
 table.dt.fu td:nth-child(-n+4),table.dt.fu td:first-child{white-space:nowrap}
-@media print{.pal{display:none!important}.cgrid{grid-template-columns:1fr 1fr}.cwrap{break-inside:avoid}}
+@media print{.cgrid{grid-template-columns:1fr 1fr}.cwrap{break-inside:avoid}}
 
 /* v8: chart variety */
 .clg{font-size:12.5px;color:var(--ink-3);margin-top:14px;display:flex;align-items:center;gap:8px;flex-wrap:wrap}
@@ -557,11 +548,12 @@ svg.ch2 .brr{transform-box:fill-box;transform-origin:bottom;animation:up .8s cub
 .tabs:after{content:"";position:absolute;left:0;right:0;top:100%;height:22px;background:linear-gradient(#fff,rgba(255,255,255,0));pointer-events:none}
 .panel,.cpan,.sec{scroll-margin-top:120px}
 .cpan .sec{font-size:15px;margin-bottom:18px}
-.donut{gap:22px;align-items:center}
-.donut svg{width:152px;height:152px}
+.donut{gap:18px;align-items:center}
+.donut svg{width:132px;height:132px}
 .donut svg.wf{width:176px;height:176px}
 .dl2{gap:2px}
-.dl2 .lr{grid-template-columns:12px minmax(0,1fr) 46px 46px;font-size:13.5px;line-height:1.3;gap:10px;padding:7px 6px}
+.dl2 .lr .nm{white-space:nowrap;overflow:hidden;text-overflow:ellipsis}
+.dl2 .lr{grid-template-columns:12px minmax(0,1fr) 44px 44px;font-size:13.5px;line-height:1.3;gap:10px;padding:7px 6px}
 .dl2 .lr em{font-size:13px}
 .wtxt{flex:1 1 0;min-width:0}
 .wtxt .big{font-size:44px;font-weight:700;line-height:1;letter-spacing:-.02em;font-variant-numeric:tabular-nums}
@@ -597,6 +589,24 @@ svg.ch2 path:hover,svg.ch2 .sg:hover{opacity:.85}
 .types.t4 .ty .lk{display:flex;white-space:normal;overflow:visible;min-height:2.8em;align-items:flex-start}
 .types.t4 .ty .p{min-height:2.8em;line-height:1.4}
 @media (max-width:1279px){.types.t4{grid-template-columns:repeat(2,1fr);row-gap:18px}.types.t4 .ty:nth-child(3){padding-left:0;border-left:0}}
+
+.stk{display:flex;flex-direction:column;gap:28px;min-width:0}
+.stk .panel{margin-bottom:0;flex:1 1 auto}
+.rk{display:grid;gap:2px}
+.rkr{display:grid;grid-template-columns:minmax(70px,.9fr) minmax(60px,1.4fr) 46px minmax(84px,auto);gap:12px;align-items:center;min-height:32px;padding:0 8px;margin:0 -8px;border-radius:8px;cursor:pointer;font-size:13.5px}
+.rkr:hover{background:#F5F7F8}
+.rkr .tr{height:6px;border-radius:4px;background:#EDEFF1;overflow:hidden;display:block}
+.rkr .tr i{display:block;height:100%;border-radius:4px;background:var(--tab2)}
+.rkr b{text-align:right;font-variant-numeric:tabular-nums;color:var(--tab2d)}
+.rkr em{font-style:normal;color:var(--ink-3);font-size:12.5px;text-align:right;white-space:nowrap}
+.rkr.tot{border-top:1px solid var(--line);border-radius:0 0 8px 8px;margin-top:4px;font-weight:700}
+.rkr.tot .tr i{background:var(--tab2d)}
+
+.cgrid.even{grid-template-columns:minmax(0,1fr) minmax(0,1fr)}
+.cpan{container-type:inline-size}
+@container (max-width:440px){.donut{flex-direction:column;align-items:flex-start;gap:14px}.donut .dl2{width:100%}.donut svg.wf{width:150px;height:150px}}
+@media (max-width:1279px){.cgrid.even{grid-template-columns:1fr}}
+.rkr .tr i{background:var(--good)}.rkr b{color:var(--goodd)}.rkr.tot .tr i{background:var(--goodd)}
 </style>
 </head>
 <body>
@@ -605,7 +615,7 @@ svg.ch2 path:hover,svg.ch2 .sg:hover{opacity:.85}
   <div>
     <div class="nb"><img src="data:image/png;base64,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" alt="Veha Foundation"><span class="sp"></span>
       <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="#fff" stroke-width="1.6"><path d="M6 16V11a6 6 0 1 1 12 0v5l1.5 2h-15z"/><path d="M10 20a2 2 0 0 0 4 0"/></svg>
-      <span class="pal" id="pal" title="Temporary: compare three colour sets"><em>Palette:</em><a data-p="a" class="on">A</a><a data-p="b">B</a><a data-p="c">C</a></span><span style="opacity:.5">|</span><span class="help">Help ▾</span><span class="av">GM</span></div>
+      <span style="opacity:.5">|</span><span class="help">Help ▾</span><span class="av">GM</span></div>
     <div class="wrap">
       <section data-view="dashboard">
         <div class="top"><h1 id="d-title">Program MIS dashboard</h1><span class="sample">Sample data</span>
@@ -696,7 +706,7 @@ var M={
   thal:['Beta thalassemia carrier','var(--ty1)','s'],sick:['Sickle cell carrier','var(--ty2)','s'],scdd:['Sickle cell disease','var(--ty3)','s'],oth:['Other hemoglobinopathies','var(--ty4)','s'],
   padv:['Partners advised testing','var(--tab2)','f'],pscr:['Partners screened','var(--tab2)','f'],risk:['At-risk couples','var(--tab2)','f'],
   dec:['Declined prenatal diagnosis','var(--neg)','f'],ltfu:['Lost to follow-up','var(--neg)','f'],
-  pnd:['Prenatal diagnosis','var(--tab3)','f'],cvs:['Chorionic villus sampling (CVS)','var(--tab3)','f'],amn:['Amniocentesis','var(--tab3)','f'],pndnr:['Prenatal diagnosis, test type not recorded','var(--tab3)','f'],
+  pnd:['Prenatal diagnosis','var(--tab3)','f'],cvs:['Chorionic villus sampling (CVS)','var(--tab3)','f'],amn:['Amniocentesis','var(--tab3)','f'],pndnr:['Type of prenatal diagnosis, Not available','var(--tab3)','f'],
   unaff:['Not affected by hemoglobinopathy','var(--tab3)','f'],aff:['Thalassemia major or sickle cell disease','var(--tab3)','f'],affT:['Thalassemia major','var(--tab3)','f'],affS:['Sickle cell disease','var(--tab3)','f'],
   couns:['Couple counselled','var(--tab3)','f'],cont:['Continued pregnancy','var(--tab3)','f'],mtp:['Medical termination of pregnancy','var(--tab3)','f'],
   mtpT:['Medical termination of pregnancy, thalassemia major','var(--tab3)','f'],mtpS:['Medical termination of pregnancy, sickle cell disease','var(--tab3)','f']
@@ -812,14 +822,14 @@ function mark(k,f,v,label,inner,cls,extra){
   return '<g class="'+(cls||'rw')+'" data-k="'+k+'" data-v="'+v+'" data-t="'+label+': '+n(v)+'"'+(extra||'')+(f?" data-f='"+JSON.stringify(f)+"'":'')+' onclick="'+(f?'openX(\''+k+'\','+fjs(f)+')':'openD(\''+k+'\')')+'">'+inner+'</g>';
 }
 function sh(c,p){return 'color-mix(in srgb,'+c+' '+p+'%,#fff)'}
-var TYC={thal:'var(--tab1d)',sick:sh('var(--tab1)',42),scdd:'var(--tab2d)',oth:sh('var(--tab1)',24)};
+var TYC={thal:'var(--ty1)',sick:'var(--ty2)',scdd:'var(--ty3)',oth:'var(--ty4)'};
 function typeItems(d){return ['thal','sick','scdd','oth'].map(function(k){return {k:k,l:M[k][0],v:d[k],c:TYC[k]}})}
 function groups(){
   var sp=scopePartners(F);
   if(sp.length>1)return {by:'partner',g:sp.map(function(p){return {l:P[p].name,f:{partner:p}}})};
   return {by:'city',g:uniq(pick().map(function(r){return r.c})).sort().map(function(c){return {l:c,f:{city:c}}})};
 }
-function legendRows(items,tot){return '<div class="dl2">'+items.map(function(x){return '<div class="lr"'+(x.k?' onclick="openD(\''+x.k+'\')"':' style="cursor:default"')+'><i style="background:'+x.c+'"></i><span class="nm">'+x.l+'</span><b>'+n(x.v)+'</b><em>'+pc(x.v,tot)+'</em></div>'}).join('')+'</div>'}
+function legendRows(items,tot){return '<div class="dl2">'+items.map(function(x){return '<div class="lr"'+(x.k?' onclick="openD(\''+x.k+'\')"':' style="cursor:default"')+'><i style="background:'+x.c+'"></i><span class="nm" title="'+x.l+'">'+x.l+'</span><b>'+n(x.v)+'</b><em>'+pc(x.v,tot)+'</em></div>'}).join('')+'</div>'}
 function donut(items,cap){
   var tot=items.reduce(function(a,x){return a+x.v},0),r=70,cx=95,cy=95,C=2*Math.PI*r,off=0,s='<svg class="ch2" viewBox="0 0 190 190" role="img" aria-label="Donut chart"><circle cx="'+cx+'" cy="'+cy+'" r="'+r+'" fill="none" stroke="#EDEFF1" stroke-width="28"/>';
   items.forEach(function(x){if(!x.v||!tot)return;var len=C*x.v/tot,g=len>4?3:0;
@@ -836,16 +846,6 @@ function pie(items){
     else p='<path d="M'+cx+' '+cy+' L'+(cx+r*Math.cos(a0))+' '+(cy+r*Math.sin(a0))+' A'+r+' '+r+' 0 '+(f>.5?1:0)+' 1 '+(cx+r*Math.cos(a1))+' '+(cy+r*Math.sin(a1))+' Z" style="fill:'+x.c+'" stroke="#fff" stroke-width="2"/>';
     s+=mark(x.k,null,x.v,x.l,p,'sg');a0=a1});
   return '<div class="donut">'+s+'</svg>'+legendRows(items,tot)+'</div>';
-}
-/* two-step comparison: horizontal bars on one scale, value column on the right */
-function pair(items,W){
-  var LW=150,VW=100,pw=W-LW-VW,mx=Math.max(items[0].v,1),RH=64,top=14,H=top+items.length*RH,s='<svg class="ch2" viewBox="0 0 '+W+' '+H+'" width="100%" role="img" aria-label="Women registered and screened">';
-  items.forEach(function(x,i){var cy=top+i*RH+RH/2,w=x.v?Math.max(4,pw*x.v/mx):0;
-    s+=mark(x.k,null,x.v,x.l,'<rect class="hit" x="0" y="'+(cy-RH/2)+'" width="'+W+'" height="'+RH+'" rx="8"/><text x="0" y="'+(cy+5)+'" font-size="14.5" fill="#1F2328">'+x.l+'</text>'+
-      '<rect x="'+LW+'" y="'+(cy-14)+'" width="'+pw+'" height="28" rx="6" fill="#EDEFF1"/><rect x="'+LW+'" y="'+(cy-14)+'" width="'+w+'" height="28" rx="6" style="fill:'+x.c+'"/>'+
-      '<text x="'+(LW+pw+16)+'" y="'+(cy+6)+'" font-size="17" font-weight="700" style="'+tnum()+'">'+n(x.v)+'</text>');
-  });
-  return s+'</svg>';
 }
 /* waffle: 100 squares, filled count is the carrier rate per 100 screened women */
 function waffle(d){
@@ -865,50 +865,51 @@ function cascade(items,W,H){
     var words=x.l.split(' '),lines=[''],mc=Math.max(10,Math.floor(colW/7.6));
     words.forEach(function(w){var L=lines[lines.length-1];if((L+' '+w).trim().length>mc&&L)lines.push(w);else lines[lines.length-1]=(L+' '+w).trim()});
     inner+=lines.slice(0,3).map(function(L,j){return '<text x="'+cxm+'" y="'+(y0+20+j*16)+'" text-anchor="middle" font-size="13.5" fill="#1F2328">'+L+'</text>'}).join('');
-    if(i>0)inner+='<text x="'+cxm+'" y="'+(y0+20+2*16+8)+'" text-anchor="middle" font-size="12.5" font-weight="600" style="'+tnum()+'">'+pc(x.v,items[i-1].v)+' of previous step</text>';
+    if(i>0)inner+='<text x="'+cxm+'" y="'+(y0+20+2*16+8)+'" text-anchor="middle" font-size="12.5" font-weight="600" style="'+tnum()+'">'+pc(x.v,items[i-1].v)+' of '+n(items[i-1].v)+'</text>';
     s+=mark(x.k,null,x.v,x.l,inner);
   });
   return s+'</svg>';
 }
-function rateFmt(v){return (v%1?v.toFixed(1):v)+'%'}
-/* lollipop: one rate per partner (or per city when one partner is selected), sorted high to low; values sit in a fixed column right of the plot */
-function lolli(rows,ref,W,k,nk,dk,c){
-  rows=rows.filter(function(r){return r.den>0}).map(function(r){r.rate=100*r.num/r.den;return r}).sort(function(a,b){return b.rate-a.rate});
-  if(!rows.length)return '<div class="empty" style="padding:30px 0">No data in this selection</div>';
-  var LW=W<600?104:130,VW=W<600?176:230,RH=44,top=42,H=top+rows.length*RH+30,pw=W-LW-VW,mxv=Math.max(ref.rate,rows[0].rate),
-  ax=[2,3,4,5,6,8,10,15,20,25,30,40,50,60,80,100].filter(function(a){return a>=mxv*1.15})[0]||100,X=function(v){return LW+pw*v/ax},
-  s='<svg class="ch2" viewBox="0 0 '+W+' '+H+'" width="100%" role="img" aria-label="Rate by group">';
-  [0,ax/2,ax].forEach(function(g){s+='<line x1="'+X(g)+'" x2="'+X(g)+'" y1="'+(top-6)+'" y2="'+(H-28)+'" stroke="#E3E6E9"/><text x="'+X(g)+'" y="'+(H-8)+'" text-anchor="middle" font-size="12" fill="#6B7280">'+rateFmt(g)+'</text>'});
-  rows.forEach(function(r,i){var cy=top+i*RH+RH/2;
-    s+=mark(k,r.f,r.num,r.l,'<rect class="hit" x="0" y="'+(cy-RH/2)+'" width="'+W+'" height="'+RH+'" rx="8"/><text x="0" y="'+(cy+5)+'" font-size="14.5" fill="#1F2328">'+r.l+'</text>'+
-      '<line x1="'+X(0)+'" x2="'+X(r.rate)+'" y1="'+cy+'" y2="'+cy+'" style="stroke:'+c+'" stroke-width="3" stroke-linecap="round"/><circle cx="'+X(r.rate)+'" cy="'+cy+'" r="8" style="fill:'+c+'"/>'+
-      '<text class="vv" x="'+(LW+pw+22)+'" y="'+(cy+5)+'" font-size="15" font-weight="700" style="'+tnum()+'">'+pc(r.num,r.den)+'<tspan font-weight="400" font-size="12.5" fill="#6B7280" style="fill:#6B7280" dx="8">'+n(r.num)+' of '+n(r.den)+'</tspan></text>','rw',' data-nk="'+nk+'" data-dk="'+dk+'" data-den="'+r.den+'"');
-  });
-  s+='<line x1="'+X(ref.rate)+'" x2="'+X(ref.rate)+'" y1="'+(top-6)+'" y2="'+(H-28)+'" stroke="#1F2328" stroke-dasharray="5 4" stroke-width="1.5"/><text x="'+X(ref.rate)+'" y="'+(top-16)+'" text-anchor="middle" font-size="12.5" font-weight="600" fill="#1F2328">Overall '+pc(ref.num,ref.den)+'</text>';
-  return s+'</svg>';
-}
 /* heatmap: rows are partners (or cities), columns are the elapsed months of the selected period; future months are left out.
-   A hatched cell is an elapsed month with no report. */
+   A hatched cell is an elapsed month with no report. Two summary columns carry the per-row totals; the last row is the overall total. */
 function heat(gr,W){
   var months=[],a,last=Math.min(F.to,TODAY);for(a=F.from;a<=last;a++)months.push(a);
   if(!months.length)return '<div class="empty" style="padding:30px 0">No elapsed months in this period</div>';
-  var multi=Math.floor((F.from-3)/12)!==Math.floor((last-3)/12),LW=110,top=34,CH=40,cw=(W-LW)/months.length,cells=[],mx=1;
-  gr.g.forEach(function(g,ri){months.forEach(function(m,ci){var rs=pick(Object.assign({},F,g.f,{from:m,to:m})),v=rs.reduce(function(s,r){return s+r.scr},0);cells.push({g:g,ri:ri,ci:ci,m:m,rep:rs.length>0,v:v});if(v>mx)mx=v})});
-  var H=top+gr.g.length*CH+6,s='<svg class="ch2" viewBox="0 0 '+W+' '+H+'" width="100%" role="img" aria-label="Women screened by month"><defs><pattern id="hatch" width="7" height="7" patternUnits="userSpaceOnUse" patternTransform="rotate(45)"><rect width="7" height="7" fill="#F4F5F7"/><line x1="0" y1="0" x2="0" y2="7" stroke="#C2C8CF" stroke-width="2.4"/></pattern></defs>';
+  var multi=Math.floor((F.from-3)/12)!==Math.floor((last-3)/12),LW=110,top=50,CH=40,GAP=18,SWt=92,SWc=150,G2=8,nm=months.length,
+    cw=Math.min(110,(W-LW-GAP-SWt-G2-SWc)/nm),sx1=LW+nm*cw+GAP,sx2=sx1+SWt+G2,cells=[],mx=1,tot=months.map(function(){return 0}),nr=gr.g.length;
+  gr.g.forEach(function(g,ri){months.forEach(function(m,ci){var rs=pick(Object.assign({},F,g.f,{from:m,to:m})),v=rs.reduce(function(s,r){return s+r.scr},0);cells.push({g:g,ri:ri,ci:ci,m:m,rep:rs.length>0,v:v});tot[ci]+=v;if(v>mx)mx=v})});
+  var H=top+(nr+1)*CH+6,s='<svg class="ch2" viewBox="0 0 '+W+' '+H+'" width="100%" role="img" aria-label="Women screened by month"><defs><pattern id="hatch" width="7" height="7" patternUnits="userSpaceOnUse" patternTransform="rotate(45)"><rect width="7" height="7" fill="#F4F5F7"/><line x1="0" y1="0" x2="0" y2="7" stroke="#C2C8CF" stroke-width="2.4"/></pattern></defs>';
   months.forEach(function(m,ci){s+='<text x="'+(LW+ci*cw+cw/2)+'" y="'+(top-12)+'" text-anchor="middle" font-size="'+(cw<34?10.5:12.5)+'" fill="#6B7280">'+MSS[m%12]+(multi?' '+String(Math.floor(m/12)).slice(2):'')+'</text>'});
-  gr.g.forEach(function(g,ri){s+='<text x="0" y="'+(top+ri*CH+CH/2+5)+'" font-size="14" fill="#1F2328">'+g.l+'</text>'});
+  s+='<text x="'+(sx1+SWt/2)+'" y="'+(top-12)+'" text-anchor="middle" font-size="12.5" font-weight="600" fill="#1F2328">Women screened</text>'+
+     '<text x="'+(sx2+SWc/2)+'" y="'+(top-27)+'" text-anchor="middle" font-size="12.5" font-weight="600" fill="#1F2328">Women identified</text><text x="'+(sx2+SWc/2)+'" y="'+(top-12)+'" text-anchor="middle" font-size="12.5" font-weight="600" fill="#1F2328">as carriers</text>';
   var BIN=[14,30,48,72,100];
   cells.forEach(function(c){var x=LW+c.ci*cw+1.5,y=top+c.ri*CH+1.5,w=cw-3,h=CH-3,lbl=c.g.l+', '+aLabel(c.m,true);
-    if(!c.rep){s+='<g data-t="'+lbl+': Not reported"><rect x="'+x+'" y="'+y+'" width="'+w+'" height="'+h+'" rx="4" fill="url(#hatch)" stroke="#D5D9DE"/></g>';return}
+    if(!c.rep){s+='<g data-t="'+lbl+': Not available"><rect x="'+x+'" y="'+y+'" width="'+w+'" height="'+h+'" rx="4" fill="url(#hatch)" stroke="#D5D9DE"/></g>';return}
     var r=c.v/mx,b=r<.2?0:r<.4?1:r<.6?2:r<.8?3:4,txt=cw>=34?'<text x="'+(x+w/2)+'" y="'+(y+h/2+4.5)+'" text-anchor="middle" font-size="'+(cw>=48?13:11)+'" font-weight="600" fill="'+(b>=3?'#fff':'#1F2328')+'">'+n(c.v)+'</text>':'';
     s+=mark('scr',Object.assign({},c.g.f,{from:c.m,to:c.m}),c.v,lbl,'<rect x="'+x+'" y="'+y+'" width="'+w+'" height="'+h+'" rx="4" style="fill:'+sh('var(--tab1)',BIN[b])+'"/>'+txt);
   });
+  var sumCells=function(ri,f,lab,bold){var rs=pick(Object.assign({},F,f)),a=agg(rs),y=top+ri*CH+(ri===nr?6:0),h=CH-3,ty=y+h/2+5,fs=bold?' font-weight="700"':' font-weight="600"';
+    if(bold)s+='<text x="0" y="'+ty+'" font-size="14" font-weight="700" fill="#1F2328">'+lab+'</text>';
+    s+=mark(f&&Object.keys(f).length?'scr':'scr',Object.keys(f).length?f:null,a.scr,lab+', women screened','<rect x="'+sx1+'" y="'+y+'" width="'+SWt+'" height="'+h+'" rx="4" fill="#F1F3F5"/><text x="'+(sx1+SWt/2)+'" y="'+ty+'" text-anchor="middle" font-size="13.5"'+fs+' style="'+tnum()+'">'+n(a.scr)+'</text>');
+    s+=mark('pos',Object.keys(f).length?f:null,a.pos,lab+', women identified as carriers','<rect x="'+sx2+'" y="'+y+'" width="'+SWc+'" height="'+h+'" rx="4" fill="#F1F3F5"/><text x="'+(sx2+SWc/2)+'" y="'+ty+'" text-anchor="middle" font-size="13.5"'+fs+' style="'+tnum()+'">'+n(a.pos)+' · '+pc(a.pos,a.scr)+'</text>','rw',' data-den="'+a.scr+'" data-dk="scr"');};
+  gr.g.forEach(function(g,ri){s+='<text x="0" y="'+(top+ri*CH+CH/2+5)+'" font-size="14" fill="#1F2328">'+g.l+'</text>';sumCells(ri,g.f,g.l,false)});
+  s+='<line x1="0" x2="'+W+'" y1="'+(top+nr*CH+2)+'" y2="'+(top+nr*CH+2)+'" stroke="#CBD0D6"/>';
+  months.forEach(function(m,ci){var x=LW+ci*cw+1.5,y=top+nr*CH+6,w=cw-3,h=CH-3;
+    s+=mark('scr',{from:m,to:m},tot[ci],'Overall, '+aLabel(m,true),'<rect x="'+x+'" y="'+y+'" width="'+w+'" height="'+h+'" rx="4" fill="#F1F3F5"/>'+(cw>=34?'<text x="'+(x+w/2)+'" y="'+(y+h/2+4.5)+'" text-anchor="middle" font-size="'+(cw>=48?13:11)+'" font-weight="700" style="'+tnum()+'">'+n(tot[ci])+'</text>':''))});
+  sumCells(nr,{},'Overall',true);
   return s+'</svg>';
 }
-function heatLegend(){return 'Fewer'+[14,30,48,72,100].map(function(p){return '<i class="sw" style="background:'+sh('var(--tab1)',p)+'"></i>'}).join('')+'More women screened<i class="sw hat"></i>Not reported'}
+/* ranked table: one row per partner (or city) with a thin inline bar for the share, number and the counts behind it */
+function ranked(rows,ref,k,dk){
+  rows=rows.filter(function(r){return r.den>0}).map(function(r){r.rate=100*r.num/r.den;return r}).sort(function(a,b){return b.rate-a.rate});
+  if(!rows.length)return '<div class="empty" style="padding:30px 0">No data in this selection</div>';
+  var line=function(l,r,f,bold){return '<div class="rkr'+(bold?' tot':'')+'" data-k="'+k+'" data-v="'+r.num+'" data-den="'+r.den+'" data-dk="'+dk+'"'+(f?" data-f='"+JSON.stringify(f)+"'":'')+' data-t="'+l+': '+n(r.num)+' of '+n(r.den)+'" onclick="'+(f?'openX(\''+k+'\','+fjs(f)+')':'openD(\''+k+'\')')+'"><span class="o">'+l+'</span><span class="tr"><i style="width:'+Math.min(100,r.rate)+'%"></i></span><b>'+pc(r.num,r.den)+'</b><em>'+n(r.num)+' of '+n(r.den)+'</em></div>'};
+  return '<div class="rk">'+rows.map(function(r){return line(r.l,r,r.f,false)}).join('')+line('Overall',ref,null,true)+'</div>';
+}
+function heatLegend(){return 'Fewer'+[14,30,48,72,100].map(function(p){return '<i class="sw" style="background:'+sh('var(--tab1)',p)+'"></i>'}).join('')+'More women screened<i class="sw hat"></i>Not available'}
 /* 100% stacked bar */
 function stack(items,W,tot){
-  var rest=tot-items.reduce(function(a,x){return a+x.v},0),all=items.slice();if(rest>0)all.push({k:null,l:'Outcome not recorded',v:rest,c:'var(--nr)'});
+  var rest=tot-items.reduce(function(a,x){return a+x.v},0),all=items.slice();if(rest>0)all.push({k:null,l:'Not available',v:rest,c:'var(--nr)'});
   if(!tot)return '<div class="empty" style="padding:30px 0">No data in this selection</div>';
   var s='<svg class="ch2" viewBox="0 0 '+W+' 64" width="100%" role="img" aria-label="Outcome of at-risk couples">',x0=0;
   all.forEach(function(x){if(!x.v)return;var w=W*x.v/tot,seg='<rect x="'+x0+'" y="8" width="'+Math.max(w-2,2)+'" height="48" style="fill:'+x.c+'"/>';
@@ -916,10 +917,10 @@ function stack(items,W,tot){
   return s+'</svg>'+legendRows(all,tot);
 }
 function ringChart(v,of){
-  var r=70,C=2*Math.PI*r,f=of?Math.min(1,v/of):0,inner='<circle cx="95" cy="95" r="'+r+'" fill="none" stroke="#EDEFF1" stroke-width="22"/>'+(f?'<circle cx="95" cy="95" r="'+r+'" fill="none" style="stroke:var(--tab3)" stroke-width="22" stroke-dasharray="'+(f*C)+' '+C+'" transform="rotate(-90 95 95)"/>':'')+
-    '<text x="95" y="102" text-anchor="middle" font-size="32" font-weight="700" style="'+tnum()+'">'+(of?pc(v,of):'0%')+'</text><text x="95" y="122" text-anchor="middle" font-size="11.5" fill="#6B7280">of at-risk couples</text>';
+  var r=70,C=2*Math.PI*r,f=of?Math.min(1,v/of):0,inner='<circle cx="95" cy="95" r="'+r+'" fill="none" stroke="#EDEFF1" stroke-width="22"/>'+(f?'<circle cx="95" cy="95" r="'+r+'" fill="none" style="stroke:var(--good)" stroke-width="22" stroke-dasharray="'+(f*C)+' '+C+'" transform="rotate(-90 95 95)"/>':'')+
+    '<text x="95" y="102" text-anchor="middle" font-size="32" font-weight="700" style="fill:var(--goodd)">'+(of?pc(v,of):'0%')+'</text><text x="95" y="122" text-anchor="middle" font-size="11.5" fill="#6B7280">of at-risk couples</text>';
   return '<div class="donut"><svg class="ch2" viewBox="0 0 190 190" role="img" aria-label="Share of at-risk couples with prenatal diagnosis">'+mark('pnd',null,v,'Prenatal diagnosis',inner,'sg')+'</svg>'+
-    legendRows([{k:'pnd',l:'Prenatal diagnosis',v:v,c:'var(--tab3)'},{k:'risk',l:'At-risk couples',v:of,c:'#EDEFF1'}],of).replace(/<em>[^<]*<\/em>/g,'<em></em>')+'</div>';
+    legendRows([{k:'pnd',l:'Prenatal diagnosis',v:v,c:'var(--good)'},{k:'risk',l:'At-risk couples',v:of,c:'#EDEFF1'}],of).replace(/<em>[^<]*<\/em>/g,'<em></em>')+'</div>';
 }
 /* flow: ribbon widths are the number of women; couples counselled are drawn from the affected group, medical termination from those counselled */
 function sankey(d,W,H){
@@ -944,20 +945,18 @@ function chartsFor(tab,d){
   TN=tab==='screening'?1:tab==='followup'?2:3;
   var gr=groups(),by=gr.by==='partner'?'partner':'city',ref=function(nk,dk){return {num:d[nk],den:d[dk],rate:d[dk]?100*d[nk]/d[dk]:0}};
   var rowsOf=function(nk,dk){return gr.g.map(function(g){var a=agg(pick(Object.assign({},F,g.f)));return {l:g.l,f:g.f,num:a[nk],den:a[dk]}})};
-  if(tab==='screening')return '<div class="cgrid">'+
-    cpanel('Women registered and screened','var(--tab1)',pair([{k:'reg',l:'Women registered',v:d.reg,c:'var(--tab1d)'},{k:'scr',l:'Women screened',v:d.scr,c:'var(--tab1)'}],460))+
-    cpanel('Women identified as carriers per 100 screened','var(--tab1)',waffle(d))+'</div>'+
-    '<div class="cgrid">'+
-    cpanel('Type of hemoglobinopathy','var(--tab1)',pie(typeItems(d)))+
-    cpanel('Women identified as carriers by '+by,'var(--tab1)',lolli(rowsOf('pos','scr'),ref('pos','scr'),460,'pos','pos','scr','var(--tab1)'))+'</div>'+
-    '<div class="cgrid one">'+cpanel('Women screened by '+by+' and month','var(--tab1)',heat(gr,960),heatLegend())+'</div>';
+  if(tab==='screening')return '<div class="cgrid even">'+
+    cpanel('Women identified as carriers out of every 100 women screened','var(--tab1)',waffle(d))+
+    cpanel('Type of hemoglobinopathy','var(--tab1)',pie(typeItems(d)))+'</div>'+
+    '<div class="cgrid one">'+cpanel('Women screened by month','var(--tab1)',heat(gr,960),heatLegend())+'</div>';
   if(tab==='followup')return '<div class="cgrid">'+
     cpanel('Women identified as carriers to partners screened','var(--tab2)',cascade([{k:'pos',l:'Women identified as carriers',v:d.pos,c:'var(--tab2d)'},{k:'padv',l:'Partners advised testing',v:d.padv,c:'var(--tab2)'},{k:'pscr',l:'Partners screened',v:d.pscr,c:sh('var(--tab2)',66)}],460,330))+
-    cpanel('Outcome of at-risk couples','var(--tab2)',stack([{k:'pnd',l:'Prenatal diagnosis',v:d.pnd,c:'var(--tab2)'},{k:'dec',l:'Declined prenatal diagnosis',v:d.dec,c:'var(--neg)'},{k:'ltfu',l:'Lost to follow-up',v:d.ltfu,c:sh('var(--neg)',55)}],460,d.risk))+'</div>'+
-    '<div class="cgrid one">'+cpanel('Partner testing rate by '+by,'var(--tab2)',lolli(rowsOf('pscr','padv'),ref('pscr','padv'),960,'pscr','pscr','padv','var(--tab2)'))+'</div>';
+    '<div class="stk">'+
+    cpanel('At-risk couples','var(--tab2)',stack([{k:'pnd',l:'Prenatal diagnosis',v:d.pnd,c:'var(--good)'},{k:'dec',l:'Declined prenatal diagnosis',v:d.dec,c:'var(--neg)'},{k:'ltfu',l:'Lost to follow-up',v:d.ltfu,c:sh('var(--neg)',55)}],460,d.risk))+
+    cpanel('Partners screened out of partners advised testing','var(--tab2)',ranked(rowsOf('pscr','padv'),ref('pscr','padv'),'pscr','padv'))+'</div></div>';
   return '<div class="cgrid one">'+cpanel('Prenatal diagnosis to medical termination of pregnancy','var(--tab3)',sankey(d,960,300))+'</div>'+
     '<div class="cgrid">'+
-    cpanel('Type of prenatal diagnosis','var(--tab3)',donut([{k:'cvs',l:M.cvs[0],v:d.cvs,c:'var(--tab3d)'},{k:'amn',l:M.amn[0],v:d.amn,c:sh('var(--tab3)',55)},{k:'pndnr',l:'Test type not recorded',v:d.pndnr,c:'var(--nr)'}],['prenatal','diagnosis']))+
+    cpanel('Type of prenatal diagnosis','var(--tab3)',donut([{k:'cvs',l:M.cvs[0],v:d.cvs,c:'var(--tab3d)'},{k:'amn',l:M.amn[0],v:d.amn,c:sh('var(--tab3)',55)},{k:'pndnr',l:'Not available',v:d.pndnr,c:'var(--nr)'}],['prenatal','diagnosis']))+
     cpanel('At-risk couples with prenatal diagnosis','var(--tab3)',ringChart(d.pnd,d.risk))+'</div>';
 }
 /* tooltip follows the cursor and hides when it leaves a mark */
@@ -985,7 +984,7 @@ var FUR=(function(){
     var risk=w.filter(function(x){return x.risk});
     risk.forEach(function(x,i){x.pnd=i<r.pnd?'Done':i<r.pnd+r.dec?'Declined':i<r.pnd+r.dec+r.ltfu?'Lost':'Pending'});
     var pnd=w.filter(function(x){return x.pnd==='Done'});shuf(pnd,R);
-    pnd.forEach(function(x,i){x.test=i<r.cvs?'CVS':i<r.cvs+r.amn?'Amniocentesis':'Not recorded';x.fr=i<r.affT?'Major, Thal':i<r.affT+r.affS?'Major, Sickle':'Minor or normal'});
+    pnd.forEach(function(x,i){x.test=i<r.cvs?'CVS':i<r.cvs+r.amn?'Amniocentesis':'Not available';x.fr=i<r.affT?'Major, Thal':i<r.affT+r.affS?'Major, Sickle':'Minor or normal'});
     var aT=pnd.filter(function(x){return x.fr==='Major, Thal'}),aS=pnd.filter(function(x){return x.fr==='Major, Sickle'}),aff=aT.concat(aS);
     aT.forEach(function(x,i){x.mtp=i<r.mtpT?'Yes':'No'});aS.forEach(function(x,i){x.mtp=i<r.mtpS?'Yes':'No'});
     var cn=0;aff.forEach(function(x){x.couns='No';if(x.mtp==='Yes'){x.couns='Yes';cn++}});
@@ -997,22 +996,23 @@ var FUR=(function(){
 var CT={thal:'Beta thalassemia carrier',sick:'Sickle cell carrier',oth:'Other hemoglobinopathy',scdd:'Sickle cell disease'};
 var FSEL={padv:function(x){return x.pa==='Yes'},pscr:function(x){return x.hs==='Yes'},risk:function(x){return x.risk},dec:function(x){return x.pnd==='Declined'},ltfu:function(x){return x.pnd==='Lost'},
   pnd:function(x){return x.pnd==='Done'},
-  cvs:function(x){return x.test==='CVS'},amn:function(x){return x.test==='Amniocentesis'},pndnr:function(x){return x.test==='Not recorded'},
+  cvs:function(x){return x.test==='CVS'},amn:function(x){return x.test==='Amniocentesis'},pndnr:function(x){return x.test==='Not available'},
   aff:function(x){return x.fr.indexOf('Major')===0},unaff:function(x){return x.pnd==='Done'&&x.fr.indexOf('Major')!==0},affT:function(x){return x.fr==='Major, Thal'},affS:function(x){return x.fr==='Major, Sickle'},
   couns:function(x){return x.couns==='Yes'},cont:function(x){return x.couns==='Yes'&&x.mtp!=='Yes'},mtp:function(x){return x.mtp==='Yes'},mtpT:function(x){return x.mtp==='Yes'&&x.fr==='Major, Thal'},mtpS:function(x){return x.mtp==='Yes'&&x.fr==='Major, Sickle'}};
-var FCOL={id:'ID',wc:'Woman code',p:'Partner',c:'City',m:'Registered on',ct:'Type of hemoglobinopathy',pa:'Testing advised',pt:'Test done',hr:'Partner result',pndp:'Prenatal diagnosis',reason:'Reason',fr:'Prenatal diagnosis result',couns:'Couple counselled',out:'Outcome'};
+var FCOL={id:'ID',wc:'Woman code',p:'Partner',c:'City',m:'Registered on',ct:'Type of hemoglobinopathy',pa:'Partner advised testing',pt:'Partner screened',hr:'Partner screening result',pndp:'Prenatal diagnosis',reason:'Reason',fr:'Prenatal diagnosis result',couns:'Couple counselled',out:'Medical termination of pregnancy'};
 var SR={thal:'Beta thalassemia carrier',sick:'Sickle cell carrier',scdd:'Sickle cell disease'};
-function fval(x,c){
+function fval(x,c){var v=fval0(x,c);return v===''||v==null?'Not available':v}
+function fval0(x,c){
   if(c==='p')return P[x.p].name;
   if(c==='m'){var y=FY[x.fy].y+(x.m>8?1:0),mo=(x.m+3)%12+1;return (x.dd<10?'0':'')+x.dd+'-'+(mo<10?'0':'')+mo+'-'+y}
   if(c==='ct')return SR[x.ct]||(x.alt<.5?'Hemoglobin E carrier':'Other hemoglobin variant carrier');
   if(c==='pt')return x.hs==='Yes'?'Yes':x.pa==='Yes'?'No':'';
   if(c==='hr')return x.hs!=='Yes'?'':x.risk?(SR[x.ct]||'Hemoglobin E carrier'):'Normal';
-  if(c==='pndp')return x.pnd==='Declined'?'Declined':x.pnd==='Lost'?'Lost to follow-up':x.pnd==='Pending'?'Pending':x.pnd==='Done'?(x.test==='CVS'?'Chorionic villus sampling (CVS)':x.test==='Amniocentesis'?'Amniocentesis':'Test type not recorded'):'';
+  if(c==='pndp')return x.pnd==='Declined'?'Declined':x.pnd==='Lost'?'Lost to follow-up':x.pnd==='Pending'?'Pending':x.pnd==='Done'?(x.test==='CVS'?'Chorionic villus sampling (CVS)':x.test==='Amniocentesis'?'Amniocentesis':'Not available'):'';
   if(c==='reason')return x.pnd==='Declined'?'Refused':x.pnd==='Lost'?'Not reachable':'';
   if(c==='fr')return x.fr==='Major, Thal'?'Thalassemia major':x.fr==='Major, Sickle'?'Sickle cell disease':x.fr?(x.alt<.6?'Carrier':'Normal'):'';
   if(c==='couns')return x.couns;
-  if(c==='out')return x.mtp==='Yes'?'Medical termination of pregnancy':x.mtp==='No'?'Pregnancy continuing':'';
+  if(c==='out')return x.mtp==='Yes'?'Yes':x.mtp==='No'?'No':'';
   return x[c];
 }
 function fcols(k){
@@ -1042,12 +1042,12 @@ function drawer(){
   var crumbs='';
   if(view==='partners'){
     var pv=partnerVals(k,FF),tot=pv.reduce(function(a,x){return a+x.v},0);val=tot;
-    head=['Partner','Value','Share of total'];rows=pv.map(function(x){return [P[x.p].name,x.v,pc(x.v,tot)]});
-    tbl='<table class="pt"><thead><tr><th>Partner</th><th class="n">Value</th><th class="n">Share of total</th><th></th></tr></thead><tbody>'+
+    head=['Partner',M[k][0],'Share of total'];rows=pv.map(function(x){return [P[x.p].name,x.v,pc(x.v,tot)]});
+    tbl='<table class="pt"><thead><tr><th>Partner</th><th class="n">'+M[k][0]+'</th><th class="n">Share of total</th><th></th></tr></thead><tbody>'+
       pv.map(function(x,i){var z=!x.v;return '<tr class="pr'+(z?' z':'')+'" style="animation-delay:'+i*40+'ms"'+(z?'':' onclick="drillP(\''+x.p+'\')"')+'><td><span class="dot" style="background:'+P[x.p].c+'"></span> <span class="pn">'+P[x.p].name+'</span><span class="pg3">'+P[x.p].prog+'</span></td><td class="n"><b>'+n(x.v)+'</b></td><td class="n"><div class="sb2"><u><i style="width:'+(tot?100*x.v/tot:0)+'%;background:'+col+'"></i></u><span>'+pc(x.v,tot)+'</span></div></td><td class="n go2">'+(z?'':'›')+'</td></tr>'}).join('')+
       '<tr class="tot"><td>All partners shown</td><td class="n">'+n(tot)+'</td><td class="n">100%</td><td></td></tr></tbody></table>';
     unit=pv.length+' partner'+(pv.length===1?'':'s');
-    crumbs='<div class="crumbs2"><span class="cur">Partner breakup</span><span class="sep">›</span><span>Select a partner to see its source records</span><a class="all" onclick="drillP(\'all\')">View all partners\' records ›</a></div>';
+    crumbs='<div class="crumbs2"><span class="cur">Partner-wise breakup</span><span class="sep">›</span><span>Select a partner to see its records</span><a class="all" onclick="drillP(\'all\')">View all partners\' records ›</a></div>';
   } else {
     var one=dp!=='all',pf=Object.assign({},FF,one?{partner:dp}:{});
     if(scr){
@@ -1068,8 +1068,8 @@ function drawer(){
     tbl='<table class="dt'+(scr?'':' fu')+'"><thead><tr>'+head.map(function(h,i){if(i===cI||(scr&&i===2))return '';if(i===pI)h='Partner, city';return '<th'+(i>=5&&scr?' class="n'+(i===hi?' hi':'')+'"':'')+'>'+h+'</th>'}).join('')+'</tr></thead><tbody>'+
       rows.map(function(r,ri){return '<tr style="animation-delay:'+Math.min(ri,14)*30+'ms">'+r.map(function(v,i){if(i===cI||(scr&&i===2))return '';if(i===pI)v=v+'<span class="cy">'+r[cI]+'</span>';return '<td'+(i>=5&&scr?' class="n'+(i===hi?' hi':'')+'"':'')+'>'+(typeof v==='number'?n(v):v)+'</td>'}).join('')+'</tr>'}).join('')+'</tbody></table>';
     ctx=[TABN[TABOF[k]],per,one?P[dp].name:'All partners',FF.city||FF.st||'All cities'].join(' · ');
-    crumbs=single?'<div class="crumbs2"><span class="cur">'+P[dp].name+'</span><span class="sep">›</span><span>Source records, most recent first</span></div>':
-      '<div class="crumbs2"><a onclick="drillP(null)">‹ Partner breakup</a><span class="sep">›</span><span class="cur">'+(one?P[dp].name:'All partners')+'</span><span class="sep">·</span><span>Source records, most recent first</span></div>';
+    crumbs=single?'<div class="crumbs2"><span class="cur">'+P[dp].name+'</span><span class="sep">›</span><span>Records, most recent first</span></div>':
+      '<div class="crumbs2"><a onclick="drillP(null)">‹ Partner-wise breakup</a><span class="sep">›</span><span class="cur">'+(one?P[dp].name:'All partners')+'</span><span class="sep">·</span><span>Records, most recent first</span></div>';
   }
   var empty=view==='src'&&!rows.length;
   el.innerHTML='<div class="scrim" onclick="closeD()"></div><div class="drawer wide" style="--dc:'+col+'"><div class="dh"><div class="t">'+ctx+'</div><h3>'+M[k][0]+' <b>'+n(val)+'</b></h3>'+
@@ -1116,19 +1116,19 @@ function dashboard(){
   h+='<div class="tabs">'+['screening','followup','prenatal'].map(function(tb){return '<a class="'+(state.tab===tb?'on':'')+'" style="--ta:'+TABCOL[tb]+';--tad:'+TABD[tb]+'" onclick="setTab(\''+tb+'\')">'+TABN[tb]+'</a>'}).join('')+'</div><div class="fade">';
   if(state.tab==='screening'){
     var rsp=function(t,ka,kb,c){var tot=d[ka]+d[kb];return '<div class="rg"><div class="rgt">'+t+'</div><div class="rbar"><i style="width:'+(tot?100*d[ka]/tot:0)+'%;background:'+M[ka][1]+'"></i><i style="width:'+(tot?100*d[kb]/tot:0)+'%;background:'+c+'"></i></div><div class="types rc">'+[ka,kb].map(function(t2){return '<div class="ty" onclick="openD(\''+t2+'\')"><div class="lk">'+M[t2][0]+'</div><div class="v">'+cu(d[t2])+'</div><div class="p">'+cupc(d[t2],d.reg)+' of registered</div></div>'}).join('')+'</div></div>'};
-    h+='<div class="panel"><div class="sec" style="--sa:var(--tab1)">Screening data</div>'+stair([{k:'reg'},{k:'scr'},{k:'pos'}],d,[178,148,118])+
-      '<div class="rsplit">'+rsp('Registered by conception','nivf','ivf','var(--brand-3)')+rsp('Gestational age at the time of registration','le12','gt12','var(--brand-3)')+'</div></div>';
+    h+='<div class="panel"><div class="sec" style="--sa:var(--tab1)">Women screened</div>'+stair([{k:'reg'},{k:'scr'},{k:'pos'}],d,[178,148,118])+
+      '<div class="rsplit">'+rsp('Registered ANC and IVF','nivf','ivf','var(--brand-3)')+rsp('Gestational age at the time of registration','le12','gt12','var(--brand-3)')+'</div></div>';
     var ty=['thal','sick','scdd','oth'];
     h+='<div class="panel reveal"><div class="sec" style="--sa:var(--tab1)">Type of hemoglobinopathy</div><div class="types t4">'+ty.map(function(t,i){return '<div class="ty" onclick="openD(\''+t+'\')"><div class="lk"><span class="dot" style="background:'+TYC[t]+'"></span>'+M[t][0]+'</div><div class="v">'+cu(d[t])+'</div><div class="p">'+cupc(d[t],d.pos)+' of women identified as carriers</div><div class="mini"><i style="width:'+(d.pos?100*d[t]/d.pos:0)+'%;background:'+TYC[t]+';animation-delay:'+(250+i*120)+'ms"></i></div></div>'}).join('')+'</div></div>';
   } else if(state.tab==='followup'){
-    h+='<div class="panel"><div class="sec" style="--sa:var(--tab2)">Partner testing and at-risk couples</div>'+stair([{k:'padv'},{k:'pscr'},{k:'risk',rt:'Of at-risk couples',rows:[['Declined prenatal diagnosis',d.dec,'dec','var(--neg)'],['Lost to follow-up',d.ltfu,'ltfu','var(--neg)']]}],d,[190,150,110])+'</div>';
+    h+='<div class="panel"><div class="sec" style="--sa:var(--tab2)">Partner screened and at-risk couples</div>'+stair([{k:'padv'},{k:'pscr'},{k:'risk',rt:'Of at-risk couples',rows:[['Declined prenatal diagnosis',d.dec,'dec','var(--neg)'],['Lost to follow-up',d.ltfu,'ltfu','var(--neg)']]}],d,[190,150,110])+'</div>';
   } else {
     var mnr=d.mtp-d.mtpT-d.mtpS;
-    var st=[{k:'pnd',rt:'Type of prenatal diagnosis',rows:[['Chorionic villus sampling (CVS)',d.cvs,'cvs'],['Amniocentesis',d.amn,'amn'],d.pndnr>0?['Test type not recorded',d.pndnr,'pndnr']:null]},
+    var st=[{k:'pnd',rt:'Type of prenatal diagnosis',rows:[['Chorionic villus sampling (CVS)',d.cvs,'cvs'],['Amniocentesis',d.amn,'amn'],d.pndnr>0?['Not available',d.pndnr,'pndnr']:null]},
       {k:'aff',rt:'Type of hemoglobinopathy',rows:[['Thalassemia major',d.affT,'affT'],['Sickle cell disease',d.affS,'affS']]},{k:'couns'},
-      {k:'mtp',rt:'Type of hemoglobinopathy',rows:[['Thalassemia major',d.mtpT,'mtpT'],['Sickle cell disease',d.mtpS,'mtpS'],mnr>0?['Type not recorded',mnr]:null]}];
+      {k:'mtp',rt:'Type of hemoglobinopathy',rows:[['Thalassemia major',d.mtpT,'mtpT'],['Sickle cell disease',d.mtpS,'mtpS'],mnr>0?['Not available',mnr]:null]}];
     var hs=st.map(function(_,i){return 200-i*Math.round(80/(st.length-1))});
-    h+='<div class="panel"><div class="sec" style="--sa:var(--tab3)">Prenatal testing and outcomes</div>'+stair(st,d,hs)+'</div>';
+    h+='<div class="panel"><div class="sec" style="--sa:var(--tab3)">Prenatal testing</div>'+stair(st,d,hs)+'</div>';
   }
   h+=chartsFor(state.tab,d);
   return h+'</div>';
@@ -1180,11 +1180,6 @@ function show(){
   window.scrollTo(0,0);
 }
 document.addEventListener('keydown',function(e){if(e.key==='Escape'&&state.open)closeD()});
-/* temporary palette switcher: swaps the CSS tokens on <html>, charts and cards recolour live */
-(function(){var box=document.getElementById('pal');if(!box)return;
-  box.addEventListener('click',function(e){var a=e.target.closest('a[data-p]');if(!a)return;var p=a.dataset.p;
-    if(p==='a')document.documentElement.removeAttribute('data-pal');else document.documentElement.setAttribute('data-pal',p);
-    [].forEach.call(box.querySelectorAll('a'),function(x){x.classList.toggle('on',x===a)})})})();
 sidebar();window.addEventListener('hashchange',show);show();
 
 </script>

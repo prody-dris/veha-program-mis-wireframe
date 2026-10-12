@@ -335,8 +335,8 @@ html{scroll-behavior:smooth}
 .hs.att{--sc:var(--attd)}
 .hs.bad{--sc:var(--l4)}
 .hs.good{--sc:var(--dec1)}
-.hero .hs:nth-child(1){--sc:var(--hg)}
-.hero .hs:nth-child(2){--sc:var(--ho)}
+.hero:not(.pn) .hs:nth-child(1){--sc:var(--hg)}
+.hero:not(.pn) .hs:nth-child(2){--sc:var(--ho)}
 .hs .big{font-size:48px;font-weight:600;line-height:1;letter-spacing:-.02em;color:#FFFFFF;font-variant-numeric:tabular-nums}
 .hs .t{font-size:19px;font-weight:600;color:#FFFFFF;margin-top:10px;line-height:1.35}
 .hs .hn{font-size:13.5px;color:#FFFFFF;margin-top:8px;font-variant-numeric:tabular-nums;opacity:.95}
@@ -743,6 +743,16 @@ table.bt tr.tot td{font-weight:700;border-top:2px solid #D5D5D5;border-bottom:0;
 .czp{right:0;top:38px}
 .types.rc .ty .lk{white-space:normal;overflow:visible;text-overflow:clip;min-height:2.8em}
 }
+
+.st .v{margin-top:14px}
+.st .inc{margin-top:14px;padding-top:8px;border-top:1px solid #F0F0F0;cursor:default}
+.st .inc .bkl{margin-top:0}
+.st .inc .xb+.bkl,.st .inc .bkl+.xb{margin-top:10px}
+.bkl .bkr.tt{border-top:1px solid #F0F0F0;margin-top:4px;padding-top:8px;font-size:12.5px;font-weight:600;color:var(--ink-2)}
+.donut svg.dbg{width:240px;height:240px}
+.donut:has(svg.dbg){gap:28px;justify-content:flex-start}
+.donut:has(svg.dbg) .dl2{flex:0 1 420px}
+@container (max-width:440px){.donut svg.dbg{width:200px;height:200px}.donut:has(svg.dbg) .dl2{flex:0 0 auto}}
 </style>
 </head>
 <body>
@@ -977,13 +987,12 @@ function cu(v,dec,suf){return '<span class="cu" data-v="'+v+'" data-d="'+(dec||0
 function cupc(a,b){if(!b)return cu(0,0,'%');var r=100*a/b,d=(r<10&&r%1)?1:0;return cu(d?+r.toFixed(1):Math.round(r),d,'%')}
 function sub(t,list,tot,a){list=list.filter(function(x){return x});if(!list.length)return '';
   return '<div class="xb"><div class="xbt">'+t+'</div>'+list.map(function(r){var w=tot?Math.min(100,100*r[1]/tot):0;
-    return '<div class="xr'+(r[2]?' ck':'')+'"'+(r[2]?' onclick="openD(\''+r[2]+'\')"':'')+'><div class="xl"><span>'+r[0]+'</span><b>'+n(r[1])+'</b><em>'+pc(r[1],tot)+'</em>'+(r[2]?'<i>›</i>':'')+'</div><div class="xbar"><u style="width:'+w+'%;background:'+(r[3]||a)+'"></u></div></div>'}).join('')+'</div>'}
+    return '<div class="xr'+(r[2]?' ck':'')+'"'+(r[2]?' onclick="openD(\''+r[2]+'\');event.stopPropagation()"':'')+'><div class="xl"><span>'+r[0]+'</span><b>'+n(r[1])+'</b><em>'+pc(r[1],tot)+'</em>'+(r[2]?'<i>›</i>':'')+'</div><div class="xbar"><u style="width:'+w+'%;background:'+(r[3]||a)+'"></u></div></div>'}).join('')+'</div>'}
 function stair(stages,d,heights){
   var cols='repeat('+stages.length+',1fr)',by='View records';heights=heights.map(function(){return 168});
   var top=stages.map(function(s,i){var T=TINT[s.k];
-    return '<div class="st'+(state.open===s.k?' open':'')+'" data-k="'+s.k+'" style="min-height:'+heights[i]+'px;--bg:'+T[0]+';--bg2:'+T[1]+';--a:'+T[2]+';--ad:'+T[3]+';animation-delay:'+(i*90)+'ms" onclick="openD(\''+s.k+'\')"><div class="lk">'+(s.l||M[s.k][0])+tip(s.tip)+'</div><div class="v">'+cu(d[s.k])+'</div>'+((s.gaps||(s.gap?[{k:s.gap,l:s.gl}]:[])).filter(function(g){return d[g.k]>0}).map(function(g){return '<span class="gp" data-gk="'+g.k+'" data-gv="'+d[g.k]+'" data-v="'+d[g.k]+'" onclick="openD(\''+g.k+'\');event.stopPropagation()">'+n(d[g.k])+' '+g.l+' ›</span>'}).join('')||'<span class="gp"></span>')+'<span class="go">'+by+' ›</span></div>'}).join('');
-  var dets=stages.some(function(s){return s.rows||s.line})?'<div class="dets" style="grid-template-columns:'+cols+'">'+stages.map(function(s,i){return '<div class="det" style="animation-delay:'+(300+i*90)+'ms">'+(s.rows?sub(s.rt||'Breakdown',s.rows,d[s.k],TINT[s.k][2]):'')+(s.line||'')+'</div>'}).join('')+'</div>':'';
-  return '<div class="steps" style="grid-template-columns:'+cols+'">'+top+'</div>'+dets;
+    return '<div class="st'+(state.open===s.k?' open':'')+'" data-k="'+s.k+'" style="min-height:'+heights[i]+'px;--bg:'+T[0]+';--bg2:'+T[1]+';--a:'+T[2]+';--ad:'+T[3]+';animation-delay:'+(i*90)+'ms" onclick="openD(\''+s.k+'\')"><div class="lk">'+(s.l||M[s.k][0])+tip(s.tip)+'</div><div class="v">'+cu(d[s.k])+'</div>'+((s.gaps||(s.gap?[{k:s.gap,l:s.gl}]:[])).filter(function(g){return d[g.k]>0}).map(function(g){return '<span class="gp" data-gk="'+g.k+'" data-gv="'+d[g.k]+'" data-v="'+d[g.k]+'" onclick="openD(\''+g.k+'\');event.stopPropagation()">'+n(d[g.k])+' '+g.l+' ›</span>'}).join('')||'<span class="gp"></span>')+'<span class="go">'+by+' ›</span>'+((s.rows||s.line)?'<div class="inc" onclick="event.stopPropagation()">'+(s.line||'')+(s.rows?sub(s.rt||'Breakdown',s.rows,d[s.k],T[2]):'')+'</div>':'')+'</div>'}).join('');
+  return '<div class="steps" style="grid-template-columns:'+cols+'">'+top+'</div>';
 }
 /* charts: inline SVG. Colours are CSS variables so the palette switcher recolours them live.
    Every mark carries data-v (the number its drill must show) and data-t (tooltip text), and opens the partner-first drill. */
@@ -1313,7 +1322,7 @@ function drawer(){
     tbl='<table class="dt'+(scr?'':' fu')+'"><thead><tr>'+head.map(function(h,i){if(i===cI||(scr&&i===2))return '';if(i===pI)h='Partner, city';return '<th'+(i>=5&&scr?' class="n'+(i===hi?' hi':'')+'"':'')+'>'+h+'</th>'}).join('')+'</tr></thead><tbody>'+
       rows.map(function(r,ri){return '<tr style="animation-delay:'+Math.min(ri,14)*30+'ms">'+r.map(function(v,i){if(i===cI||(scr&&i===2))return '';if(i===pI)v=v+'<span class="cy">'+r[cI]+'</span>';return '<td'+(i>=5&&scr?' class="n'+(i===hi?' hi':'')+'"':'')+'>'+(typeof v==='number'?n(v):v)+'</td>'}).join('')+'</tr>'}).join('')+'</tbody></table>';
     ctx=bk?[TABN[TABOF[k]],per].concat(scopeText(FF)).join(' · '):[TABN[TABOF[k]],per,one?P[dp].name:'All partners',FF.city||FF.st||'All cities'].join(' · ');
-    if(bk){tbl=bkBlock(k,FF)+'<div class="bkh2">Records, most recent first</div>'+tbl;crumbs='<div class="crumbs2"><span class="cur">Partner-wise breakup</span><span class="sep">·</span><span>Then every record in the bucket</span></div>'}else
+    if(bk){tbl=bkBlock(k,FF);crumbs='<div class="crumbs2"><span class="cur">'+(/^glost/.test(k)?'Click a count to see the reason-wise breakup':'Partner-wise breakup')+'</span></div>'}else
     crumbs=single?'<div class="crumbs2"><span class="cur">'+P[dp].name+'</span><span class="sep">›</span><span>Records, most recent first</span></div>':
       '<div class="crumbs2"><a onclick="drillP(null)">‹ Partner-wise breakup</a><span class="sep">›</span><span class="cur">'+(one?P[dp].name:'All partners')+'</span><span class="sep">·</span><span>Records, most recent first</span></div>';
   }
@@ -1321,7 +1330,7 @@ function drawer(){
   el.innerHTML='<div class="scrim" onclick="closeD()"></div><div class="drawer wide" style="--dc:'+col+'"><div class="dh"><div class="t">'+ctx+'</div><h3>'+M[k][0]+' <b>'+n(val)+'</b></h3>'+
     '<a class="ib dlb" onclick="csvDrawer()" data-tt="Download CSV" aria-label="Download CSV"><svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"><path d="M12 4v11"/><path d="M7 10l5 5 5-5"/><path d="M5 19h14"/></svg></a><span class="cl" onclick="closeD()">✕</span>'+crumbs+'</div>'+
     '<div class="db">'+(empty?'<div class="empty">No entries for this selection</div>':tbl)+'</div>'+
-    '<div class="df"><span class="cnt">'+(view==='partners'?unit:n(rows.length)+' '+unit)+'</span><a onclick="openReport(\''+(scr?'screening':'followup')+'\',null)">Open full '+(scr?'Screening':'Follow-up')+' Report ›</a></div></div>';
+    '<div class="df">'+(bk?'':'<span class="cnt">'+(view==='partners'?unit:n(rows.length)+' '+unit)+'</span>')+'<a onclick="openReport(\''+(scr?'screening':'followup')+'\',null)">Open full '+(scr?'Screening':'Follow-up')+' Report ›</a></div></div>';
   state.dl={name:M[k][0]+' '+ctx,head:head,rows:rows};
 }
 function bkBlock(k,FF){
@@ -1330,7 +1339,7 @@ function bkBlock(k,FF){
   return '<table class="bt"><thead><tr><th>Partner</th><th class="n">'+M[k][0]+'</th></tr></thead><tbody>'+list.map(function(x){var z=!x.v,open=lost&&!z&&state.rx[x.p];
     return '<tr class="bp'+(z?' z':'')+'"><td><span class="dot" style="background:'+P[x.p].c+'"></span><span class="pn">'+P[x.p].name+'</span></td><td class="n">'+(lost&&!z?'<a class="rxc'+(open?' on':'')+'" data-p="'+x.p+'" data-v="'+x.v+'" onclick="rxT(\''+x.p+'\')" title="Show reasons"><b>'+n(x.v)+'</b><span class="car">'+(open?'⌃':'⌄')+'</span></a>':'<b>'+n(x.v)+'</b>')+'</td></tr>'+
       (open?x.r.map(function(r){return '<tr class="rxr" data-p="'+x.p+'"><td>'+r[0]+'</td><td class="n">'+n(r[1])+'</td></tr>'}).join(''):'')}).join('')+
-    '<tr class="tot"><td>All partners shown</td><td class="n">'+n(tot)+'</td></tr></tbody></table>';
+    '<tr class="tot"><td>Total</td><td class="n">'+n(tot)+'</td></tr></tbody></table>';
 }
 function rxT(p){var d=document.querySelector('.drawer .db'),s=d?d.scrollTop:0;state.rx=state.rx||{};state.rx[p]=!state.rx[p];drawer();var d2=document.querySelector('.drawer .db');if(d2)d2.scrollTop=s}
 function drillP(p){state.dp=p;drawer()}
@@ -1372,11 +1381,11 @@ function heroFor(tb,d){
   var H=tb==='screening'?[['proc','scr',d.scr,d.reg,'of registered women were screened','registered women'],['att','pos',d.pos,d.scr,'of screened women were identified as carriers','screened women']]:
     tb==='followup'?[['proc','pscr',d.pscr,d.pos,'of carrier women’s partners were screened','carrier women'],['att','riskH',d.riskH,d.pscr,'of partners screened here were an at-risk couple','partners screened here']]:
     [['bad','aff',d.aff,d.pnd,'of fetuses tested were affected','fetuses tested'],['good','mtp',d.mtp,d.aff,'opted for medical termination of pregnancy','affected fetuses']];
-  return '<div class="hero">'+H.map(function(h){return '<div class="hs '+h[0]+'" onclick="openD(\''+h[1]+'\')"><div class="big">'+cupc(h[2],h[3])+'</div><div class="t">'+h[4]+'</div><div class="hn">'+n(h[2])+' of '+n(h[3])+' '+h[5]+'</div></div>'}).join('')+'</div>';
+  return '<div class="hero'+(tb==='prenatal'?' pn':'')+'">'+H.map(function(h){return '<div class="hs '+h[0]+'" onclick="openD(\''+h[1]+'\')"><div class="big">'+cupc(h[2],h[3])+'</div><div class="t">'+h[4]+'</div><div class="hn">'+n(h[2])+' of '+n(h[3])+' '+h[5]+'</div></div>'}).join('')+'</div>';
 }
 function rsnRows(f,ff){var c={};FUR.forEach(function(x){if(match(x,ff||F)&&f(x))c[x.prs]=(c[x.prs]||0)+1});return RSN.concat(['']).map(function(t){return [(t||'Not available'),c[t]||0]})}
 function bkRow(l,v,k,sub){var z=!(v>0);return '<'+(z||!k?'div':'a')+' class="bkr'+(sub?' sub':'')+(z?' z':'')+'"'+(!z&&k?' data-k="'+k+'" data-v="'+v+'" onclick="openD(\''+k+'\');event.stopPropagation()"':'')+'><span>'+l+'</span><b>'+n(v)+'</b></'+(z||!k?'div':'a')+'>'}
-function bkList(head,rows){return '<div class="xln bkl"><div class="bkh">'+head+'</div>'+rows.join('')+'</div>'}
+function bkList(head,rows){return '<div class="xln bkl">'+(head?'<div class="bkh">'+head+'</div>':'')+rows.join('')+'</div>'}
 function bkLost(v,k){return [bkRow('Lost to follow-up',v,k)]}
 function lnk(k,v,t){return '<a data-k="'+k+'" data-v="'+v+'" onclick="openD(\''+k+'\');event.stopPropagation()">'+n(v)+' '+t+'</a>'}
 function tabBody(tb,d){
@@ -1388,14 +1397,14 @@ function tabBody(tb,d){
     var ty=['thal','sick','scdd','oth'];
     h+='<div class="panel reveal"><div class="sec" style="--sa:var(--att)">Type of hemoglobinopathy</div><div class="types t4">'+ty.map(function(t,i){return '<div class="ty" onclick="openD(\''+t+'\')"><div class="lk"><span class="dot" style="background:'+TYC[t]+'"></span>'+M[t][0]+'</div><div class="v">'+cu(d[t])+'</div><div class="p">'+cupc(d[t],d.pos)+' of women identified as carriers</div><div class="mini"><i style="width:'+(d.pos?100*d[t]/d.pos:0)+'%;background:'+TYC[t]+';animation-delay:'+(250+i*120)+'ms"></i></div></div>'}).join('')+'</div></div>';
   } else if(tb==='followup'){
-    var rl=bkList(n(d.risk)+' at-risk couples',[bkRow('Screened here',d.riskH,'riskH'),bkRow('Referred in',d.rin,'rin')]);
+    var rl=bkList('',[bkRow('Screened here',d.riskH,'riskH'),bkRow('Referred in',d.rin,'rin')]);
     var g1=d.pos-d.padv,g2=d.padv-d.pscr;
-    var l1=bkList(n(g1)+' of '+n(d.pos)+' partners',bkLost(d.glostA,'glostA').concat([bkRow('Awaiting partner test',d.gawtA,'gawtA')]));
-    var l2=bkList(n(g2)+' of '+n(d.padv)+' partners',[bkRow('Awaiting partner test',d.gawtB,'gawtB')].concat(bkLost(d.glostB,'glostB')));
+    var l1=bkList('',bkLost(d.glostA,'glostA').concat([bkRow('Awaiting partner test',d.gawtA,'gawtA')]));
+    var l2=bkList('',[bkRow('Awaiting partner test',d.gawtB,'gawtB')].concat(bkLost(d.glostB,'glostB')));
     h+='<div class="panel"><div class="sec" style="--sa:var(--tab2)">Partner screened and at-risk couples</div>'+stair([{k:'padv',line:l1},{k:'pscr',line:l2,tip:'Partner test done is Yes. Pending or blank counts as awaiting partner test. Lost to follow-up in either partner field counts as lost to follow-up.'},{k:'risk',line:rl}],d,[190,150,110])+'</div>';
   } else {
     var mnr=d.mtp-d.mtpT-d.mtpS,noP=d.risk-d.pnd;
-    var nl=bkList(noP>0?n(noP)+' of '+n(d.risk)+' at-risk couples had no prenatal diagnosis':'All '+n(d.risk)+' at-risk couples had a prenatal diagnosis',[bkRow('Declined',d.dec,'dec'),bkRow('Lost to follow-up',d.ltfu,'ltfu'),bkRow('Next step not recorded',d.nrec,'nrec')]);
+    var nl=bkList('',[bkRow('Declined',d.dec,'dec'),bkRow('Lost to follow-up',d.ltfu,'ltfu'),bkRow('Next step not recorded',d.nrec,'nrec'),'<div class="bkr tt"><span>No prenatal diagnosis</span><b>'+n(noP)+'</b></div>']);
     var st=[{k:'pnd',rt:'Type of prenatal diagnosis',rows:[['Chorionic villus sampling (CVS)',d.cvs,'cvs','var(--tab3)'],['Amniocentesis',d.amn,'amn','var(--tab2)'],['Cordocentesis',d.cord,'cord','var(--tab1d)'],d.pndnr>0?['Not available',d.pndnr,'pndnr','var(--nr)']:null],line:nl},
       {k:'aff',rt:'Type of hemoglobinopathy',rows:[['Thalassemia major',d.affT,'affT','var(--l4)'],['Sickle cell disease',d.affS,'affS','var(--aff1)']]},{k:'couns',gap:'gcouns',gl:'not counselled'},
       {k:'mtp',rt:'Type of hemoglobinopathy',rows:[['Thalassemia major',d.mtpT,'mtpT','var(--l4)'],['Sickle cell disease',d.mtpS,'mtpS','var(--aff1)'],mnr>0?['Not available',mnr,null,'var(--nr)']:null]}];

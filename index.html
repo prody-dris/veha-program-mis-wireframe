@@ -17,7 +17,7 @@
   --good:#6C5289; --goodd:#54406C; --att:#C9690C; --attd:#B85900; --aff1:#B74B21; --aff2:#D9926B; --l4:#AC3031; --neg:#C74B47; --neg2:#6E2826;
   --dec1:#6C5289; --dec2:#9D86BA; --dec3:#8A8E93; --nr:#A5A5A5; --nrd:#767676;
   --rs0:#7A2A2A; --rs1:#AC3031; --rs2:#C96B66; --rs3:#DE9C97; --rs4:#C8A27F;
-  --bar:#515151; --pc0:#333333; --pc1:#808080; --pc2:#BABABA;
+  --bar:#118659; --pc0:#0E6B47; --pc1:#3FA27A; --pc2:#9FD3BC; --pc3:#0A4F34; --pc4:#66BB9A; --hg:#118659; --ho:#C9690C;
   --att-t:#FCF6F0; --ty1:#D9661C; --ty2:#EDB02B; --ty3:#AC3031; --ty4:#BABABA; --tyd:#2B1700; --sp1:#515151; --sp2:#E3A868;
   --soft:color-mix(in srgb,var(--brand) 6%,#FFFFFF); --soft2:color-mix(in srgb,var(--brand) 10%,#FFFFFF); --brand-line:#D5D5D5;
   --ink-d:#404040; --navy:#404040;
@@ -335,6 +335,8 @@ html{scroll-behavior:smooth}
 .hs.att{--sc:var(--attd)}
 .hs.bad{--sc:var(--l4)}
 .hs.good{--sc:var(--dec1)}
+.hero .hs:nth-child(1){--sc:var(--hg)}
+.hero .hs:nth-child(2){--sc:var(--ho)}
 .hs .big{font-size:48px;font-weight:600;line-height:1;letter-spacing:-.02em;color:#FFFFFF;font-variant-numeric:tabular-nums}
 .hs .t{font-size:19px;font-weight:600;color:#FFFFFF;margin-top:10px;line-height:1.35}
 .hs .hn{font-size:13.5px;color:#FFFFFF;margin-top:8px;font-variant-numeric:tabular-nums;opacity:.95}
@@ -621,6 +623,20 @@ svg.ch2 path:hover,svg.ch2 .sg:hover{opacity:1}
 .xln a{cursor:pointer;font-weight:600;color:var(--ink);white-space:nowrap}.xln a:hover{text-decoration:underline;text-underline-offset:2px}
 .xln .sep{margin:0 8px;color:#A2A2A2}
 .det:has(.xln:only-child) .xln{margin-top:0}
+.bkl{margin-top:10px;font-size:13px;color:var(--ink-2)}
+.bkl .bkh{font-weight:600;color:var(--ink);padding:0 0 6px;border-bottom:1px solid #F0F0F0;margin-bottom:2px}
+.bkl .bkr{display:flex;justify-content:space-between;align-items:baseline;gap:12px;padding:4px 0;font-weight:400;color:var(--ink-2);white-space:normal}
+.bkl .bkr b{font-weight:600;color:var(--ink);font-variant-numeric:tabular-nums;text-align:right}
+.bkl .bkr.sub{padding-left:16px;font-size:12.5px;color:var(--ink-3)}
+.bkl a.bkr{cursor:pointer}.bkl a.bkr:hover span{text-decoration:underline;text-underline-offset:2px}
+.bkl .bkr.z{color:var(--ink-3)}.bkl .bkr.z b{color:var(--ink-3);font-weight:400}
+.sl{display:grid;gap:2px;margin-top:18px}
+.sl .lr{display:grid;grid-template-columns:12px minmax(0,1fr) 56px 56px;gap:10px;align-items:center;font-size:13.5px;padding:7px 6px;border-radius:8px;color:var(--ink-2)}
+.sl a.lr{cursor:pointer}.sl a.lr:hover{background:#FAFAFA}
+.sl .lr i{width:12px;height:12px;border-radius:3px;display:block}
+.sl .lr b{font-variant-numeric:tabular-nums;color:var(--ink);text-align:right}
+.sl .lr em{font-style:normal;color:var(--ink-3);font-size:13px;text-align:right}
+
 .clg .lg i.ln{width:20px;height:3px;border-radius:2px;margin-top:0}
 svg.cmb .halo{paint-order:stroke;stroke:#FFFFFF;stroke-width:4px;stroke-linejoin:round}
 .clg:has(.lg){flex-wrap:wrap;white-space:normal;row-gap:6px}
@@ -992,6 +1008,13 @@ function typeStack(gr,d,W){
   });
   return '<svg class="ch2 tstk" viewBox="0 0 '+W+' '+y+'" width="100%" role="img" aria-label="Type of hemoglobinopathy by '+gr.by+'">'+body+'</svg><div class="clg kk">'+spec.map(function(x){return '<span class="lg"><i style="background:'+x[1]+'"></i>'+M[x[0]][0]+'</span>'}).join('')+'</div>';
 }
+/* partners of carrier women by status: one stacked bar plus legend rows. The three statuses are mutually exclusive and sum to women identified as carriers.
+   Zero segments draw nothing; the legend row still shows 0. */
+function statusBar(items,tot,W){
+  var x=0,s='<svg class="ch2" viewBox="0 0 '+W+' 48" width="100%" role="img" aria-label="Partners of carrier women by status"><rect x="0" y="0" width="'+W+'" height="48" rx="4" fill="#F4F4F4"/>';
+  items.forEach(function(q){if(!q.v||!tot)return;var w=W*q.v/tot;s+=mark(q.k,null,q.v,q.l,'<rect x="'+x+'" y="0" width="'+Math.max(w-2,1)+'" height="48" style="fill:'+q.c+'"/>','sg');x+=w});
+  return s+'</svg><div class="sl">'+items.map(function(q){var t=q.v>0;return '<'+(t?'a':'div')+' class="lr"'+(t?' data-k="'+q.k+'" data-v="'+q.v+'" onclick="openD(\''+q.k+'\')"':'')+'><i style="background:'+q.c+'"></i><span class="nm">'+q.l+'</span><b>'+n(q.v)+'</b><em>'+pc(q.v,tot)+'</em></'+(t?'a':'div')+'>'}).join('')+'</div>';
+}
 /* care cascade: bars fall left to right, each step shows its share of the step before. Only used for true care steps. */
 function cascade(items,W,H){
   var cnt=items.length,pad=6,top=30,lab=84,y0=H-lab,chh=y0-top,colW=(W-2*pad)/cnt,bw=colW*.46,mx=Math.max(items[0].v,1),
@@ -1008,9 +1031,9 @@ function cascade(items,W,H){
   return s+'</svg>';
 }
 /* combo chart: bars are women screened per month (left axis), the line is the share of screened women identified as carriers (right axis).
-   Elapsed months only. With two or more partners in scope the bars sit side by side per partner in a graphite ramp; with one partner the bars are a single series. */
+   Elapsed months only. With two or more partners in scope the bars sit side by side per partner in a green ramp; with one partner the bars are a single series. */
 function niceAxis(mx,k){var raw=Math.max(mx,1e-9)/k,p=Math.pow(10,Math.floor(Math.log10(raw))),f=raw/p,st=(f<=1?1:f<=2?2:f<=2.5?2.5:f<=5?5:10)*p;return {st:st,max:st*k}}
-var PRAMP=['var(--pc0)','var(--pc1)','var(--pc2)'];
+var PRAMP=['var(--pc0)','var(--pc1)','var(--pc2)','var(--pc3)','var(--pc4)'];
 function combo(gr,W){
   var months=[],a,last=Math.min(F.to,TODAY);for(a=F.from;a<=last;a++)months.push(a);
   if(!months.length)return '<div class="empty" style="padding:30px 0">No elapsed months in this period</div>';
@@ -1029,7 +1052,7 @@ function combo(gr,W){
   cols.forEach(function(c,ci){
     var cx=LM+ci*slot+slot/2,yb=TOP+BH,lab=MSS[c.m%12]+(multi?' '+String(Math.floor(c.m/12)).slice(2):''),x0=cx-(bwid*ns+(ns>1?2*(ns-1):0))/2;
     if(!c.rep){s+='<g data-t="'+aLabel(c.m,true)+': Not available"><rect x="'+(cx-bwid/2)+'" y="'+(yb-3)+'" width="'+bwid+'" height="3" fill="#D1D1D1"/></g>'}
-    else c.segs.forEach(function(q,qi){if(!q.v)return;var h=BH*q.v/L.max,y0=yb-h,col=stk?PRAMP[(q.g.ci||0)%3]:'var(--bar)',lb=aLabel(c.m,true)+(stk?', '+q.g.l:''),bx=x0+qi*(bwid+2);
+    else c.segs.forEach(function(q,qi){if(!q.v)return;var h=BH*q.v/L.max,y0=yb-h,col=stk?PRAMP[(q.g.ci||0)%5]:'var(--bar)',lb=aLabel(c.m,true)+(stk?', '+q.g.l:''),bx=x0+qi*(bwid+2);
       s+=mark('scr',Object.assign({},q.g.f,{from:c.m,to:c.m}),q.v,lb+': '+n(q.v)+' women screened'+(stk?' (of '+n(c.scr)+' across the partners shown)':'')+'; '+n(c.pos)+' identified as carriers ('+pc(c.pos,c.scr)+')',
         '<rect x="'+bx+'" y="'+y0+'" width="'+bwid+'" height="'+Math.max(h,1)+'" rx="2" style="fill:'+col+'"/>')});
     s+='<text x="'+cx+'" y="'+(yb+17)+'" text-anchor="middle" font-size="'+fs+'" font-weight="600" fill="#333333">'+lab+'</text>'+(narrow?'':'<text x="'+cx+'" y="'+(yb+33)+'" text-anchor="middle" font-size="11" fill="#727272">'+(c.rep?n(c.scr):'')+'</text>')});
@@ -1042,7 +1065,7 @@ function combo(gr,W){
 }
 function comboLegend(gr){
   var stk=gr.by==='partner';
-  return (stk?gr.g.map(function(g){return '<span class="lg"><i style="background:'+PRAMP[(g.ci||0)%3]+'"></i>'+g.l+'</span>'}).join(''):'<span class="lg"><i style="background:var(--bar)"></i>Women screened</span>')+
+  return (stk?gr.g.map(function(g){return '<span class="lg"><i style="background:'+PRAMP[(g.ci||0)%5]+'"></i>'+g.l+'</span>'}).join(''):'<span class="lg"><i style="background:var(--bar)"></i>Women screened</span>')+
     '<span class="lg"><i class="ln" style="background:var(--att)"></i>% of screened women identified as carriers</span><span class="lg">Left axis: women screened. Right axis: % identified as carriers.</span>';
 }
 /* Customize: partner picker for the combo chart only. Lists Program MIS Enabled partners in scope; state.cx holds the unticked ones. */
@@ -1109,7 +1132,7 @@ function chartsFor(tab,d){
     '<div class="cgrid one"><div class="panel cpan reveal czr"><div class="sec" style="--sa:var(--tab1)">Women screened by month and share identified as carriers</div>'+czBtn(gr)+'<div id="cmbh">'+cmbInner(gr,W)+'</div></div></div>';
   if(tab==='followup'){
     return '<div class="cgrid one">'+
-      cpanel('From women identified as carriers to at-risk couples','var(--tab2)',cascade([{k:'pos',l:'Women identified as carriers',v:d.pos,c:'var(--att)'},{k:'padv',l:'Partner advised testing',v:d.padv,c:'var(--g2)'},{k:'pscr',l:'Partner screened',v:d.pscr,c:'var(--g0)'},{k:'risk',l:'At-risk couples',v:d.risk,c:'var(--aff1)'}],W2,340))+'</div>';
+      cpanel('Partners of carrier women, by status','var(--tab2)',statusBar([{k:'pscr',l:'Partner screened',v:d.pscr,c:'var(--hg)'},{k:'gawt',l:'Awaiting partner test',v:d.gawt,c:'var(--ho)'},{k:'glost',l:'Partner lost to follow-up',v:d.glost,c:'var(--l4)'}],d.pos,W2))+'</div>';
   }
   return '<div class="cgrid one">'+cpanel('Outcome of affected fetuses','var(--l4)',d.aff?donut([{k:'mtp',l:'Medical termination of pregnancy',v:d.mtp,c:'var(--dec1)'},{k:'cont',l:'Continuing pregnancy',v:d.cont,c:'var(--dec2)'},{k:'und',l:'Undecided',v:d.und,c:'var(--g1)'},{k:'cltf',l:'Lost to follow-up',v:d.cltf,c:'var(--neg)'}],['affected fetuses'],1):'<div class="empty" style="padding:30px 0">No affected fetuses in this selection</div>')+'</div>'+
     '<div class="cgrid one">'+cpanel('From at-risk couple to termination of pregnancy','var(--aff1)',stepdown(d))+'</div>';
@@ -1295,7 +1318,10 @@ function heroFor(tb,d){
     [['bad','aff',d.aff,d.pnd,'of fetuses tested were affected','fetuses tested'],['good','mtp',d.mtp,d.aff,'opted for medical termination of pregnancy','affected fetuses']];
   return '<div class="hero">'+H.map(function(h){return '<div class="hs '+h[0]+'" onclick="openD(\''+h[1]+'\')"><div class="big">'+cupc(h[2],h[3])+'</div><div class="t">'+h[4]+'</div><div class="hn">'+n(h[2])+' of '+n(h[3])+' '+h[5]+'</div></div>'}).join('')+'</div>';
 }
-function rsnLine(f){var c={};FUR.forEach(function(x){if(match(x,F)&&f(x))c[x.prs]=(c[x.prs]||0)+1});var p=RSN.concat(['']).filter(function(t){return c[t]}).map(function(t){return (t||'Not available')+' '+n(c[t])});return p.length?' (reasons: '+p.join(', ')+')':''}
+function rsnRows(f){var c={};FUR.forEach(function(x){if(match(x,F)&&f(x))c[x.prs]=(c[x.prs]||0)+1});return RSN.concat(['']).map(function(t){return [(t||'Not available'),c[t]||0]})}
+function bkRow(l,v,k,sub){var z=!(v>0);return '<'+(z||!k?'div':'a')+' class="bkr'+(sub?' sub':'')+(z?' z':'')+'"'+(!z&&k?' data-k="'+k+'" data-v="'+v+'" onclick="openD(\''+k+'\');event.stopPropagation()"':'')+'><span>'+l+'</span><b>'+n(v)+'</b></'+(z||!k?'div':'a')+'>'}
+function bkList(head,rows){return '<div class="xln bkl"><div class="bkh">'+head+'</div>'+rows.join('')+'</div>'}
+function bkLost(v,k,fs){return [bkRow('Lost to follow-up',v,k)].concat(rsnRows(fs).map(function(r){return bkRow(r[0],r[1],null,true)}))}
 function lnk(k,v,t){return '<a data-k="'+k+'" data-v="'+v+'" onclick="openD(\''+k+'\');event.stopPropagation()">'+n(v)+' '+t+'</a>'}
 function tabBody(tb,d){
   var h=heroFor(tb,d);
@@ -1306,14 +1332,14 @@ function tabBody(tb,d){
     var ty=['thal','sick','scdd','oth'];
     h+='<div class="panel reveal"><div class="sec" style="--sa:var(--att)">Type of hemoglobinopathy</div><div class="types t4">'+ty.map(function(t,i){return '<div class="ty" onclick="openD(\''+t+'\')"><div class="lk"><span class="dot" style="background:'+TYC[t]+'"></span>'+M[t][0]+'</div><div class="v">'+cu(d[t])+'</div><div class="p">'+cupc(d[t],d.pos)+' of women identified as carriers</div><div class="mini"><i style="width:'+(d.pos?100*d[t]/d.pos:0)+'%;background:'+TYC[t]+';animation-delay:'+(250+i*120)+'ms"></i></div></div>'}).join('')+'</div></div>';
   } else if(tb==='followup'){
-    var rl='<div class="xln">'+lnk('riskH',d.riskH,'screened here')+'<span class="sep">·</span>'+lnk('rin',d.rin,'referred in')+'</div>';
-    var g1=d.pos-d.padv,g2=d.padv-d.pscr,j=function(a){return a.filter(function(x){return x}).join(', ')};
-    var l1=g1>0?'<div class="xln"><b>'+n(g1)+' of '+n(d.pos)+' partners</b>: '+j([d.glostA>0?lnk('glostA',d.glostA,'lost to follow-up')+rsnLine(FSEL.glostA):'',d.gawtA>0?lnk('gawtA',d.gawtA,'awaiting partner test'):''])+'.</div>':'<div class="xln">All '+n(d.pos)+' carrier women’s partners were advised.</div>';
-    var l2=g2>0?'<div class="xln"><b>'+n(g2)+' of '+n(d.padv)+' partners</b>: '+j([d.gawtB>0?lnk('gawtB',d.gawtB,'awaiting partner test'):'',d.glostB>0?lnk('glostB',d.glostB,'lost to follow-up')+rsnLine(FSEL.glostB):''])+'.</div>':'<div class="xln">All '+n(d.padv)+' advised partners were screened.</div>';
+    var rl=bkList(n(d.risk)+' at-risk couples',[bkRow('Screened here',d.riskH,'riskH'),bkRow('Referred in',d.rin,'rin')]);
+    var g1=d.pos-d.padv,g2=d.padv-d.pscr;
+    var l1=bkList(n(g1)+' of '+n(d.pos)+' partners',bkLost(d.glostA,'glostA',FSEL.glostA).concat([bkRow('Awaiting partner test',d.gawtA,'gawtA')]));
+    var l2=bkList(n(g2)+' of '+n(d.padv)+' partners',[bkRow('Awaiting partner test',d.gawtB,'gawtB')].concat(bkLost(d.glostB,'glostB',FSEL.glostB)));
     h+='<div class="panel"><div class="sec" style="--sa:var(--tab2)">Partner screened and at-risk couples</div>'+stair([{k:'padv',line:l1},{k:'pscr',line:l2,tip:'Partner test done is Yes. Pending or blank counts as awaiting partner test. Lost to follow-up in either partner field counts as lost to follow-up.'},{k:'risk',line:rl}],d,[190,150,110])+'</div>';
   } else {
     var mnr=d.mtp-d.mtpT-d.mtpS,noP=d.risk-d.pnd;
-    var nl=noP>0?'<div class="xln"><b>'+n(noP)+' of '+n(d.risk)+' at-risk couples</b> ('+lnk('riskH',d.riskH,'screened here')+' + '+lnk('rin',d.rin,'referred in')+') had no prenatal diagnosis: '+[d.dec>0?lnk('dec',d.dec,'declined'):'',d.ltfu>0?lnk('ltfu',d.ltfu,'lost to follow-up'):'',d.nrec>0?lnk('nrec',d.nrec,'next step not recorded'):''].filter(function(x){return x}).join(', ')+'. The other '+n(d.pnd)+' did.</div>':'<div class="xln">All '+n(d.risk)+' at-risk couples ('+lnk('riskH',d.riskH,'screened here')+' + '+lnk('rin',d.rin,'referred in')+') had a prenatal diagnosis.</div>';
+    var nl=bkList(noP>0?n(noP)+' of '+n(d.risk)+' at-risk couples had no prenatal diagnosis':'All '+n(d.risk)+' at-risk couples had a prenatal diagnosis',[bkRow('Declined',d.dec,'dec'),bkRow('Lost to follow-up',d.ltfu,'ltfu'),bkRow('Next step not recorded',d.nrec,'nrec')]);
     var st=[{k:'pnd',rt:'Type of prenatal diagnosis',rows:[['Chorionic villus sampling (CVS)',d.cvs,'cvs','var(--tab3)'],['Amniocentesis',d.amn,'amn','var(--tab2)'],['Cordocentesis',d.cord,'cord','var(--tab1d)'],d.pndnr>0?['Not available',d.pndnr,'pndnr','var(--nr)']:null],line:nl},
       {k:'aff',rt:'Type of hemoglobinopathy',rows:[['Thalassemia major',d.affT,'affT','var(--l4)'],['Sickle cell disease',d.affS,'affS','var(--aff1)']]},{k:'couns',gap:'gcouns',gl:'not counselled'},
       {k:'mtp',rt:'Type of hemoglobinopathy',rows:[['Thalassemia major',d.mtpT,'mtpT','var(--l4)'],['Sickle cell disease',d.mtpS,'mtpS','var(--aff1)'],mnr>0?['Not available',mnr,null,'var(--nr)']:null]}];

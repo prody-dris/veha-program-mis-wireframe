@@ -7,12 +7,18 @@
 <title>Program MIS Dashboard · Veha Foundation</title>
 <style>
 :root{
-  /* One token system. Severity: good green, process blue and teal, attention orange (carriers, partner advised testing), serious deep orange (at-risk couple, Sickle cell disease), most serious red (Thalassemia major), failure reds (Declined, Lost to follow-up), decision plums, Not available grey. Navbar purple is the only purple. Opacity scale: 100, 40 (ribbons), 10 (tracks, empty), 6 (tints). */
-  --brand:#2863AB; --brand-d:#2863AB; --brand-2:#2863AB; --brand-3:#98A6B8;
-  --tab1:#2863AB; --tab1d:#2863AB; --tab2:#008893; --tab2d:#00828D; --tab3:#2863AB; --tab3d:#2863AB;
-  --good:#118659; --goodd:#118659; --att:#C9690C; --attd:#B85900; --aff1:#B74B21; --l4:#AC3031; --neg:#C74B47; --neg2:#6E2826;
-  --dec1:#6C5289; --dec2:#9D86BA; --nr:#A0A5AB; --nrd:#6B7280;
-  --att-t:#FCF6F0; --ty1:#C9690C; --ty2:#E1A263; --ty3:#B74B21; --ty4:#EFD3AC; --tyd:#5A2E05;
+  /* One token system, calmer palette (12 Oct 2026 client round). Blue is retired; the old blue tab colour is now teal.
+     Sentiment of a rate or an outcome: good outcome = plum (never green on this dashboard; a medical termination opted for is good), process = teal and slate,
+     attention = orange (carriers, at-risk couples, awaiting partner test), serious = deep orange, failure = red family (affected fetus, declined, lost), decision = plum family, Not available = grey.
+     Hero rates: Women screened = process teal, carriers = attention; Partner screened = process teal, at-risk couples = attention; fetuses affected = failure red, medical termination opted = good plum.
+     Navbar purple is the only purple chrome. Every text colour is checked at 4.5:1 or better against its fill (numbers in -d tokens on 8% tints). Light theme only. */
+  --brand:#1F7A7D; --brand-d:#17595C; --brand-2:#1F7A7D; --brand-3:#98A6B8;
+  --tab1:#1F7A7D; --tab1d:#17595C; --tab2:#556677; --tab2d:#3F4D5B; --tab3:#1F7A7D; --tab3d:#17595C;
+  --good:#6C5289; --goodd:#54406C; --att:#B35400; --attd:#8F4300; --aff1:#B74B21; --aff2:#D9926B; --l4:#AC3031; --neg:#C74B47; --neg2:#6E2826;
+  --dec1:#6C5289; --dec2:#9D86BA; --dec3:#8A94A3; --nr:#A0A5AB; --nrd:#6B7280;
+  --rs0:#7A2A2A; --rs1:#AC3031; --rs2:#C96B66; --rs3:#DE9C97; --rs4:#C8A27F;
+  --bar:#5E9FA2; --pc0:#17595C; --pc1:#3E9396; --pc2:#8CC1C3;
+  --att-t:#FCF6F0; --ty1:#9A4A08; --ty2:#CD7A1E; --ty3:#E9A85C; --ty4:#F6DDB6; --tyd:#3B1E03;
   --soft:color-mix(in srgb,var(--brand) 6%,#FFFFFF); --soft2:color-mix(in srgb,var(--brand) 10%,#FFFFFF); --brand-line:#D1D5DB;
   --ink-d:#374151; --navy:#374151;
   --ink:#1F2328; --ink-2:#374151; --ink-3:#6B7280; --line:#E5E7EB; --side:#F9FAFB; --bg:#FFFFFF;
@@ -75,7 +81,7 @@ section[data-view].active{display:block}
 .hlc .s{font-size:12.5px;margin-top:8px;opacity:1}
 .hlc .ring{position:absolute;right:14px;top:14px}
 .hlc.c1{background:linear-gradient(135deg,var(--brand),var(--brand-2))}
-.hlc.c2{background:linear-gradient(135deg,#00828D,#00828D)}
+.hlc.c2{background:linear-gradient(135deg,var(--tab2),var(--tab2))}
 .hlc.c3{background:linear-gradient(135deg,#4A5666,var(--brand))}
 
 /* step frame */
@@ -307,7 +313,7 @@ tr.muted td{color:var(--ink-3)}
 .fl a{font-size:13px;color:var(--brand);cursor:pointer;font-weight:600;padding:0 4px}
 .meta{display:flex;align-items:center;gap:8px;flex-wrap:wrap;font-size:12.5px;color:var(--ink-3);margin:0 0 16px}
 .meta .dotsep{color:#D1D5DB}
-.meta .sample{margin-left:auto;background:#F1F5F9;color:#00828D;border:1px solid #98A6B8;border-radius:999px;padding:2px 10px;font-weight:600}
+.meta .sample{margin-left:auto;background:#F1F5F9;color:var(--tab1d);border:1px solid #98A6B8;border-radius:999px;padding:2px 10px;font-weight:600}
 .tabs{position:sticky;top:47px;background:#FFFFFF;z-index:4}
 .fade{animation:fd .22s ease-out}
 html{scroll-behavior:smooth}
@@ -322,15 +328,16 @@ html{scroll-behavior:smooth}
 .top{margin:22px 0 6px}
 .top h1{font-size:22px;letter-spacing:-.01em}
 .meta{margin:0 0 22px}
-.hero{display:grid;grid-template-columns:repeat(2,1fr);border-radius:18px;margin:0 0 30px;position:relative;overflow:hidden}
-.hs{padding:30px 38px 32px;cursor:pointer;position:relative;transition:filter .2s;color:#FFFFFF}
-.hs:nth-child(1){background:var(--good)}
-.hs:nth-child(2){background:var(--att)}
-
-.hs .acc{display:none;width:34px;height:4px;border-radius:3px;background:rgba(255,255,255,1);margin-bottom:14px}
-.hs .big{font-size:48px;font-weight:600;line-height:1;letter-spacing:-.02em;color:#FFFFFF;font-variant-numeric:tabular-nums}
-.hs .t{font-size:19px;font-weight:600;color:#FFFFFF;margin-top:10px;line-height:1.35}
-.hs .of{font-size:22px;font-weight:600;color:#A0A5AB;margin:0 10px;letter-spacing:0}
+.hero{display:grid;grid-template-columns:repeat(2,1fr);gap:16px;margin:0 0 28px;position:relative}
+.hs{--sc:var(--tab1);--sd:var(--tab1d);padding:24px 30px 24px;cursor:pointer;position:relative;transition:box-shadow .2s;color:var(--ink);border-radius:16px;border:1px solid color-mix(in srgb,var(--sc) 22%,#FFFFFF);border-left:6px solid var(--sc);background:color-mix(in srgb,var(--sc) 7%,#FFFFFF)}
+.hs:hover{box-shadow:0 2px 10px rgba(31,42,55,.08)}
+.hs.proc{--sc:var(--tab1);--sd:var(--tab1d)}
+.hs.att{--sc:var(--att);--sd:var(--attd)}
+.hs.bad{--sc:var(--l4);--sd:#8F2425}
+.hs.good{--sc:var(--good);--sd:var(--goodd)}
+.hs .big{font-size:48px;font-weight:600;line-height:1;letter-spacing:-.02em;color:var(--sd);font-variant-numeric:tabular-nums}
+.hs .t{font-size:18px;font-weight:600;color:var(--ink);margin-top:10px;line-height:1.35}
+.hs .hn{font-size:13px;color:var(--ink-2);margin-top:6px;font-variant-numeric:tabular-nums}
 .tabs{margin:0 0 26px;gap:8px;padding-top:4px}
 .tabs a{font-size:15px;padding:12px 18px}
 .sec{font-size:15px;font-weight:600;margin:0 0 18px;display:flex;align-items:center;gap:10px;letter-spacing:-.005em}
@@ -410,7 +417,7 @@ html{scroll-behavior:smooth}
 .pop .crt{font-size:12px;font-weight:600;color:var(--ink-2);margin-bottom:8px}
 .pop .crr{display:flex;gap:8px;margin-bottom:10px}.pop .crr label{flex:1;font-size:11.5px;color:var(--ink-3);display:flex;flex-direction:column;gap:4px}
 .pop .crr input{font:inherit;font-size:12.5px;border:1px solid #D1D5DB;border-radius:6px;padding:5px 6px}
-.top .sample{background:#F1F5F9;color:#00828D;border:1px solid #98A6B8;border-radius:999px;padding:2px 10px;font-weight:600;font-size:11.5px;margin-right:auto}
+.top .sample{background:#F1F5F9;color:var(--tab1d);border:1px solid #98A6B8;border-radius:999px;padding:2px 10px;font-weight:600;font-size:11.5px;margin-right:auto}
 .top h1{margin-right:0!important}
 .fl select{height:32px;padding-top:0;padding-bottom:0}
 #f-reset{font-size:12.5px;color:var(--ink-3);cursor:pointer}#f-reset:hover{color:var(--brand)}
@@ -564,7 +571,7 @@ svg.ch2 path:hover,svg.ch2 .sg:hover{opacity:1}
 .clg{flex-wrap:nowrap;white-space:nowrap;gap:8px;font-size:12.5px;margin-top:16px}
 .clg .sw{margin-right:0}
 .clg .sw.hat{margin-left:14px}
-.clg.kk{flex-wrap:wrap!important;white-space:normal!important;row-gap:6px}.clg .lg{display:inline-flex;align-items:center;gap:4px;margin-right:12px}.clg .lg.lgd{margin-left:14px;font-weight:600;color:var(--ink-2)}.clg .lg i.lgs{width:120px;height:10px;border-radius:5px;background:linear-gradient(90deg,#118659,#2863AB,#C9690C,#B74B21)}.clg .lg i{display:inline-block;width:12px;height:12px;border-radius:3px}
+.clg.kk{flex-wrap:wrap!important;white-space:normal!important;row-gap:6px}.clg .lg{display:inline-flex;align-items:center;gap:4px;margin-right:12px}.clg .lg.lgd{margin-left:14px;font-weight:600;color:var(--ink-2)}.clg .lg i.lgs{display:none}.clg .lg i{display:inline-block;width:12px;height:12px;border-radius:3px}
 #ctip{position:fixed;z-index:70;pointer-events:none;display:none;background:#4A5666;color:#FFFFFF;font-size:12.5px;font-weight:500;padding:6px 10px;border-radius:7px;white-space:nowrap;box-shadow:0 6px 16px rgba(20,26,34,.1)}
 /* breakdown rows: shared grid, no stray borders, one baseline */
 .rsplit{display:grid;grid-template-columns:1fr 1fr;gap:0;align-items:start}
@@ -607,6 +614,56 @@ svg.ch2 path:hover,svg.ch2 .sg:hover{opacity:1}
 @media (max-width:1279px){.cgrid.even{grid-template-columns:1fr}}
 .rkr .tr i{background:var(--good)}.rkr b{color:var(--goodd)}.rkr.tot .tr i{background:var(--goodd)}
 .clg:has(.sklg){justify-content:flex-start;gap:0}.sklg{display:flex;flex-wrap:wrap;align-items:center;justify-content:flex-start;gap:8px 20px;font-size:12px;color:var(--ink-2)}.sklg .lg{display:inline-flex;flex-direction:row;align-items:center;gap:6px;margin:0;font-size:12px;white-space:nowrap}.sklg .lg i{display:inline-block;flex:none;width:10px;height:10px;border-radius:2px;margin:0}.sklg .lg i.lgs{width:96px;height:8px;border-radius:999px}.sklg .lg.lgd{margin:0;font-weight:600}
+
+/* round 5: one-line breakdowns, step-down chart, combo legend, narrow screens */
+.xln{font-size:12.5px;line-height:1.5;color:var(--ink-2);margin-top:10px}.xln b{color:var(--ink);font-weight:600}
+.xr+.xln,.xbt+.xln{margin-top:10px;padding-top:8px;border-top:1px solid #F1F5F9}
+.xln a{cursor:pointer;font-weight:600;color:var(--ink);white-space:nowrap}.xln a:hover{text-decoration:underline;text-underline-offset:2px}
+.xln .sep{margin:0 8px;color:#9CA3AF}
+.det:has(.xln:only-child) .xln{margin-top:0}
+.clg .lg i.ln{width:20px;height:3px;border-radius:2px;margin-top:0}
+.sd{display:grid;gap:4px}
+.sdr{display:grid;grid-template-columns:minmax(150px,230px) minmax(0,1fr) minmax(0,38%);gap:6px 20px;align-items:center;padding:12px 4px;border-bottom:1px solid #F1F5F9}
+.sdr:last-child{border-bottom:0}
+.sdn{font-size:14px;font-weight:600;color:var(--ink);line-height:1.3}
+.sds{font-size:12.5px;color:var(--ink-3);margin-top:2px;font-variant-numeric:tabular-nums}
+.sdb{display:flex;align-items:center;gap:12px;min-width:0}
+.sdt{flex:1;display:flex;height:26px;min-width:0}
+.sdf{display:block;height:100%;border-radius:4px 0 0 4px;cursor:pointer;min-width:4px;transition:filter .15s}
+.sdf:hover{filter:brightness(.92)}
+.sdg{display:block;height:100%;border:1px dashed #C4CAD3;border-left:0;border-radius:0 4px 4px 0;background:repeating-linear-gradient(45deg,#F8FAFC 0 4px,#EEF1F5 4px 8px)}
+.sdt .sdf:last-child{border-radius:4px}
+.sdv{font-size:20px;font-weight:600;min-width:46px;text-align:right;font-variant-numeric:tabular-nums;color:var(--ink)}
+.sdd{font-size:12.5px;color:var(--ink-2);line-height:1.6;display:flex;flex-wrap:wrap;gap:2px 12px;align-items:center}
+.sdd .dn{font-weight:600;color:var(--ink)}.sdd .dn0{color:var(--ink-3)}
+.sdd .dp{cursor:pointer;display:inline-flex;align-items:center;gap:5px;white-space:nowrap}.sdd .dp:hover{text-decoration:underline;text-underline-offset:2px}
+.sdd .dp i{display:inline-block;width:9px;height:9px;border-radius:2px}
+.sdgi{display:inline-block;width:22px;height:10px;border:1px dashed #C4CAD3;border-radius:2px;background:repeating-linear-gradient(45deg,#F8FAFC 0 3px,#EEF1F5 3px 6px);margin-right:2px}
+svg.cmb .halo{paint-order:stroke;stroke:#FFFFFF;stroke-width:4px;stroke-linejoin:round}
+.clg:has(.lg){flex-wrap:wrap;white-space:normal;row-gap:6px}
+@media (max-width:1100px){.sdr{grid-template-columns:minmax(130px,200px) minmax(0,1fr)}.sdd{grid-column:1/-1;padding-left:2px}}
+@media (max-width:900px){
+  .desk{grid-template-columns:minmax(0,1fr)}
+  .sb{display:none}
+  .wrap{padding:6px 14px 60px}
+}
+@media (max-width:720px){
+  .nb{padding:0 12px;gap:12px}.nb img{height:28px}.nb .help{display:none}
+  .top{flex-wrap:wrap;gap:8px}.top h1{font-size:19px;flex:1 1 100%}
+  .fl{width:100%}.fcb{display:flex;flex-wrap:wrap;gap:8px}
+  .tabs{overflow-x:auto;gap:2px;white-space:nowrap;scrollbar-width:none}.tabs::-webkit-scrollbar{display:none}.tabs a{font-size:13.5px;padding:10px 12px;flex:none}
+  .hero{grid-template-columns:1fr;gap:12px}.hs{padding:18px 20px}.hs .big{font-size:40px}.hs .t{font-size:16px}
+  .panel{padding:18px 16px 20px;border-radius:14px;margin-bottom:20px}
+  .steps,.dets{grid-template-columns:minmax(0,1fr)!important}
+  .det:empty{display:none}
+  .rsplit{grid-template-columns:minmax(0,1fr)}.rg+.rg{padding:18px 0 0;border-left:0;border-top:1px solid var(--line);margin-top:18px}
+  .types.t4,.types.rc{grid-template-columns:repeat(2,minmax(0,1fr))}.types.t4 .ty{padding:6px 12px 4px}.types.t4 .ty:nth-child(odd){padding-left:0;border-left:0}.types .ty .v{font-size:30px}
+  .sdr{grid-template-columns:minmax(0,1fr);gap:6px;padding:12px 0}.sdd{grid-column:auto}
+  .clg{font-size:12px}
+  .drawer,.drawer.wide{width:100vw!important;max-width:100vw}
+  .drawer .db{overflow-x:auto}
+  .pop{max-width:calc(100vw - 24px)}
+}
 </style>
 </head>
 <body>
@@ -688,6 +745,36 @@ var ROWS=[["fogsi","Kolkata South","2025-26",0,321,304,15,1,10,23,2,0,2,0,1,1,0,
     r.push(ivf,le12,scdd,padv,ltfu,cltf);
   });
 })();
+
+/* v3 round 5 extension (seeded sample, deterministic, 12 Oct 2026 client round). Appends after cltf, in COLS order:
+   lA,lB,lr0,lr1,lr2,lr3,lr4,lrn,rin,nrec,cord,und,ncd.
+   Partner bucket rule (Nihaan, 12 Oct): partner_testing_advised is Yes / Lost to follow-up; partner_test_done is Yes / Pending / Lost to follow-up; a blank shows as Pending.
+     Lost to follow-up = either field is Lost to follow-up (lA = advised Lost, lB = advised Yes and test Lost); these rows carry a reason (lr0..lr4, lrn = reason not recorded).
+     Awaiting partner test = Pending or blank. Screened = Yes. pos = pscr + awaiting + lost.
+   Mukta's first three months of FY 2025-26 are Screening Register only: no Follow-up Record exists, so every follow-up count is zero and the carriers' partners show as Pending.
+   rin = at-risk couples referred in (Wadia only, partner result from elsewhere). They sit outside the carrier and partner chain. risk (total) = screened-here + rin.
+   nrec = at-risk couples with no recorded next step. risk = pnd + dec + ltfu + nrec. cord = Cordocentesis (taken out of amn). und = affected fetus, couple Undecided.
+   ncd = of those undecided, how many were not counselled. couns = aff - ncd. */
+(function(){
+  function h(i,s){var x=Math.sin((i+1)*12.9898+s*78.233)*43758.5453;return x-Math.floor(x)}
+  var RIN={'2026-27':[1,2,1,2,1,1],'2025-26':[1,0,2,1,0,1,1,1,0,1,0,1]},RNR={'2026-27':{1:1,3:1},'2025-26':{7:1}},WT=[.30,.24,.14,.14,.18],ncd25=false,seen={};
+  ROWS.forEach(function(r,i){
+    var P=r[0],FYv=r[2],m=r[3],regOnly=P==='fogsi'&&FYv==='2025-26'&&m<=2;
+    if(regOnly){[9,10,11,12,13,14,15,16,17,18,19,23,24,25].forEach(function(k){r[k]=0})}
+    var pos=r[6]+r[7]+r[8]+r[22],A=pos-r[23],B=r[23]-r[9];
+    var lA=regOnly?0:Math.min(A,Math.round(A*(0.65+0.3*h(i,14)))),lB=Math.min(B,Math.round(B*(0.18+0.25*h(i,15)))),lost=lA+lB,lr=[0,0,0,0,0,0];
+    for(var k=0;k<lost;k++){if(h(i*37+k,17)>0.93){lr[5]++;continue}var u=h(i*31+k,16),c=0,j=0;for(;j<4;j++){c+=WT[j];if(u<c)break}lr[j]++}
+    var rin=P==='wadia'?RIN[FYv][m]:0,rnr=P==='wadia'&&RNR[FYv][m]?RNR[FYv][m]:0,rinP=rin-rnr;
+    if(rin){r[10]+=rin;r[12]+=rinP;if(h(i,18)>.5)r[13]+=rinP;else r[14]+=rinP}
+    var nrec=rnr;
+    if(!regOnly&&!rin&&r[12]>r[15]+r[16]&&r[13]+r[14]>0&&h(i,11)>0.95){r[12]--;if(r[13]>0&&(r[14]===0||h(i,19)>.5))r[13]--;else r[14]--;nrec++}
+    var cord=0;if(r[14]>=2&&h(i,12)>.55){r[14]--;cord=1}
+    var aff=r[15]+r[16],mtp=r[18]+r[19],cont0=aff-mtp-r[25],und=cont0>0&&h(i,13)>.4?1:0,ncd=0;
+    if(und&&FYv==='2025-26'&&!ncd25){ncd=1;ncd25=true}
+    r[17]=aff-ncd;
+    r.push(lA,lB,lr[0],lr[1],lr[2],lr[3],lr[4],lr[5],rin,nrec,cord,und,ncd);
+  });
+})();
 var P={
   fogsi:{name:'Mukta',full:'Mukta',prog:'Mukta',c:'#374151'},
   sion:{name:'Sion',full:'Sion - Lokmanya Tilak General Municipal Hospital',prog:'MUKTA, Sion Hospital',c:'#6B7280'},
@@ -697,7 +784,7 @@ var P={
 var FY={'2025-26':{range:'01-04-2025 to 31-03-2026',upto:'31-03-2026',y:2025},'2026-27':{range:'01-04-2026 to 31-03-2027',upto:'30-09-2026',y:2026}};
 var MN=['Apr','May','Jun','Jul','Aug','Sep','Oct','Nov','Dec','Jan','Feb','Mar'];
 var MF=['April','May','June','July','August','September','October','November','December','January','February','March'];
-var COLS=['p','c','fy','m','reg','scr','thal','sick','oth','pscr','risk','dec','pnd','cvs','amn','affT','affS','couns','mtpT','mtpS','ivf','le12','scdd','padv','ltfu','cltf'];
+var COLS=['p','c','fy','m','reg','scr','thal','sick','oth','pscr','risk','dec','pnd','cvs','amn','affT','affS','couns','mtpT','mtpS','ivf','le12','scdd','padv','ltfu','cltf','lA','lB','lr0','lr1','lr2','lr3','lr4','lrn','rin','nrec','cord','und','ncd'];
 var AGGK=COLS.slice(4).concat(['nivf','gt12']);
 var TARGET=85000;
 var M={
@@ -707,16 +794,20 @@ var M={
   thal:['Beta thalassemia carrier','var(--ty1)','s'],sick:['Sickle cell carrier','var(--ty2)','s'],scdd:['Sickle cell disease','var(--ty3)','s'],oth:['Other hemoglobinopathies','var(--ty4)','s'],
   padv:['Partner advised testing','var(--att)','f'],pscr:['Partner screened','var(--tab2)','f'],risk:['At-risk couple','var(--aff1)','f'],
   dec:['Declined prenatal diagnosis','var(--neg)','f'],ltfu:['Lost to follow-up','var(--neg2)','f'],
-  pnd:['Prenatal diagnosis','var(--tab1)','f'],cvs:['Chorionic villus sampling (CVS)','var(--tab1)','f'],amn:['Amniocentesis','var(--tab2)','f'],pndnr:['Type of prenatal diagnosis, Not available','var(--nr)','f'],
+  pnd:['Prenatal diagnosis','var(--tab3)','f'],cvs:['Chorionic villus sampling (CVS)','var(--tab3)','f'],amn:['Amniocentesis','var(--tab2)','f'],pndnr:['Type of prenatal diagnosis, Not available','var(--nr)','f'],
   unaff:['Not affected by hemoglobinopathy','var(--good)','f'],aff:['Thalassemia major or sickle cell disease','var(--l4)','f'],affT:['Thalassemia major','var(--l4)','f'],affS:['Sickle cell disease','var(--aff1)','f'],
-  couns:['Couple counselled','var(--tab2)','f'],cont:['Continued pregnancy','var(--dec2)','f'],cltf:['Lost to follow-up after counselling','var(--neg2)','f'],mtp:['Medical termination of pregnancy','var(--dec1)','f'],
+  couns:['Couple counselled','var(--tab2)','f'],cont:['Affected fetus, continuing pregnancy','var(--dec2)','f'],cltf:['Affected fetus, lost to follow-up','var(--neg2)','f'],mtp:['Medical termination of pregnancy','var(--dec1)','f'],
   mtpT:['Medical termination of pregnancy, thalassemia major','var(--l4)','f'],mtpS:['Medical termination of pregnancy, sickle cell disease','var(--aff1)','f']
 };
-M.gscr=['Women not screened','var(--att)','s'];M.gadv=['Partner not advised testing','var(--att)','f'];M.gpsc=['Partner not screened','var(--att)','f'];M.gcouns=['Couple not counselled','var(--aff1)','f'];
+M.gscr=['Women not screened','var(--att)','s'];M.gcouns=['Couple not counselled','var(--aff1)','f'];
+M.gawt=['Awaiting partner test','var(--att)','f'];M.glost=['Partner lost to follow-up','var(--neg)','f'];M.riskH=['At-risk couple, screened here','var(--aff1)','f'];M.rin=['At-risk couple, referred in','var(--aff2)','f'];
+M.undc=['Affected fetus, couple undecided, counselled','var(--dec3)','f'];M.nrec=['At-risk couple, next step not recorded','var(--nr)','f'];M.cord=['Cordocentesis','var(--tab3)','f'];M.und=['Affected fetus, couple undecided','var(--dec3)','f'];
+var RSN=['Partner unavailable or migrated','Partner refused','Cost','Beyond gestational window','Other'];var RSNC=['var(--rs0)','var(--rs1)','var(--rs2)','var(--rs3)','var(--rs4)'];
+RSN.forEach(function(t,i){M['lr'+i]=['Partner lost to follow-up, reason: '+t,RSNC[i],'f']});M.lrn=['Partner lost to follow-up, reason Not available','var(--nr)','f'];
 var TABN={screening:'Women screened',followup:'Partner screened',prenatal:'Prenatal testing'};
 var TABOF={};['reg','nivf','ivf','le12','gt12','scr','pos','thal','sick','scdd','oth'].forEach(function(k){TABOF[k]='screening'});
-['padv','pscr','risk','dec','ltfu','gadv','gpsc'].forEach(function(k){TABOF[k]='followup'});TABOF.gscr='screening';TABOF.gcouns='prenatal';
-['pnd','cvs','amn','pndnr','unaff','aff','affT','affS','couns','cont','cltf','mtp','mtpT','mtpS'].forEach(function(k){TABOF[k]='prenatal'});
+['padv','pscr','risk','riskH','rin','gawt','glost','lr0','lr1','lr2','lr3','lr4','lrn'].forEach(function(k){TABOF[k]='followup'});TABOF.gscr='screening';TABOF.gcouns='prenatal';
+['dec','ltfu','nrec','cord','und','undc','pnd','cvs','amn','pndnr','unaff','aff','affT','affS','couns','cont','cltf','mtp','mtpT','mtpS'].forEach(function(k){TABOF[k]='prenatal'});
 var ST={'Kolkata North':'West Bengal','Kolkata South':'West Bengal','Mumbai':'Maharashtra','Nanded':'Maharashtra','Yavatmal':'Maharashtra','Chandrapur':'Maharashtra','Akola':'Maharashtra','Haldwani':'Uttarakhand','Dehradun':'Uttarakhand','Rudrapur':'Uttarakhand','Ludhiana':'Punjab'};
 var MSS=['Jan','Feb','Mar','Apr','May','Jun','Jul','Aug','Sep','Oct','Nov','Dec'],MSF=['January','February','March','April','May','June','July','August','September','October','November','December'];
 function A(fy,m){return (FY[fy].y+(m>8?1:0))*12+(m+3)%12}
@@ -737,7 +828,7 @@ function pick(f){f=f||F;return DATA.filter(function(r){return match(r,f)})}
 function agg(rs){
   var a={};AGGK.forEach(function(k){a[k]=0});
   rs.forEach(function(r){AGGK.forEach(function(k){a[k]+=r[k]})});
-  a.pos=a.thal+a.sick+a.oth+a.scdd;a.aff=a.affT+a.affS;a.mtp=a.mtpT+a.mtpS;a.pndnr=a.pnd-a.cvs-a.amn;a.unaff=a.pnd-a.aff;a.cont=a.couns-a.mtp-a.cltf;a.gscr=a.reg-a.scr;a.gadv=a.pos-a.padv;a.gpsc=a.padv-a.pscr;a.gcouns=a.aff-a.couns;return a;
+  a.pos=a.thal+a.sick+a.oth+a.scdd;a.aff=a.affT+a.affS;a.mtp=a.mtpT+a.mtpS;a.pndnr=a.pnd-a.cvs-a.amn-a.cord;a.unaff=a.pnd-a.aff;a.cont=a.aff-a.mtp-a.cltf-a.und;a.gscr=a.reg-a.scr;a.glost=a.lA+a.lB;a.gawt=a.pos-a.pscr-a.glost;a.riskH=a.risk-a.rin;a.gcouns=a.aff-a.couns;a.undc=a.und-a.ncd;return a;
 }
 function uniq(a){return a.filter(function(x,i){return a.indexOf(x)===i})}
 function citiesOf(p){p=p===undefined?F.partner:p;return uniq(DATA.filter(function(r){return (!p||r.p===p)&&(!F.prog||P[r.p].prog===F.prog)}).map(function(r){return r.c})).sort()}
@@ -802,7 +893,7 @@ function mixc(a,p){return 'color-mix(in srgb,'+a+' '+p+'%,#FFFFFF)'}
 function tn(a,ad,p1,p2){return [mixc(a,p1),mixc(a,p2),a,ad]}
 var TINT={reg:tn('var(--tab1)','var(--tab1d)',8,14),scr:tn('var(--tab1)','var(--tab1d)',11,18),pos:tn('var(--att)','var(--attd)',14,22),
   padv:tn('var(--att)','var(--attd)',8,14),pscr:tn('var(--tab2)','var(--tab2d)',11,18),risk:tn('var(--aff1)','var(--aff1)',14,22),
-  pnd:tn('var(--tab1)','var(--tab1d)',8,14),aff:tn('var(--l4)','var(--l4)',11,18),couns:tn('var(--tab2)','var(--tab2d)',14,22),mtp:tn('var(--dec1)','#6C5289',17,26)};
+  pnd:tn('var(--tab3)','var(--tab3d)',8,14),aff:tn('var(--l4)','var(--l4)',11,18),couns:tn('var(--tab2)','var(--tab2d)',14,22),mtp:tn('var(--dec1)','#6C5289',17,26)};
 function cu(v,dec,suf){return '<span class="cu" data-v="'+v+'" data-d="'+(dec||0)+'" data-s="'+(suf||'')+'">0</span>'}
 function cupc(a,b){if(!b)return cu(0,0,'%');var r=100*a/b,d=(r<10&&r%1)?1:0;return cu(d?+r.toFixed(1):Math.round(r),d,'%')}
 function sub(t,list,tot,a){list=list.filter(function(x){return x});if(!list.length)return '';
@@ -811,8 +902,8 @@ function sub(t,list,tot,a){list=list.filter(function(x){return x});if(!list.leng
 function stair(stages,d,heights){
   var cols='repeat('+stages.length+',1fr)',by='View records';heights=heights.map(function(){return 168});
   var top=stages.map(function(s,i){var T=TINT[s.k];
-    return '<div class="st'+(state.open===s.k?' open':'')+'" data-k="'+s.k+'" style="min-height:'+heights[i]+'px;--bg:'+T[0]+';--bg2:'+T[1]+';--a:'+T[2]+';--ad:'+T[3]+';animation-delay:'+(i*90)+'ms" onclick="openD(\''+s.k+'\')"><div class="lk">'+(s.l||M[s.k][0])+tip(s.tip)+'</div><div class="v">'+cu(d[s.k])+'</div>'+(s.gap&&d[s.gap]>0?'<span class="gp" data-gk="'+s.gap+'" data-gv="'+d[s.gap]+'" data-v="'+d[s.gap]+'" onclick="openD(\''+s.gap+'\');event.stopPropagation()">'+n(d[s.gap])+' '+s.gl+' ›</span>':'<span class="gp"></span>')+'<span class="go">'+by+' ›</span></div>'}).join('');
-  var dets=stages.some(function(s){return s.rows})?'<div class="dets" style="grid-template-columns:'+cols+'">'+stages.map(function(s,i){return '<div class="det" style="animation-delay:'+(300+i*90)+'ms">'+(s.rows?sub(s.rt||'Breakdown',s.rows,d[s.k],TINT[s.k][2]):'')+'</div>'}).join('')+'</div>':'';
+    return '<div class="st'+(state.open===s.k?' open':'')+'" data-k="'+s.k+'" style="min-height:'+heights[i]+'px;--bg:'+T[0]+';--bg2:'+T[1]+';--a:'+T[2]+';--ad:'+T[3]+';animation-delay:'+(i*90)+'ms" onclick="openD(\''+s.k+'\')"><div class="lk">'+(s.l||M[s.k][0])+tip(s.tip)+'</div><div class="v">'+cu(d[s.k])+'</div>'+((s.gaps||(s.gap?[{k:s.gap,l:s.gl}]:[])).filter(function(g){return d[g.k]>0}).map(function(g){return '<span class="gp" data-gk="'+g.k+'" data-gv="'+d[g.k]+'" data-v="'+d[g.k]+'" onclick="openD(\''+g.k+'\');event.stopPropagation()">'+n(d[g.k])+' '+g.l+' ›</span>'}).join('')||'<span class="gp"></span>')+'<span class="go">'+by+' ›</span></div>'}).join('');
+  var dets=stages.some(function(s){return s.rows||s.line})?'<div class="dets" style="grid-template-columns:'+cols+'">'+stages.map(function(s,i){return '<div class="det" style="animation-delay:'+(300+i*90)+'ms">'+(s.rows?sub(s.rt||'Breakdown',s.rows,d[s.k],TINT[s.k][2]):'')+(s.line||'')+'</div>'}).join('')+'</div>':'';
   return '<div class="steps" style="grid-template-columns:'+cols+'">'+top+'</div>'+dets;
 }
 /* charts: inline SVG. Colours are CSS variables so the palette switcher recolours them live.
@@ -857,17 +948,30 @@ function waffle(d){
   s+=mark('pos',null,d.pos,'Women identified as carriers',cells,'sg')+'</svg>';
   return '<div class="donut">'+s+'<div class="wtxt"><div class="big" style="color:var(--att)">'+(d.scr?(100*d.pos/d.scr).toFixed(1):'0.0')+'%</div><div class="wm">'+n(d.pos)+' of '+n(d.scr)+' women screened</div></div></div>';
 }
-/* type of hemoglobinopathy by partner (or city): 100% stacked bars in the four orange shades, total at the end of each bar */
-function typeStack(gr,d,W,spec,tk){
-  spec=spec||[['thal','var(--ty1)',1],['sick','var(--ty2)',0],['scdd','var(--ty3)',1],['oth','var(--ty4)',0]];tk=tk||'pos';
-  var LW=96,TW=tk==='pos'?0:52,bw=W-LW-TW,CH=42,H=gr.g.length*CH+4,KS=spec.map(function(x){return x[0]}),DK={};spec.forEach(function(x){DK[x[0]]=x[2]});var s='<svg class="ch2 tstk" viewBox="0 0 '+W+' '+H+'" width="100%" role="img" aria-label="'+(tk==='pos'?'Type of hemoglobinopathy':'Type of prenatal diagnosis')+' by '+gr.by+'">';
-  gr.g.forEach(function(g,i){var a=agg(pick(Object.assign({},F,g.f))),tot=KS.reduce(function(t,k){return t+a[k]},0),y=i*CH+4,x0=LW,nm=g.l.length>13?g.l.slice(0,12)+'…':g.l;
-    s+='<text x="0" y="'+(y+21)+'" font-size="13.5" fill="#1F2328">'+nm+'</text>';
-    if(!tot){s+='<rect x="'+LW+'" y="'+y+'" width="'+bw+'" height="30" rx="4" fill="#F1F5F9"/>'+(TW?'<text x="'+(W-TW+8)+'" y="'+(y+20)+'" font-size="13.5" font-weight="700">0</text>':'');return}
-    KS.forEach(function(k){if(!a[k])return;var w=bw*a[k]/tot;
-      s+=mark(k,g.f,a[k],g.l+', '+M[k][0],'<rect x="'+x0+'" y="'+y+'" width="'+Math.max(w-2,1)+'" height="30" style="fill:'+spec.filter(function(x){return x[0]===k})[0][1]+(k==='oth'?';stroke:var(--ty2);stroke-width:1':'')+'"/>'+(w>=30?'<text x="'+(x0+w/2-1)+'" y="'+(y+20)+'" text-anchor="middle" font-size="12.5" font-weight="600" fill="'+(DK[k]?'#FFFFFF':'var(--tyd)')+'">'+n(a[k])+'</text>':''));x0+=w});
-    s+=(TW?'<text x="'+(W-TW+8)+'" y="'+(y+20)+'" font-size="13.5" font-weight="700" style="fill:var(--ink)">'+n(tot)+'</text>':'')});
-  return s+'</svg><div class="clg kk">'+spec.map(function(x){return '<span class="lg"><i style="background:'+x[1]+(x[0]==='oth'?';box-shadow:inset 0 0 0 1px var(--ty2)':'')+'"></i>'+(x[0]==='pndnr'?'Not available':M[x[0]][0])+'</span>'}).join('')+'</div>';
+/* type of hemoglobinopathy by partner (or city): 100% stacked bars, four orange shades graded dark to light.
+   Every non-zero segment shows its number: inside when it fits, otherwise below the bar on a short leader. Zero draws nothing. */
+function chartW(max){var el=document.getElementById('dash'),w=(el&&el.clientWidth)||1000;return Math.max(300,Math.min(max||960,w-60))}
+function typeStack(gr,d,W){
+  var spec=[['thal','var(--ty1)'],['sick','var(--ty2)'],['scdd','var(--ty3)'],['oth','var(--ty4)']],narrow=W<560,LW=narrow?64:96,bw=W-LW,KS=spec.map(function(x){return x[0]}),DK={thal:1},FS=narrow?11.5:12.5,body='',y=4;
+  gr.g.forEach(function(g){
+    var a=agg(pick(Object.assign({},F,g.f))),tot=KS.reduce(function(t,k){return t+a[k]},0),nm=g.l.length>(narrow?9:13)?g.l.slice(0,narrow?8:12)+'…':g.l;
+    body+='<text x="0" y="'+(y+20)+'" font-size="'+(narrow?12:13.5)+'" fill="#1F2328">'+nm+'</text>';
+    if(!tot){body+='<rect x="'+LW+'" y="'+y+'" width="'+bw+'" height="30" rx="4" fill="#F1F5F9"/>';y+=44;return}
+    var x0=LW,segs=[],outs=[];
+    KS.forEach(function(k){if(!a[k])return;var w=bw*a[k]/tot,tw=n(a[k]).length*(FS*.6)+10,q={k:k,v:a[k],x:x0,w:w,tw:tw,ins:w>=tw};segs.push(q);if(!q.ins)outs.push(q);x0+=w});
+    outs.sort(function(p,q){return p.x+p.w/2-(q.x+q.w/2)});
+    var pos=outs.map(function(q){return q.x+q.w/2});
+    for(var i=1;i<outs.length;i++){var mn=pos[i-1]+(outs[i-1].tw+outs[i].tw)/2+2;if(pos[i]<mn)pos[i]=mn}
+    var over=outs.length?pos[outs.length-1]+outs[outs.length-1].tw/2-(LW+bw):0;if(over>0)for(var j=0;j<pos.length;j++)pos[j]-=over;
+    outs.forEach(function(q,i){q.lx=pos[i]});
+    segs.forEach(function(q){
+      var w=Math.max(q.w-2,1),inner='<rect x="'+q.x+'" y="'+y+'" width="'+w+'" height="30" style="fill:'+spec.filter(function(x){return x[0]===q.k})[0][1]+'"/>';
+      if(q.ins)inner+='<text x="'+(q.x+q.w/2-1)+'" y="'+(y+20)+'" text-anchor="middle" font-size="'+FS+'" font-weight="600" fill="'+(DK[q.k]?'#FFFFFF':'var(--tyd)')+'">'+n(q.v)+'</text>';
+      else inner+='<path d="M'+(q.x+w/2)+' '+(y+30)+' L'+q.lx+' '+(y+37)+'" stroke="#6B7280" stroke-width="1" fill="none"/><text x="'+q.lx+'" y="'+(y+49)+'" text-anchor="middle" font-size="'+FS+'" font-weight="600" fill="var(--tyd)">'+n(q.v)+'</text>';
+      body+=mark(q.k,g.f,q.v,g.l+', '+M[q.k][0],inner)});
+    y+=outs.length?58:44;
+  });
+  return '<svg class="ch2 tstk" viewBox="0 0 '+W+' '+y+'" width="100%" role="img" aria-label="Type of hemoglobinopathy by '+gr.by+'">'+body+'</svg><div class="clg kk">'+spec.map(function(x){return '<span class="lg"><i style="background:'+x[1]+'"></i>'+M[x[0]][0]+'</span>'}).join('')+'</div>';
 }
 /* care cascade: bars fall left to right, each step shows its share of the step before. Only used for true care steps. */
 function cascade(items,W,H){
@@ -884,34 +988,41 @@ function cascade(items,W,H){
   });
   return s+'</svg>';
 }
-/* heatmap: rows are partners (or cities), columns are the elapsed months of the selected period; future months are left out.
-   A hatched cell is an elapsed month with no report. Two summary columns carry the per-row totals; the last row is the overall total. */
-function heat(gr,W){
+/* combo chart: bars are women screened per month (left axis), the line is the share of screened women identified as carriers (right axis).
+   Elapsed months only. With two or more partners in scope the bars stack by partner in a teal ramp; with one partner the bars are a single series. */
+function niceAxis(mx,k){var raw=Math.max(mx,1e-9)/k,p=Math.pow(10,Math.floor(Math.log10(raw))),f=raw/p,st=(f<=1?1:f<=2?2:f<=2.5?2.5:f<=5?5:10)*p;return {st:st,max:st*k}}
+var PRAMP=['var(--pc0)','var(--pc1)','var(--pc2)'];
+function combo(gr,W){
   var months=[],a,last=Math.min(F.to,TODAY);for(a=F.from;a<=last;a++)months.push(a);
   if(!months.length)return '<div class="empty" style="padding:30px 0">No elapsed months in this period</div>';
-  var multi=Math.floor((F.from-3)/12)!==Math.floor((last-3)/12),LW=110,top=50,CH=40,GAP=18,SWt=92,SWc=150,G2=8,nm=months.length,
-    cw=Math.min(110,(W-LW-GAP-SWt-G2-SWc)/nm),sx1=LW+nm*cw+GAP,sx2=sx1+SWt+G2,cells=[],mx=1,tot=months.map(function(){return 0}),nr=gr.g.length;
-  gr.g.forEach(function(g,ri){months.forEach(function(m,ci){var rs=pick(Object.assign({},F,g.f,{from:m,to:m})),v=rs.reduce(function(s,r){return s+r.scr},0);cells.push({g:g,ri:ri,ci:ci,m:m,rep:rs.length>0,v:v});tot[ci]+=v;if(v>mx)mx=v})});
-  var H=top+(nr+1)*CH+6,s='<svg class="ch2" viewBox="0 0 '+W+' '+H+'" width="100%" role="img" aria-label="Women screened by month"><defs><pattern id="hatch" width="7" height="7" patternUnits="userSpaceOnUse" patternTransform="rotate(45)"><rect width="7" height="7" fill="#F1F5F9"/><line x1="0" y1="0" x2="0" y2="7" stroke="#D1D5DB" stroke-width="2.4"/></pattern></defs>';
-  months.forEach(function(m,ci){s+='<text x="'+(LW+ci*cw+cw/2)+'" y="'+(top-12)+'" text-anchor="middle" font-size="'+(cw<34?10.5:12.5)+'" fill="#6B7280">'+MSS[m%12]+(multi?' '+String(Math.floor(m/12)).slice(2):'')+'</text>'});
-  s+='<text x="'+(sx1+SWt/2)+'" y="'+(top-12)+'" text-anchor="middle" font-size="12.5" font-weight="600" fill="#1F2328">Women screened</text>'+
-     '<text x="'+(sx2+SWc/2)+'" y="'+(top-27)+'" text-anchor="middle" font-size="12.5" font-weight="600" fill="#1F2328">Women identified</text><text x="'+(sx2+SWc/2)+'" y="'+(top-12)+'" text-anchor="middle" font-size="12.5" font-weight="600" fill="#1F2328">as carriers</text>';
-  var BIN=[6,28,50,75,100];
-  cells.forEach(function(c){var x=LW+c.ci*cw+1.5,y=top+c.ri*CH+1.5,w=cw-3,h=CH-3,lbl=c.g.l+', '+aLabel(c.m,true);
-    if(!c.rep){s+='<g data-t="'+lbl+': Not available"><rect x="'+x+'" y="'+y+'" width="'+w+'" height="'+h+'" rx="4" fill="url(#hatch)" stroke="#D1D5DB"/></g>';return}
-    var r=c.v/mx,b=r<.2?0:r<.4?1:r<.6?2:r<.8?3:4,txt=cw>=34?'<text x="'+(x+w/2)+'" y="'+(y+h/2+4.5)+'" text-anchor="middle" font-size="'+(cw>=48?13:11)+'" font-weight="600" fill="'+(b>=3?'#FFFFFF':'#1F2328')+'">'+n(c.v)+'</text>':'';
-    s+=mark('scr',Object.assign({},c.g.f,{from:c.m,to:c.m}),c.v,lbl,'<rect x="'+x+'" y="'+y+'" width="'+w+'" height="'+h+'" rx="4" style="fill:'+sh('var(--tab1)',BIN[b])+'"/>'+txt);
-  });
-  var sumCells=function(ri,f,lab,bold){var rs=pick(Object.assign({},F,f)),a=agg(rs),y=top+ri*CH+(ri===nr?6:0),h=CH-3,ty=y+h/2+5,fs=bold?' font-weight="700"':' font-weight="600"';
-    if(bold)s+='<text x="0" y="'+ty+'" font-size="14" font-weight="700" fill="#1F2328">'+lab+'</text>';
-    s+=mark(f&&Object.keys(f).length?'scr':'scr',Object.keys(f).length?f:null,a.scr,lab+', women screened','<rect x="'+sx1+'" y="'+y+'" width="'+SWt+'" height="'+h+'" rx="4" fill="#F1F5F9"/><text x="'+(sx1+SWt/2)+'" y="'+ty+'" text-anchor="middle" font-size="13.5"'+fs+' style="'+tnum()+'">'+n(a.scr)+'</text>');
-    s+=mark('pos',Object.keys(f).length?f:null,a.pos,lab+', women identified as carriers','<rect x="'+sx2+'" y="'+y+'" width="'+SWc+'" height="'+h+'" rx="4" style="fill:var(--att-t)"/><text x="'+(sx2+SWc/2)+'" y="'+ty+'" text-anchor="middle" font-size="13.5"'+fs+' style="fill:var(--attd)">'+n(a.pos)+' · '+pc(a.pos,a.scr)+'</text>','rw',' data-den="'+a.scr+'" data-dk="scr"');};
-  gr.g.forEach(function(g,ri){s+='<text x="0" y="'+(top+ri*CH+CH/2+5)+'" font-size="14" fill="#1F2328">'+g.l+'</text>';sumCells(ri,g.f,g.l,false)});
-  s+='<line x1="0" x2="'+W+'" y1="'+(top+nr*CH+2)+'" y2="'+(top+nr*CH+2)+'" stroke="#D1D5DB"/>';
-  months.forEach(function(m,ci){var x=LW+ci*cw+1.5,y=top+nr*CH+6,w=cw-3,h=CH-3;
-    s+=mark('scr',{from:m,to:m},tot[ci],'Overall, '+aLabel(m,true),'<rect x="'+x+'" y="'+y+'" width="'+w+'" height="'+h+'" rx="4" fill="#F1F5F9"/>'+(cw>=34?'<text x="'+(x+w/2)+'" y="'+(y+h/2+4.5)+'" text-anchor="middle" font-size="'+(cw>=48?13:11)+'" font-weight="700" style="'+tnum()+'">'+n(tot[ci])+'</text>':''))});
-  sumCells(nr,{},'Overall',true);
+  var stk=gr.by==='partner'&&gr.g.length>1,series=stk?gr.g:[{l:'Women screened',f:{}}],narrow=W<560,multi=Math.floor((F.from-3)/12)!==Math.floor((last-3)/12);
+  var cols=months.map(function(m){
+    var segs=series.map(function(g){var rs=pick(Object.assign({},F,g.f,{from:m,to:m}));return {g:g,v:rs.reduce(function(s,r){return s+r.scr},0)}}),ag=agg(pick(Object.assign({},F,{from:m,to:m})));
+    return {m:m,segs:segs,scr:ag.scr,pos:ag.pos,rate:ag.scr?100*ag.pos/ag.scr:0,rep:pick(Object.assign({},F,{from:m,to:m})).length>0}});
+  var mxS=Math.max.apply(null,cols.map(function(c){return c.scr}).concat([1])),mxP=Math.max.apply(null,cols.map(function(c){return c.rate}).concat([0.5])),
+    L=niceAxis(mxS/0.78,4),R=niceAxis(mxP*1.05,4),LM=narrow?40:58,RM=narrow?36:54,TOP=narrow?34:38,BH=narrow?210:260,BOT=narrow?34:50,H=TOP+BH+BOT,pw=W-LM-RM,slot=pw/months.length,bwid=Math.min(narrow?30:58,slot*.56),
+    yL=function(v){return TOP+BH-BH*v/L.max},yR=function(v){return TOP+BH-BH*v/R.max},fs=narrow?10.5:12,s='<svg class="ch2 cmb" viewBox="0 0 '+W+' '+H+'" width="100%" role="img" aria-label="Women screened per month and share identified as carriers">';
+  var i;for(i=0;i<=4;i++){var gy=TOP+BH-BH*i/4;
+    s+='<line x1="'+LM+'" x2="'+(W-RM)+'" y1="'+gy+'" y2="'+gy+'" stroke="'+(i?'#EEF0F3':'#D1D5DB')+'" stroke-width="1"/><text x="'+(LM-8)+'" y="'+(gy+4)+'" text-anchor="end" font-size="'+fs+'" fill="#6B7280">'+n(L.st*i)+'</text><text x="'+(W-RM+8)+'" y="'+(gy+4)+'" font-size="'+fs+'" fill="var(--attd)">'+(+(R.st*i).toFixed(2))+'%</text>'}
+  s+='<text x="0" y="'+(TOP-18)+'" text-anchor="start" font-size="'+(narrow?10.5:11.5)+'" font-weight="600" fill="#374151">Women screened</text><text x="'+W+'" y="'+(TOP-18)+'" text-anchor="end" font-size="'+(narrow?10.5:11.5)+'" font-weight="600" fill="var(--attd)">'+(narrow?'% carriers':'% identified as carriers')+'</text>';
+  cols.forEach(function(c,ci){
+    var cx=LM+ci*slot+slot/2,bx=cx-bwid/2,yb=TOP+BH,lab=MSS[c.m%12]+(multi?' '+String(Math.floor(c.m/12)).slice(2):'');
+    if(!c.rep){s+='<g data-t="'+aLabel(c.m,true)+': Not available"><rect x="'+bx+'" y="'+(yb-3)+'" width="'+bwid+'" height="3" fill="#D1D5DB"/></g>'}
+    else{var acc=0;c.segs.forEach(function(q,qi){if(!q.v)return;var h=BH*q.v/L.max,y0=yb-acc-h,col=stk?PRAMP[qi%3]:'var(--bar)',lb=aLabel(c.m,true)+(stk?', '+q.g.l:'');acc+=h;
+      s+=mark('scr',Object.assign({},q.g.f,{from:c.m,to:c.m}),q.v,lb+': '+n(q.v)+' women screened'+(stk?' (of '+n(c.scr)+' in the month)':'')+'; '+n(c.pos)+' identified as carriers ('+pc(c.pos,c.scr)+')',
+        '<rect x="'+bx+'" y="'+y0+'" width="'+bwid+'" height="'+Math.max(h-(stk&&qi<c.segs.length-1?1.5:0),1)+'" rx="'+(stk?0:3)+'" style="fill:'+col+'"/>')})}
+    s+='<text x="'+cx+'" y="'+(yb+17)+'" text-anchor="middle" font-size="'+fs+'" font-weight="600" fill="#374151">'+lab+'</text>'+(narrow?'':'<text x="'+cx+'" y="'+(yb+33)+'" text-anchor="middle" font-size="11" fill="#6B7280">'+(c.rep?n(c.scr):'')+'</text>')});
+  var pts=cols.filter(function(c){return c.rep&&c.scr}).map(function(c){return {c:c,x:LM+cols.indexOf(c)*slot+slot/2,y:yR(c.rate)}});
+  if(pts.length>1)s+='<path d="'+pts.map(function(p,i){return (i?'L':'M')+p.x+' '+p.y}).join(' ')+'" fill="none" style="stroke:var(--att)" stroke-width="2.5" stroke-linejoin="round" stroke-linecap="round"/>';
+  pts.forEach(function(p){var c=p.c;
+    s+=mark('pos',{from:c.m,to:c.m},c.pos,aLabel(c.m,true)+': '+(c.rate<10&&c.rate%1?c.rate.toFixed(1):Math.round(c.rate))+'% of screened women identified as carriers ('+n(c.pos)+' of '+n(c.scr)+')',
+      '<circle cx="'+p.x+'" cy="'+p.y+'" r="'+(narrow?3.5:5)+'" style="fill:#FFFFFF;stroke:var(--att)" stroke-width="2.5"/>'+(slot>=44?'<text class="halo" x="'+p.x+'" y="'+(p.y-12)+'" text-anchor="middle" font-size="12" font-weight="700" style="fill:var(--attd)">'+c.rate.toFixed(1)+'%</text>':''))});
   return s+'</svg>';
+}
+function comboLegend(gr){
+  var stk=gr.by==='partner'&&gr.g.length>1;
+  return (stk?gr.g.map(function(g,i){return '<span class="lg"><i style="background:'+PRAMP[i%3]+'"></i>'+g.l+'</span>'}).join(''):'<span class="lg"><i style="background:var(--bar)"></i>Women screened</span>')+
+    '<span class="lg"><i class="ln" style="background:var(--att)"></i>% of screened women identified as carriers</span><span class="lg">Left axis: women screened. Right axis: % identified as carriers.</span>';
 }
 /* ranked table: one row per partner (or city) with a thin inline bar for the share, number and the counts behind it */
 function ranked(rows,ref,k,dk){
@@ -920,12 +1031,11 @@ function ranked(rows,ref,k,dk){
   var line=function(l,r,f,bold){return '<div class="rkr'+(bold?' tot':'')+'" data-k="'+k+'" data-v="'+r.num+'" data-den="'+r.den+'" data-dk="'+dk+'"'+(f?" data-f='"+JSON.stringify(f)+"'":'')+' data-t="'+l+': '+n(r.num)+' of '+n(r.den)+'" onclick="'+(f?'openX(\''+k+'\','+fjs(f)+')':'openD(\''+k+'\')')+'"><span class="o">'+l+'</span><span class="tr"><i style="width:'+Math.min(100,r.rate)+'%"></i></span><b>'+pc(r.num,r.den)+'</b><em>'+n(r.num)+' of '+n(r.den)+'</em></div>'};
   return '<div class="rk">'+rows.map(function(r){return line(r.l,r,r.f,false)}).join('')+line('Overall',ref,null,true)+'</div>';
 }
-function heatLegend(){return 'Fewer'+[6,28,50,75,100].map(function(p){return '<i class="sw" style="background:'+sh('var(--tab1)',p)+'"></i>'}).join('')+'More women screened<i class="sw hat"></i>Not available'}
 /* 100% stacked bar */
-function stack(items,W,tot){
+function stack(items,W,tot,aria){
   var rest=tot-items.reduce(function(a,x){return a+x.v},0),all=items.slice();if(rest>0)all.push({k:null,l:'Not available',v:rest,c:'var(--nr)'});
   if(!tot)return '<div class="empty" style="padding:30px 0">No data in this selection</div>';
-  var s='<svg class="ch2" viewBox="0 0 '+W+' 64" width="100%" role="img" aria-label="Outcome of at-risk couples">',x0=0;
+  var s='<svg class="ch2" viewBox="0 0 '+W+' 64" width="100%" role="img" aria-label="'+(aria||'Outcome of at-risk couples')+'">',x0=0;
   all.forEach(function(x){if(!x.v)return;var w=W*x.v/tot,seg='<rect x="'+x0+'" y="8" width="'+Math.max(w-2,2)+'" height="48" style="fill:'+x.c+'"/>';
     s+=x.k?mark(x.k,null,x.v,x.l,seg):'<g data-t="'+x.l+': '+n(x.v)+'">'+seg+'</g>';x0+=w});
   return s+'</svg>'+legendRows(all,tot);
@@ -936,44 +1046,41 @@ function ringChart(v,of){
   return '<div class="donut"><svg class="ch2" viewBox="0 0 190 190" role="img" aria-label="Share of at-risk couples with prenatal diagnosis">'+mark('pnd',null,v,'Prenatal diagnosis',inner,'sg')+'</svg>'+'</div>';
 }
 
-/* flow: ribbon widths are the number of couples; every ribbon takes the colour of its target node, so the flow turns red as it reaches an affected result.
-   Conservation: at-risk couple = prenatal diagnosis + declined + lost to follow-up; prenatal diagnosis = thalassemia major + sickle cell disease + not affected;
-   affected = couple counselled + not counselled; couple counselled = medical termination + continued pregnancy + lost to follow-up. */
-function sankey(d,W,H){
+/* step-down: one row per care step on a common scale (the first step is 100%). The filled bar is the step, the hatched stretch is what dropped
+   out since the step before, and the drop-off names its reason bucket. Conservation:
+   at-risk couple = prenatal diagnosis + declined + lost to follow-up + next step not recorded; prenatal diagnosis = affected + not affected;
+   affected = counselled + not counselled; counselled = medical termination + continuing + undecided (counselled) + lost to follow-up. */
+function stepdown(d){
   if(!d.risk)return '<div class="empty" style="padding:30px 0">No at-risk couples in this selection</div>';
-  var nw=18,G=28,T=66,Bm=10,aff=d.affT+d.affS,sc=(H-T-Bm-4*G-16)/d.risk,x=[205,335,510,670,790],gid=0,defs='',
-    mn=function(v){return v?Math.max(3,v*sc):0},mt=function(v){return v?Math.max(8,v*sc):0},
-    hT=mn(d.affT),hS=mn(d.affS),hU=mn(d.unaff),hP=d.pnd*sc,hD=mt(d.dec),hL=mt(d.ltfu),hR=hP+hD+hL,hC=mn(d.couns),hM=mn(d.mtp),hK=mn(d.cont),hO=mn(d.cltf),sM=d.couns?hC*d.mtp/d.couns:0,sK=d.couns?hC*d.cont/d.couns:0,
-    cs=aff?d.couns/aff:0,nT=d.affT*(1-cs),nS=d.affS*(1-cs),hN=mt(aff-d.couns),
-    yT=T,yS=yT+hT+G,yU=yS+hS+G,y1=T+((yU+hU-T)-hP)/2,yR=T,yD=yU+hU+G,yL=yD+hD+G,yC=T,yM=T,yK=yM+hM+16,yO=yK+hK+16,yN=yC+hC+G+20,
-    kR='var(--aff1)',kP='var(--tab1)',kD='var(--neg)',kL='var(--neg2)',kT='var(--l4)',kS='var(--aff1)',kU='var(--good)',kC='var(--tab2)',kM='var(--dec1)',kK='var(--dec2)',kN='var(--aff1)',
-    rb=function(xa,ya0,ya1,xb,yb0,yb1,col,k,v,l,src){if(!v)return '';var m=(xa+xb)/2,id='skg'+(++gid);return mark(k,null,v,l,'<path d="M'+xa+' '+ya0+' C'+m+' '+ya0+' '+m+' '+yb0+' '+xb+' '+yb0+' L'+xb+' '+yb1+' C'+m+' '+yb1+' '+m+' '+ya1+' '+xa+' '+ya1+' Z" style="fill:'+col+';fill-opacity:.35"/>')},
-    lab=function(xx,yy,anchor,l,v,nc){return '<text x="'+xx+'" y="'+yy+'" text-anchor="'+anchor+'" font-size="14" fill="#1F2328" stroke="#FFFFFF" stroke-width="4" stroke-linejoin="round" paint-order="stroke">'+l+' <tspan font-weight="700" style="fill:'+nc+'">'+n(v)+'</tspan></text>'},
-    nd=function(xx,yy,hh,col,k,v,l,pos,nc){if(!v)return '';var tx=pos==='left'?xx-9:pos==='right'?xx+nw+9:xx,ty=pos==='above'?yy-9:pos==='below'?yy+hh+23:pos==='lift'?T-26:yy+hh/2+5,ld=pos==='lift'?'<line x1="'+(xx+nw/2)+'" x2="'+(xx+nw/2)+'" y1="'+(T-20)+'" y2="'+(yy-2)+'" stroke="#9CA3AF" stroke-width="1"/>':'';
-      return mark(k,null,v,l,ld+'<rect x="'+xx+'" y="'+yy+'" width="'+nw+'" height="'+hh+'" rx="3" style="fill:'+col+'"/>'+lab(tx,ty,pos==='left'?'end':'start',l,v,nc||col))},
-    cT=d.affT*cs*sc,cS=d.affS*cs*sc,fT=nT+nS>0?nT/(nT+nS):0,s='';
-  s+=rb(x[0]+nw,yR,yR+hP,x[1],y1,y1+hP,kP,'pnd',d.pnd,'Prenatal diagnosis',kR)+rb(x[0]+nw,yR+hP,yR+hP+hD,x[1],yD,yD+hD,kD,'dec',d.dec,'Declined prenatal diagnosis',kR)+rb(x[0]+nw,yR+hP+hD,yR+hR,x[1],yL,yL+hL,kL,'ltfu',d.ltfu,'Lost to follow-up',kR);
-  s+=rb(x[1]+nw,y1,y1+hT,x[2],yT,yT+hT,kT,'affT',d.affT,'Thalassemia major',kP)+rb(x[1]+nw,y1+hT,y1+hT+hS,x[2],yS,yS+hS,kS,'affS',d.affS,'Sickle cell disease',kP)+rb(x[1]+nw,y1+hT+hS,y1+hP,x[2],yU,yU+hU,kU,'unaff',d.unaff,'Not affected',kP);
-  s+=rb(x[2]+nw,yT,yT+cT,x[3],yC,yC+cT,kC,'couns',d.couns,'Couple counselled',kT)+rb(x[2]+nw,yS,yS+cS,x[3],yC+cT,yC+cT+cS,kC,'couns',d.couns,'Couple counselled',kS);
-  if(aff>d.couns)s+=rb(x[2]+nw,yT+cT,yT+hT,x[3],yN,yN+hN*fT,kN,'gcouns',aff-d.couns,'Couple not counselled',kT)+rb(x[2]+nw,yS+cS,yS+hS,x[3],yN+hN*fT,yN+hN,kN,'gcouns',aff-d.couns,'Couple not counselled',kS);
-  s+=rb(x[3]+nw,yC,yC+sM,x[4],yM,yM+hM,kM,'mtp',d.mtp,'Medical termination of pregnancy',kC)+rb(x[3]+nw,yC+sM,yC+sM+sK,x[4],yK,yK+hK,kK,'cont',d.cont,'Continued pregnancy',kC)+rb(x[3]+nw,yC+sM+sK,yC+hC,x[4],yO,yO+hO,kL,'cltf',d.cltf,'Lost to follow-up after counselling',kC);
-  s+=nd(x[0],yR,hR,kR,'risk',d.risk,'At-risk couple','left')+nd(x[1],y1,hP,kP,'pnd',d.pnd,'Prenatal diagnosis','lift')+nd(x[1],yD,hD,kD,'dec',d.dec,'Declined prenatal diagnosis','right','#AC3031')+nd(x[1],yL,hL,kL,'ltfu',d.ltfu,'Lost to follow-up','right')+
-    nd(x[2],yT,hT,kT,'affT',d.affT,'Thalassemia major','above')+nd(x[2],yS,hS,kS,'affS',d.affS,'Sickle cell disease','below')+nd(x[2],yU,hU,kU,'unaff',d.unaff,'Not affected','right')+
-    nd(x[3],yC,hC,kC,'couns',d.couns,'Couple counselled','above','var(--tab2d)')+nd(x[3],yN,hN,kN,'gcouns',aff-d.couns,'Couple not counselled','right')+
-    nd(x[4],yM,hM,kM,'mtp',d.mtp,'Medical termination of pregnancy','right')+nd(x[4],yK,hK,kK,'cont',d.cont,'Continued pregnancy','right','var(--dec1)')+nd(x[4],yO,hO,kL,'cltf',d.cltf,'Lost to follow-up','right');
-  return '<svg class="ch2 sk" viewBox="0 0 '+W+' '+H+'" width="100%" role="img" aria-label="Flow from at-risk couple to prenatal diagnosis, affected result, counselling and decision">'+s+'</svg>';
+  var S=[
+    {k:'risk',l:'At-risk couples',v:d.risk,c:'var(--aff1)'},
+    {k:'pnd',l:'Prenatal diagnosis',v:d.pnd,c:'var(--tab3)',of:'at-risk couples',drop:[['dec',d.dec,'declined','var(--neg)'],['ltfu',d.ltfu,'lost to follow-up','var(--neg2)'],['nrec',d.nrec,'next step not recorded','var(--nr)']],dl:'no prenatal diagnosis'},
+    {k:'aff',l:'Affected fetus',v:d.aff,c:'var(--l4)',of:'fetuses tested',drop:[['unaff',d.unaff,'not affected','var(--good)']],dl:'unaffected'},
+    {k:'couns',l:'Couple counselled',v:d.couns,c:'var(--tab2)',of:'affected fetuses',drop:[['gcouns',d.gcouns,'not counselled','var(--dec3)']],dl:'not counselled'},
+    {k:'mtp',l:'Medical termination of pregnancy',v:d.mtp,c:'var(--dec1)',of:'couples counselled',drop:[['cont',d.cont,'continuing pregnancy','var(--dec2)'],['undc',d.undc,'undecided','var(--dec3)'],['cltf',d.cltf,'lost to follow-up','var(--neg2)']],dl:'did not terminate'}];
+  var top=S[0].v;
+  return '<div class="sd">'+S.map(function(s,i){var prev=i?S[i-1].v:0,w=100*s.v/top,gw=i?100*(prev-s.v)/top:0,items=(s.drop||[]).filter(function(x){return x[1]>0}),dtot=prev-s.v;
+    var dtxt=i?(dtot>0?(items.length>1?'<span class="dn">'+n(dtot)+' '+s.dl+'</span> ':'')+items.map(function(x){return '<a class="dp" data-k="'+x[0]+'" data-v="'+x[1]+'" onclick="openD(\''+x[0]+'\');event.stopPropagation()"><i style="background:'+x[3]+'"></i>'+n(x[1])+' '+x[2]+'</a>'}).join(''):'<span class="dn0">No drop-off</span>'):'<span class="dn0">Starting point</span>';
+    return '<div class="sdr"><div class="sdl"><div class="sdn">'+s.l+'</div><div class="sds">'+(i?pc(s.v,prev)+' of '+n(prev)+' '+s.of:'Screened here and referred in')+'</div></div>'+
+      '<div class="sdb"><div class="sdt"><a class="sdf" data-k="'+s.k+'" data-v="'+s.v+'" onclick="openD(\''+s.k+'\')" style="width:'+(s.v?Math.max(w,1.2):0)+'%;background:'+s.c+'" data-t="'+s.l+': '+n(s.v)+'"></a>'+(gw>0?'<i class="sdg" style="width:'+gw+'%"></i>':'')+'</div><b class="sdv">'+n(s.v)+'</b></div>'+
+      '<div class="sdd">'+dtxt+'</div></div>'}).join('')+'</div>';
 }
 function cpanel(title,sa,body,lg){return '<div class="panel cpan reveal"><div class="sec" style="--sa:'+sa+'">'+title+'</div>'+body+(lg?'<div class="clg">'+lg+'</div>':'')+'</div>'}
 function chartsFor(tab,d){
   TN=tab==='screening'?1:tab==='followup'?2:3;
-  var gr=groups(),by=gr.by==='partner'?'partner':'city',ref=function(nk,dk){return {num:d[nk],den:d[dk],rate:d[dk]?100*d[nk]/d[dk]:0}};
-  var rowsOf=function(nk,dk){return gr.g.map(function(g){var a=agg(pick(Object.assign({},F,g.f)));return {l:g.l,f:g.f,num:a[nk],den:a[dk]}})};
+  var gr=groups(),W=chartW(960),W2=chartW(1100);
   if(tab==='screening')return '<div class="cgrid one">'+
-    cpanel('Type of hemoglobinopathy, '+(gr.by==='partner'?'partner-wise':'city-wise'),'var(--att)',typeStack(gr,d,960))+'</div>'+
-    '<div class="cgrid one">'+cpanel('Women screened by month','var(--tab1)',heat(gr,960),heatLegend())+'</div>';
-  if(tab==='followup')return '<div class="cgrid one">'+
-    cpanel('At-risk couple outcomes','var(--aff1)',stack([{k:'pnd',l:'Prenatal diagnosis',v:d.pnd,c:'var(--tab1)'},{k:'dec',l:'Declined prenatal diagnosis',v:d.dec,c:'var(--neg)'},{k:'ltfu',l:'Lost to follow-up',v:d.ltfu,c:'var(--neg2)'}],1100,d.risk))+'</div>';
-  return '<div class="cgrid one">'+cpanel('At-risk couple pathway','var(--aff1)',sankey(d,1100,450),'<span class="sklg"><span class="lg"><i class="lgs"></i>Good · Process · Attention · Serious</span><span class="lg"><i style="background:var(--neg)"></i>Declined prenatal diagnosis</span><span class="lg"><i style="background:var(--neg2)"></i>Lost to follow-up</span><span class="lg lgd">Decision:</span><span class="lg"><i style="background:var(--dec1)"></i>Medical termination of pregnancy</span><span class="lg"><i style="background:var(--dec2)"></i>Continued pregnancy</span></span>')+'</div>';
+    cpanel('Type of hemoglobinopathy, '+(gr.by==='partner'?'partner-wise':'city-wise'),'var(--att)',typeStack(gr,d,W))+'</div>'+
+    '<div class="cgrid one">'+cpanel('Women screened by month and share identified as carriers','var(--tab1)',combo(gr,W),comboLegend(gr))+'</div>';
+  if(tab==='followup'){
+    var rs=RSN.map(function(t,i){return {k:'lr'+i,l:t,v:d['lr'+i],c:RSNC[i]}}).concat([{k:'lrn',l:'Not available',v:d.lrn,c:'var(--nr)'}]);
+    return '<div class="cgrid one">'+
+      cpanel('Partners of carrier women, by status','var(--tab2)',stack([{k:'pscr',l:'Partner screened',v:d.pscr,c:'var(--tab2)'},{k:'gawt',l:'Awaiting partner test',v:d.gawt,c:'var(--att)'},{k:'glost',l:'Partner lost to follow-up',v:d.glost,c:'var(--neg)'}],W2,d.pos,'Status of partners of carrier women'))+'</div>'+
+      '<div class="cgrid one">'+cpanel('Reason partners were lost to follow-up','var(--neg)',d.glost?stack(rs,W2,d.glost,'Reason partners were lost to follow-up'):'<div class="empty" style="padding:30px 0">No partners lost to follow-up in this selection</div>')+'</div>'+
+      '<div class="cgrid one">'+cpanel('At-risk couple outcomes','var(--aff1)',stack([{k:'pnd',l:'Prenatal diagnosis',v:d.pnd,c:'var(--tab3)'},{k:'dec',l:'Declined prenatal diagnosis',v:d.dec,c:'var(--neg)'},{k:'ltfu',l:'Lost to follow-up',v:d.ltfu,c:'var(--neg2)'},{k:'nrec',l:'Next step not recorded',v:d.nrec,c:'var(--nr)'}],W2,d.risk,'Outcome of at-risk couples'))+'</div>';
+  }
+  return '<div class="cgrid one">'+cpanel('Outcome of affected fetuses','var(--l4)',d.aff?stack([{k:'mtp',l:'Medical termination of pregnancy',v:d.mtp,c:'var(--dec1)'},{k:'cont',l:'Continuing pregnancy',v:d.cont,c:'var(--dec2)'},{k:'und',l:'Undecided',v:d.und,c:'var(--dec3)'},{k:'cltf',l:'Lost to follow-up',v:d.cltf,c:'var(--neg2)'}],W2,d.aff,'Outcome of affected fetuses'):'<div class="empty" style="padding:30px 0">No affected fetuses in this selection</div>')+'</div>'+
+    '<div class="cgrid one">'+cpanel('From at-risk couple to termination of pregnancy','var(--aff1)',stepdown(d),'<span class="sklg"><span class="lg"><i class="sdgi"></i>Dropped out since the step before</span></span>')+'</div>';
 }
 /* tooltip follows the cursor and hides when it leaves a mark */
 (function(){var t=document.createElement('div');t.id='ctip';document.body.appendChild(t);
@@ -984,8 +1091,10 @@ function chartsFor(tab,d){
  window.addEventListener('scroll',function(){t.style.display='none'},true)})();
 
 
-/* follow-up records: one per woman, generated from the register rows so every count matches */
+/* follow-up records: one per woman, generated from the register rows so every count matches.
+   Partner fields use the built options: partner_testing_advised Yes / Lost to follow-up; partner_test_done Yes / Pending / Lost to follow-up; a blank shows as Pending. */
 var PFX={fogsi:'FOG',sion:'SIO',wadia:'WAD',cmc:'CMC'};
+var LOST='Lost to follow-up',PO_CONT=['Ongoing','Live birth','Spontaneous abortion','Stillbirth'];
 function rng(s){return function(){s=(s*16807)%2147483647;return s/2147483647}}
 function shuf(a,r){for(var i=a.length-1;i>0;i--){var j=Math.floor(r()*(i+1)),t=a[i];a[i]=a[j];a[j]=t}return a}
 var FUR=(function(){
@@ -993,56 +1102,70 @@ var FUR=(function(){
   DATA.forEach(function(r,ri){
     var R=rng(ri*7919+13),fy2=r.fy.slice(2,4);seq[r.fy]=seq[r.fy]||0;wc[r.p]=wc[r.p]||1000;
     var mk=function(src,ct){wc[r.p]+=1+Math.floor(R()*7);
-      var yr=FY[r.fy].y+(r.m>8?1:0);seq[yr]=(seq[yr]||0)+1;return {id:'PREV-'+yr+'-'+('0000'+seq[yr]).slice(-5),dd:1+Math.floor(R()*27),alt:R(),wc:r.fy.slice(2,4)+r.fy.slice(5,7)+'-'+('0000'+(wq[r.fy]=(wq[r.fy]||0)+1)).slice(-4),p:r.p,c:r.c,fy:r.fy,m:r.m,a:r.a,src:src,ct:ct,pa:'',hs:'',hr:'',risk:false,pnd:'',test:'',fr:'',couns:'',mtp:''}};
+      var yr=FY[r.fy].y+(r.m>8?1:0);seq[yr]=(seq[yr]||0)+1;return {id:'PREV-'+yr+'-'+('0000'+seq[yr]).slice(-5),dd:1+Math.floor(R()*27),alt:R(),wc:r.fy.slice(2,4)+r.fy.slice(5,7)+'-'+('0000'+(wq[r.fy]=(wq[r.fy]||0)+1)).slice(-4),p:r.p,c:r.c,fy:r.fy,m:r.m,a:r.a,src:src,ct:ct,pa:'Pending',td:'Pending',hs:'',hr:'',prs:'',risk:false,ref:false,pnd:'',test:'',fr:'',couns:'',mtp:'',lost:false,und:false,po:'',dcs:''}};
     var types=[];['thal','sick','oth','scdd'].forEach(function(t){for(var i=0;i<r[t];i++)types.push(t)});shuf(types,R);
-    var w=types.map(function(t){return mk('Screened here',t)});
-    w.forEach(function(x,i){x.pa=i<r.padv?'Yes':'No';if(i<r.pscr){x.hs='Yes';x.hr=i<r.risk?'Carrier':'Normal';x.risk=i<r.risk}else{x.hs='No';x.hr=''}});
-    var risk=w.filter(function(x){return x.risk});
+    var w=types.map(function(t){return mk('Screened here',t)}),riskH=r.risk-r.rin,nS=r.pscr,nB=r.lB,nAP=r.padv-r.pscr-r.lB,nA=r.lA;
+    w.forEach(function(x,i){
+      if(i<nS){x.pa='Yes';x.td='Yes';x.hs='Yes';x.risk=i<riskH;x.hr=x.risk?'Carrier':'Normal'}
+      else if(i<nS+nB){x.pa='Yes';x.td=LOST}
+      else if(i<nS+nB+nAP){x.pa='Yes';x.td='Pending'}
+      else if(i<nS+nB+nAP+nA){x.pa=LOST;x.td=R()<.5?LOST:'Pending'}
+    });
+    var rsn=[];for(var q=0;q<5;q++)for(var z=0;z<r['lr'+q];z++)rsn.push(RSN[q]);for(z=0;z<r.lrn;z++)rsn.push('');shuf(rsn,R);
+    var lostW=w.filter(function(x){return x.pa===LOST||x.td===LOST});lostW.forEach(function(x,i){x.prs=rsn[i]});
+    var refs=[];for(q=0;q<r.rin;q++){var x=mk('Referred in','ref');x.ref=true;x.risk=true;x.pa='';x.td='';x.hr='Carrier';refs.push(x)}
+    var risk=w.filter(function(x){return x.risk}).concat(refs);
     risk.forEach(function(x,i){x.pnd=i<r.pnd?'Done':i<r.pnd+r.dec?'Declined':i<r.pnd+r.dec+r.ltfu?'Lost':'Pending'});
-    var pnd=w.filter(function(x){return x.pnd==='Done'});shuf(pnd,R);
-    pnd.forEach(function(x,i){x.test=i<r.cvs?'CVS':i<r.cvs+r.amn?'Amniocentesis':'Not available';x.fr=i<r.affT?'Major, Thal':i<r.affT+r.affS?'Major, Sickle':'Minor or normal'});
+    var pnd=risk.filter(function(x){return x.pnd==='Done'});shuf(pnd,R);
+    pnd.forEach(function(x,i){x.test=i<r.cvs?'CVS':i<r.cvs+r.amn?'Amniocentesis':i<r.cvs+r.amn+r.cord?'Cordocentesis':'Not available';x.fr=i<r.affT?'Major, Thal':i<r.affT+r.affS?'Major, Sickle':'Minor or normal'});
     var aT=pnd.filter(function(x){return x.fr==='Major, Thal'}),aS=pnd.filter(function(x){return x.fr==='Major, Sickle'}),aff=aT.concat(aS);
     aT.forEach(function(x,i){x.mtp=i<r.mtpT?'Yes':'No'});aS.forEach(function(x,i){x.mtp=i<r.mtpS?'Yes':'No'});
-    var cn=0;aff.forEach(function(x){x.couns='No';if(x.mtp==='Yes'){x.couns='Yes';cn++}});
-    aff.forEach(function(x){if(x.couns==='No'&&cn<r.couns){x.couns='Yes';cn++}});
-    var lo=0;aff.forEach(function(x){x.lost=false;if(x.couns==='Yes'&&x.mtp!=='Yes'&&lo<r.cltf){x.lost=true;lo++}});
-    out=out.concat(w);
+    var non=aff.filter(function(x){return x.mtp!=='Yes'}),und=[];
+    aff.forEach(function(x){x.couns='Yes';if(x.mtp==='Yes'){x.po='MTP';x.dcs='Terminate'}});
+    non.forEach(function(x,i){
+      if(i<r.cltf){x.lost=true;x.po=LOST}
+      else if(i<r.cltf+r.und){x.und=true;x.dcs='Undecided';und.push(x)}
+      else{x.dcs='Continue pregnancy';x.po=PO_CONT[Math.floor(R()*4)]}});
+    und.forEach(function(x,i){x.couns=i<r.und-r.ncd?'Yes':'No'});
+    out=out.concat(w,refs);
   });
   return out;
 })();
 var CT={thal:'Beta thalassemia carrier',sick:'Sickle cell carrier',oth:'Other hemoglobinopathy',scdd:'Sickle cell disease'};
-var FSEL={gadv:function(x){return x.pa!=='Yes'},gpsc:function(x){return x.pa==='Yes'&&x.hs!=='Yes'},gcouns:function(x){return x.fr.indexOf('Major')===0&&x.couns!=='Yes'},padv:function(x){return x.pa==='Yes'},pscr:function(x){return x.hs==='Yes'},risk:function(x){return x.risk},dec:function(x){return x.pnd==='Declined'},ltfu:function(x){return x.pnd==='Lost'},
-  pnd:function(x){return x.pnd==='Done'},
-  cvs:function(x){return x.test==='CVS'},amn:function(x){return x.test==='Amniocentesis'},pndnr:function(x){return x.test==='Not available'},
-  aff:function(x){return x.fr.indexOf('Major')===0},unaff:function(x){return x.pnd==='Done'&&x.fr.indexOf('Major')!==0},affT:function(x){return x.fr==='Major, Thal'},affS:function(x){return x.fr==='Major, Sickle'},
-  couns:function(x){return x.couns==='Yes'},cont:function(x){return x.couns==='Yes'&&x.mtp!=='Yes'&&!x.lost},cltf:function(x){return x.lost===true},mtp:function(x){return x.mtp==='Yes'},mtpT:function(x){return x.mtp==='Yes'&&x.fr==='Major, Thal'},mtpS:function(x){return x.mtp==='Yes'&&x.fr==='Major, Sickle'}};
-var FCOL={id:'ID',wc:'Woman code',p:'Partner',c:'City',m:'Registered on',ct:'Type of hemoglobinopathy',pa:'Partner advised testing',pt:'Partner screened',hr:'Partner screening result',pndp:'Prenatal diagnosis',reason:'Reason',fr:'Prenatal diagnosis result',couns:'Couple counselled',out:'Medical termination of pregnancy',po:'Pregnancy outcome'};
+var isL=function(x){return x.pa===LOST||x.td===LOST},isAff=function(x){return x.fr.indexOf('Major')===0};
+var FSEL={padv:function(x){return x.pa==='Yes'},pscr:function(x){return x.td==='Yes'},gawt:function(x){return !x.ref&&!isL(x)&&x.td!=='Yes'},glost:isL,
+  lr0:function(x){return isL(x)&&x.prs===RSN[0]},lr1:function(x){return isL(x)&&x.prs===RSN[1]},lr2:function(x){return isL(x)&&x.prs===RSN[2]},lr3:function(x){return isL(x)&&x.prs===RSN[3]},lr4:function(x){return isL(x)&&x.prs===RSN[4]},lrn:function(x){return isL(x)&&x.prs===''},
+  risk:function(x){return x.risk},riskH:function(x){return x.risk&&!x.ref},rin:function(x){return x.ref},dec:function(x){return x.pnd==='Declined'},ltfu:function(x){return x.pnd==='Lost'},nrec:function(x){return x.pnd==='Pending'},
+  pnd:function(x){return x.pnd==='Done'},cvs:function(x){return x.test==='CVS'},amn:function(x){return x.test==='Amniocentesis'},cord:function(x){return x.test==='Cordocentesis'},pndnr:function(x){return x.test==='Not available'},
+  gcouns:function(x){return isAff(x)&&x.couns!=='Yes'},aff:isAff,unaff:function(x){return x.pnd==='Done'&&!isAff(x)},affT:function(x){return x.fr==='Major, Thal'},affS:function(x){return x.fr==='Major, Sickle'},
+  couns:function(x){return isAff(x)&&x.couns==='Yes'},cont:function(x){return isAff(x)&&x.mtp!=='Yes'&&!x.lost&&!x.und},und:function(x){return x.und},undc:function(x){return x.und&&x.couns==='Yes'},cltf:function(x){return x.lost===true},mtp:function(x){return x.mtp==='Yes'},mtpT:function(x){return x.mtp==='Yes'&&x.fr==='Major, Thal'},mtpS:function(x){return x.mtp==='Yes'&&x.fr==='Major, Sickle'}};
+var FCOL={id:'ID',wc:'Woman code',p:'Partner',c:'City',m:'Registered on',ct:'Type of hemoglobinopathy',pa:'Partner advised testing',pt:'Partner screened',prs:'Reason',hr:'Partner screening result',pndp:'Prenatal diagnosis',reason:'Reason',fr:'Prenatal diagnosis result',couns:'Couple counselled',po:'Pregnancy outcome',dcs:'Couple\'s decision'};
 var SR={thal:'Beta thalassemia carrier',sick:'Sickle cell carrier',scdd:'Sickle cell disease'};
 function fval(x,c){var v=fval0(x,c);return v===''||v==null?'Not available':v}
 function fval0(x,c){
   if(c==='p')return P[x.p].name;
   if(c==='m'){var y=FY[x.fy].y+(x.m>8?1:0),mo=(x.m+3)%12+1;return (x.dd<10?'0':'')+x.dd+'-'+(mo<10?'0':'')+mo+'-'+y}
-  if(c==='ct')return SR[x.ct]||'Other hemoglobinopathies';
-  if(c==='pt')return x.hs==='Yes'?'Yes':x.pa==='Yes'?'No':'';
-  if(c==='hr')return x.hs!=='Yes'?'':x.risk?(SR[x.ct]||'Other hemoglobinopathies'):'Normal';
-  if(c==='pndp')return x.pnd==='Declined'?'Declined':x.pnd==='Lost'?'Lost to follow-up':x.pnd==='Pending'?'Pending':x.pnd==='Done'?(x.test==='CVS'?'Chorionic villus sampling (CVS)':x.test==='Amniocentesis'?'Amniocentesis':'Not available'):'';
-  if(c==='reason')return x.pnd==='Declined'?'Refused':x.pnd==='Lost'?'Not reachable':'';
+  if(c==='ct')return x.ref?'Screened elsewhere':SR[x.ct]||'Other hemoglobinopathies';
+  if(c==='pa')return x.ref?'':x.pa;
+  if(c==='pt')return x.ref?'':x.td;
+  if(c==='prs')return x.prs;
+  if(c==='hr')return x.ref?'Referred in':x.hs!=='Yes'?'':x.risk?(SR[x.ct]||'Other hemoglobinopathies'):'Normal';
+  if(c==='pndp')return x.pnd==='Declined'?'Declined':x.pnd==='Lost'?LOST:x.pnd==='Pending'?'Next step not recorded':x.pnd==='Done'?(x.test==='CVS'?'Chorionic villus sampling (CVS)':x.test==='Amniocentesis'?'Amniocentesis':x.test==='Cordocentesis'?'Cordocentesis':'Not available'):'';
+  if(c==='reason')return x.pnd==='Declined'?'Refused':x.pnd==='Lost'?LOST:'';
   if(c==='fr')return x.fr==='Major, Thal'?'Thalassemia major':x.fr==='Major, Sickle'?'Sickle cell disease':x.fr?(x.alt<.6?'Carrier':'Normal'):'';
   if(c==='couns')return x.couns;
-  if(c==='po')return x.mtp==='Yes'?'Medical termination of pregnancy':x.lost?'Lost to follow-up':x.couns==='Yes'?'Continued pregnancy':'';
-  if(c==='out')return x.mtp==='Yes'?'Yes':x.mtp==='No'?'No':'';
+  if(c==='po')return x.po;
+  if(c==='dcs')return x.dcs;
   return x[c];
 }
 function fcols(k){
   var base=['id','wc','p','c','m'];
-  if(k==='gadv')return base.concat(['ct','pa']);
-  if(k==='gpsc')return base.concat(['ct','pa','pt']);
-  if(k==='padv')return base.concat(['ct','pa','pt']);
+  if(k==='padv'||k==='gawt')return base.concat(['ct','pa','pt']);
   if(k==='pscr')return base.concat(['ct','pt','hr']);
-  if(k==='risk'||k==='dec'||k==='ltfu')return base.concat(['ct','hr','pndp','reason']);
-  if(/^(pnd|cvs|amn|pndnr|unaff)$/.test(k))return base.concat(['pndp','fr']);
-  if(k==='cont'||k==='cltf')return base.concat(['pndp','fr','couns','po']);
-  return base.concat(['pndp','fr','couns','out']);
+  if(k==='glost'||/^lr/.test(k))return base.concat(['ct','pa','pt','prs']);
+  if(/^(risk|riskH|rin|dec|ltfu|nrec)$/.test(k))return base.concat(['ct','hr','pndp','reason']);
+  if(/^(pnd|cvs|amn|cord|pndnr|unaff)$/.test(k))return base.concat(['pndp','fr']);
+  return base.concat(['pndp','fr','couns','po','dcs']);
 }
 function inScope(x,ms){return match(x,F)&&(!ms||ms.indexOf(x.a)>=0)}
 var SCOLR=[['reg','Registered'],['nivf','Registered ANC'],['ivf','Registered IVF'],['le12','Registered before 12 weeks'],['gt12','Registered after 12 weeks']];
@@ -1109,7 +1232,7 @@ function saveCsv(name,head,rows){
   document.body.appendChild(a);a.click();setTimeout(function(){URL.revokeObjectURL(a.href);a.remove()},500);
 }
 function csvDrawer(){if(state.dl)saveCsv(state.dl.name,state.dl.head,state.dl.rows)}
-var ALLC=[['reg','Women registered'],['nivf','Registered ANC'],['ivf','Registered IVF'],['le12','Registered before 12 weeks'],['gt12','Registered after 12 weeks'],['scr','Women screened'],['pos','Women identified as carriers'],['thal','Beta thalassemia carrier'],['sick','Sickle cell carrier'],['scdd','Sickle cell disease (screening)'],['oth','Other hemoglobinopathies'],['padv','Partner advised testing'],['pscr','Partner screened'],['risk','At-risk couple'],['dec','Declined prenatal diagnosis'],['ltfu','Lost to follow-up'],['pnd','Prenatal diagnosis'],['cvs','Chorionic villus sampling (CVS)'],['amn','Amniocentesis'],['aff','Thalassemia major or sickle cell disease'],['affT','Prenatal diagnosis: thalassemia major'],['affS','Prenatal diagnosis: sickle cell disease'],['couns','Couple counselled'],['mtp','Medical termination of pregnancy'],['cltf','Lost to follow-up after counselling'],['mtpT','Medical termination of pregnancy, thalassemia major'],['mtpS','Medical termination of pregnancy, sickle cell disease']];
+var ALLC=[['reg','Women registered'],['nivf','Registered ANC'],['ivf','Registered IVF'],['le12','Registered before 12 weeks'],['gt12','Registered after 12 weeks'],['scr','Women screened'],['pos','Women identified as carriers'],['thal','Beta thalassemia carrier'],['sick','Sickle cell carrier'],['scdd','Sickle cell disease (screening)'],['oth','Other hemoglobinopathies'],['padv','Partner advised testing'],['pscr','Partner screened'],['gawt','Awaiting partner test'],['glost','Partner lost to follow-up'],['lr0','Partner lost to follow-up, reason: '+RSN[0]],['lr1','Partner lost to follow-up, reason: '+RSN[1]],['lr2','Partner lost to follow-up, reason: '+RSN[2]],['lr3','Partner lost to follow-up, reason: '+RSN[3]],['lr4','Partner lost to follow-up, reason: '+RSN[4]],['lrn','Partner lost to follow-up, reason Not available'],['risk','At-risk couple'],['riskH','At-risk couple, screened here'],['rin','At-risk couple, referred in'],['dec','Declined prenatal diagnosis'],['ltfu','Lost to follow-up'],['nrec','At-risk couple, next step not recorded'],['pnd','Prenatal diagnosis'],['cvs','Chorionic villus sampling (CVS)'],['amn','Amniocentesis'],['cord','Cordocentesis'],['aff','Thalassemia major or sickle cell disease'],['affT','Prenatal diagnosis: thalassemia major'],['affS','Prenatal diagnosis: sickle cell disease'],['couns','Couple counselled'],['mtp','Medical termination of pregnancy'],['cont','Affected fetus, continuing pregnancy'],['und','Affected fetus, couple undecided'],['cltf','Affected fetus, lost to follow-up'],['mtpT','Medical termination of pregnancy, thalassemia major'],['mtpS','Medical termination of pregnancy, sickle cell disease']];
 function csvDash(){
   var rs=pick().slice().sort(function(a,b){return a.a-b.a||a.p.localeCompare(b.p)||a.c.localeCompare(b.c)});
   saveCsv('Program MIS '+[periodText()].concat(scopeText()).join(' '),['Month','Partner','Programme','City'].concat(ALLC.map(function(c){return c[1]})),
@@ -1129,30 +1252,39 @@ function markOpen(){[].forEach.call(document.querySelectorAll('.st'),function(e)
 /* dashboard */
 var TABCOL={screening:'var(--tab1)',followup:'var(--tab2)',prenatal:'var(--tab3)'},TABD={screening:'var(--tab1d)',followup:'var(--tab2d)',prenatal:'var(--tab3d)'};
 function dashboard(){
-  var d=agg(pick()),h='';
-  h+='<div class="hero">'+
-    '<div class="hs" style="--hc:var(--tab1)" onclick="openD(\'scr\')"><span class="acc"></span><div class="big">'+cupc(d.scr,d.reg)+'</div><div class="t">of registered women were screened</div></div>'+
-    '<div class="hs" style="--hc:var(--attd)" onclick="openD(\'pos\')"><span class="acc"></span><div class="big">'+cupc(d.pos,d.scr)+'</div><div class="t">of screened women were identified as carriers</div></div></div>';
-  if(state.print){var keep=state.tab,both='';state.print=false;['screening','followup','prenatal'].forEach(function(tb){state.tab=tb;both+='<div class="pth">'+TABN[tb]+'</div>'+dashboard().replace(/^[\s\S]*?<div class="fade">/,'<div>')});state.tab=keep;state.print=true;return h+both}
-  h+='<div class="tabs">'+['screening','followup','prenatal'].map(function(tb){return '<a class="'+(state.tab===tb?'on':'')+'" style="--ta:'+TABCOL[tb]+';--tad:'+TABD[tb]+'" onclick="setTab(\''+tb+'\')">'+TABN[tb]+'</a>'}).join('')+'</div><div class="fade">';
-  if(state.tab==='screening'){
+  var d=agg(pick());
+  if(state.print){var keep=state.tab,both='';state.print=false;['screening','followup','prenatal'].forEach(function(tb){state.tab=tb;both+='<div class="pth">'+TABN[tb]+'</div>'+tabBody(tb,d)});state.tab=keep;state.print=true;return both}
+  return '<div class="tabs">'+['screening','followup','prenatal'].map(function(tb){return '<a class="'+(state.tab===tb?'on':'')+'" style="--ta:'+TABCOL[tb]+';--tad:'+TABD[tb]+'" onclick="setTab(\''+tb+'\')">'+TABN[tb]+'</a>'}).join('')+'</div><div class="fade">'+tabBody(state.tab,d)+'</div>';
+}
+/* hero: two rates for the active tab. Sentiment sets the colour: proc = neutral process (teal), att = attention (orange), bad = failure (red), good = good outcome (plum, never green). */
+function heroFor(tb,d){
+  var H=tb==='screening'?[['proc','scr',d.scr,d.reg,'of registered women were screened','registered women'],['att','pos',d.pos,d.scr,'of screened women were identified as carriers','screened women']]:
+    tb==='followup'?[['proc','pscr',d.pscr,d.pos,'of carrier women’s partners were screened','carrier women'],['att','riskH',d.riskH,d.pscr,'of partners screened here were an at-risk couple','partners screened here']]:
+    [['bad','aff',d.aff,d.pnd,'of fetuses tested were affected','fetuses tested'],['good','mtp',d.mtp,d.aff,'opted for medical termination of pregnancy','affected fetuses']];
+  return '<div class="hero">'+H.map(function(h){return '<div class="hs '+h[0]+'" onclick="openD(\''+h[1]+'\')"><div class="big">'+cupc(h[2],h[3])+'</div><div class="t">'+h[4]+'</div><div class="hn">'+n(h[2])+' of '+n(h[3])+' '+h[5]+'</div></div>'}).join('')+'</div>';
+}
+function lnk(k,v,t){return '<a data-k="'+k+'" data-v="'+v+'" onclick="openD(\''+k+'\');event.stopPropagation()">'+n(v)+' '+t+'</a>'}
+function tabBody(tb,d){
+  var h=heroFor(tb,d);
+  if(tb==='screening'){
     var rsp=function(t,ka,kb,c){var tot=d[ka]+d[kb];return '<div class="rg"><div class="rgt">'+t+'</div><div class="rbar"><i style="width:'+(tot?100*d[ka]/tot:0)+'%;background:'+M[ka][1]+'"></i><i style="width:'+(tot?100*d[kb]/tot:0)+'%;background:'+c+'"></i></div><div class="types rc">'+[ka,kb].map(function(t2){return '<div class="ty" onclick="openD(\''+t2+'\')"><div class="lk">'+M[t2][0]+'</div><div class="v">'+cu(d[t2])+'</div><div class="p">'+cupc(d[t2],d.reg)+' of registered</div></div>'}).join('')+'</div></div>'};
-    h+='<div class="panel"><div class="sec" style="--sa:var(--tab1)">Registration and screening</div>'+stair([{k:'reg'},{k:'scr',gap:'gscr',gl:'not screened'},{k:'pos'}],d,[178,148,118])+
+    h+='<div class="panel"><div class="sec" style="--sa:var(--tab1)">Registration and screening</div>'+stair([{k:'reg'},{k:'scr',gap:'gscr',gl:'not screened'},{k:'pos',tip:'Includes sickle cell disease'}],d,[178,148,118])+
       '<div class="rsplit">'+rsp('Registration type','nivf','ivf','var(--tab2)')+rsp('Gestational age at registration','le12','gt12','var(--tab2)')+'</div></div>';
     var ty=['thal','sick','scdd','oth'];
-    h+='<div class="panel reveal"><div class="sec" style="--sa:var(--att)">Type of hemoglobinopathy</div><div class="types t4">'+ty.map(function(t,i){return '<div class="ty" onclick="openD(\''+t+'\')"><div class="lk"><span class="dot" style="background:'+TYC[t]+(t==='oth'?';box-shadow:inset 0 0 0 1px var(--ty2)':'')+'"></span>'+M[t][0]+'</div><div class="v">'+cu(d[t])+'</div><div class="p">'+cupc(d[t],d.pos)+' of women identified as carriers</div><div class="mini"><i style="width:'+(d.pos?100*d[t]/d.pos:0)+'%;background:'+TYC[t]+(t==='oth'?';box-shadow:inset 0 0 0 1px var(--ty2)':'')+';animation-delay:'+(250+i*120)+'ms"></i></div></div>'}).join('')+'</div></div>';
-  } else if(state.tab==='followup'){
-    h+='<div class="panel"><div class="sec" style="--sa:var(--tab2)">Partner screened and at-risk couples</div>'+stair([{k:'padv',gap:'gadv',gl:'partners not advised'},{k:'pscr',gap:'gpsc',gl:'partners not screened'},{k:'risk'}],d,[190,150,110])+'</div>';
+    h+='<div class="panel reveal"><div class="sec" style="--sa:var(--att)">Type of hemoglobinopathy</div><div class="types t4">'+ty.map(function(t,i){return '<div class="ty" onclick="openD(\''+t+'\')"><div class="lk"><span class="dot" style="background:'+TYC[t]+'"></span>'+M[t][0]+'</div><div class="v">'+cu(d[t])+'</div><div class="p">'+cupc(d[t],d.pos)+' of women identified as carriers</div><div class="mini"><i style="width:'+(d.pos?100*d[t]/d.pos:0)+'%;background:'+TYC[t]+';animation-delay:'+(250+i*120)+'ms"></i></div></div>'}).join('')+'</div></div>';
+  } else if(tb==='followup'){
+    var rl='<div class="xln">'+lnk('riskH',d.riskH,'screened here')+'<span class="sep">·</span>'+lnk('rin',d.rin,'referred in')+'</div>';
+    h+='<div class="panel"><div class="sec" style="--sa:var(--tab2)">Partner screened and at-risk couples</div>'+stair([{k:'padv'},{k:'pscr',gaps:[{k:'gawt',l:'awaiting partner test'},{k:'glost',l:'lost to follow-up'}],tip:'Partner test done is Yes. Pending or blank counts as awaiting partner test. Lost to follow-up in either partner field counts as lost to follow-up.'},{k:'risk',line:rl}],d,[190,150,110])+'</div>';
   } else {
-    var mnr=d.mtp-d.mtpT-d.mtpS;
-    var st=[{k:'pnd',rt:'Type of prenatal diagnosis',rows:[['Chorionic villus sampling (CVS)',d.cvs,'cvs','var(--tab1)'],['Amniocentesis',d.amn,'amn','var(--tab2)'],d.pndnr>0?['Not available',d.pndnr,'pndnr','var(--nr)']:null]},
+    var mnr=d.mtp-d.mtpT-d.mtpS,noP=d.risk-d.pnd;
+    var nl=noP>0?'<div class="xln"><b>'+n(noP)+' of '+n(d.risk)+' at-risk couples</b> had no prenatal diagnosis: '+[d.dec>0?lnk('dec',d.dec,'declined'):'',d.ltfu>0?lnk('ltfu',d.ltfu,'lost to follow-up'):'',d.nrec>0?lnk('nrec',d.nrec,'with next step not recorded'):''].filter(function(x){return x}).join(', ')+'.</div>':'<div class="xln">All '+n(d.risk)+' at-risk couples had a prenatal diagnosis.</div>';
+    var st=[{k:'pnd',rt:'Type of prenatal diagnosis',rows:[['Chorionic villus sampling (CVS)',d.cvs,'cvs','var(--tab3)'],['Amniocentesis',d.amn,'amn','var(--tab2)'],['Cordocentesis',d.cord,'cord','var(--tab1d)'],d.pndnr>0?['Not available',d.pndnr,'pndnr','var(--nr)']:null],line:nl},
       {k:'aff',rt:'Type of hemoglobinopathy',rows:[['Thalassemia major',d.affT,'affT','var(--l4)'],['Sickle cell disease',d.affS,'affS','var(--aff1)']]},{k:'couns',gap:'gcouns',gl:'not counselled'},
       {k:'mtp',rt:'Type of hemoglobinopathy',rows:[['Thalassemia major',d.mtpT,'mtpT','var(--l4)'],['Sickle cell disease',d.mtpS,'mtpS','var(--aff1)'],mnr>0?['Not available',mnr,null,'var(--nr)']:null]}];
     var hs=st.map(function(_,i){return 200-i*Math.round(80/(st.length-1))});
     h+='<div class="panel"><div class="sec" style="--sa:var(--tab3)">Prenatal testing results</div>'+stair(st,d,hs)+'</div>';
   }
-  h+=chartsFor(state.tab,d);
-  return h+'</div>';
+  return h+chartsFor(tb,d);
 }
 function animate(root){
   var reduce=state.print||(window.matchMedia&&matchMedia('(prefers-reduced-motion: reduce)').matches);
@@ -1182,10 +1314,10 @@ function renderReport(){
   var kind=state.report,rs=pick().filter(function(r){return (state.month==null||state.month.indexOf(r.a)>=0)&&(!state.rf||(r.p===state.rf.p&&r.c===state.rf.c))});
   rs.sort(function(a,b){return a.a-b.a||a.p.localeCompare(b.p)||a.c.localeCompare(b.c)});
   var S=kind==='screening'?[['reg','Women registered'],['nivf','Registered ANC'],['ivf','Registered IVF'],['le12','Registered before 12 weeks'],['gt12','Registered after 12 weeks'],['scr','Women screened'],['thal','Beta thalassemia carrier'],['sick','Sickle cell carrier'],['scdd','Sickle cell disease'],['oth','Other hemoglobinopathies'],['pos','Women identified as carriers']]
-    :[['padv','Partner advised testing'],['pscr','Partner screened'],['risk','At-risk couple'],['dec','Declined prenatal diagnosis'],['ltfu','Lost to follow-up'],['pnd','Prenatal diagnosis'],['cvs','Chorionic villus sampling (CVS)'],['amn','Amniocentesis'],['affT','Thalassemia major'],['affS','Sickle cell disease'],['couns','Couple counselled'],['mtpT','Medical termination of pregnancy, thalassemia major'],['mtpS','Medical termination of pregnancy, sickle cell disease']];
+    :[['padv','Partner advised testing'],['pscr','Partner screened'],['gawt','Awaiting partner test'],['glost','Partner lost to follow-up'],['risk','At-risk couple'],['riskH','At-risk couple, screened here'],['rin','At-risk couple, referred in'],['dec','Declined prenatal diagnosis'],['ltfu','Lost to follow-up'],['nrec','Next step not recorded'],['pnd','Prenatal diagnosis'],['cvs','Chorionic villus sampling (CVS)'],['amn','Amniocentesis'],['cord','Cordocentesis'],['affT','Thalassemia major'],['affS','Sickle cell disease'],['couns','Couple counselled'],['cont','Continuing pregnancy'],['und','Undecided'],['cltf','Affected fetus, lost to follow-up'],['mtpT','Medical termination of pregnancy, thalassemia major'],['mtpS','Medical termination of pregnancy, sickle cell disease']];
   document.getElementById('r-title').textContent=kind==='screening'?'Screening Report':'Follow-up Report';
   document.getElementById('r-chips').innerHTML=[state.month!=null?(state.month.length>1?'Period = '+aLabel(state.month[0])+' to '+aLabel(state.month[state.month.length-1]):'Month = '+aLabel(state.month[0],true)):'Period = '+periodText(),F.prog&&!state.rf?'Programme = '+F.prog:'',(state.rf||F.partner)?'Partner = '+P[state.rf?state.rf.p:F.partner].full:'',(state.rf||F.city)?'City = '+(state.rf?state.rf.c:F.city):F.st?'State = '+F.st:''].filter(function(x){return x}).map(function(c){return '<span>'+c+'</span>'}).join('')+'<span style="background:#F1F5F9;color:#374151">+ Filter</span>';
-  var tot=agg(rs),cell=function(o,k){return k==='pos'?o.thal+o.sick+o.oth+o.scdd:o[k]};
+  var tot=agg(rs),cell=function(o,k){return o[k]!=null?o[k]:agg([o])[k]};
   document.getElementById('r-table').innerHTML='<table><thead><tr><th>Month</th><th>Partner</th><th>Programme</th><th>City</th>'+S.map(function(s){return '<th class="n">'+s[1]+'</th>'}).join('')+'</tr></thead><tbody>'+
     rs.map(function(r){return '<tr><td style="white-space:nowrap">'+aLabel(r.a)+'</td><td>'+P[r.p].name+'</td><td>'+P[r.p].prog+'</td><td>'+r.c+'</td>'+S.map(function(s){return '<td class="n">'+n(cell(r,s[0]))+'</td>'}).join('')+'</tr>'}).join('')+
     '<tr class="tot"><td colspan="4">Total · '+rs.length+' rows</td>'+S.map(function(s){return '<td class="n">'+n(cell(tot,s[0]))+'</td>'}).join('')+'</tr></tbody></table>';
@@ -1201,6 +1333,7 @@ function show(){
   window.scrollTo(0,0);
 }
 document.addEventListener('keydown',function(e){if(e.key==='Escape'&&state.open)closeD()});
+(function(){var lw=window.innerWidth,tm;window.addEventListener('resize',function(){clearTimeout(tm);tm=setTimeout(function(){var w=window.innerWidth;if(Math.abs(w-lw)<24)return;lw=w;if((location.hash||'#dashboard')==='#dashboard'&&document.getElementById('dash')&&!state.print)renderDash()},180)})})();
 sidebar();window.addEventListener('hashchange',show);show();
 
 </script>

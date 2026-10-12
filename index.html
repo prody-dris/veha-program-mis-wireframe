@@ -1061,10 +1061,10 @@ function typeStack(gr,d,W){
   });
   return '<svg class="ch2 tstk" viewBox="0 0 '+W+' '+y+'" width="100%" role="img" aria-label="Type of hemoglobinopathy by '+gr.by+'">'+body+'</svg><div class="clg kk">'+spec.map(function(x){return '<span class="lg"><i style="background:'+x[1]+'"></i>'+M[x[0]][0]+'</span>'}).join('')+'</div>';
 }
-/* partners of carrier women by status: one stacked bar plus legend rows. The three statuses are mutually exclusive and sum to women identified as carriers.
+/* carriers’ partners by status: one stacked bar plus legend rows. The three statuses are mutually exclusive and sum to women identified as carriers.
    Zero segments draw nothing; the legend row still shows 0. */
 function statusBar(items,tot,W){
-  var x=0,s='<svg class="ch2" viewBox="0 0 '+W+' 48" width="100%" role="img" aria-label="Partners of carrier women by status"><rect x="0" y="0" width="'+W+'" height="48" rx="4" fill="#F4F4F4"/>';
+  var x=0,s='<svg class="ch2" viewBox="0 0 '+W+' 48" width="100%" role="img" aria-label="Carriers’ partners by status"><rect x="0" y="0" width="'+W+'" height="48" rx="4" fill="#F4F4F4"/>';
   items.forEach(function(q){if(!q.v||!tot)return;var w=W*q.v/tot;s+=mark(q.k,null,q.v,q.l,'<rect x="'+x+'" y="0" width="'+Math.max(w-2,1)+'" height="48" style="fill:'+q.c+'"/>','sg');x+=w});
   return s+'</svg><div class="sl">'+items.map(function(q){var t=q.v>0;return '<'+(t?'a':'div')+' class="lr"'+(t?' data-k="'+q.k+'" data-v="'+q.v+'" onclick="openD(\''+q.k+'\')"':'')+'><i style="background:'+q.c+'"></i><span class="nm">'+q.l+'</span><b>'+n(q.v)+'</b><em>'+pc(q.v,tot)+'</em></'+(t?'a':'div')+'>'}).join('')+'</div>';
 }
@@ -1084,9 +1084,11 @@ function cascade(items,W,H){
   return s+'</svg>';
 }
 /* combo chart: bars are women screened per month (left axis), the line is the share of screened women identified as carriers (right axis).
-   Elapsed months only. With two or more partners in scope the bars sit side by side per partner in a graphite ramp; with one partner the bars are a single series. */
+   Elapsed months only. With two or more partners in scope the bars sit side by side per partner in one fixed colour per partner; with one partner the bars are a single series. */
 function niceAxis(mx,k){var raw=Math.max(mx,1e-9)/k,p=Math.pow(10,Math.floor(Math.log10(raw))),f=raw/p,st=(f<=1?1:f<=2?2:f<=2.5?2.5:f<=5?5:10)*p;return {st:st,max:st*k}}
-var PRAMP=['var(--pc0)','var(--pc1)','var(--pc2)','var(--pc3)','var(--pc4)'];
+var PCOL={fogsi:'#333333',sion:'#7A5C99',wadia:'#C08497',cmc:'#8C8C8C',p5:'#6B7A3F'};
+function pcol(p){return PCOL[p]||PCOL.p5}
+function oneCol(){var sp=scopePartners(F);return sp.length===1?pcol(sp[0]):'var(--bar)'}
 function combo(gr,W){
   var months=[],a,last=Math.min(F.to,TODAY);for(a=F.from;a<=last;a++)months.push(a);
   if(!months.length)return '<div class="empty" style="padding:30px 0">No elapsed months in this period</div>';
@@ -1105,7 +1107,7 @@ function combo(gr,W){
   cols.forEach(function(c,ci){
     var cx=LM+ci*slot+slot/2,yb=TOP+BH,lab=MSS[c.m%12]+(multi?' '+String(Math.floor(c.m/12)).slice(2):''),x0=cx-(bwid*ns+(ns>1?2*(ns-1):0))/2;
     if(!c.rep){s+='<g data-t="'+aLabel(c.m,true)+': Not available"><rect x="'+(cx-bwid/2)+'" y="'+(yb-3)+'" width="'+bwid+'" height="3" fill="#D1D1D1"/></g>'}
-    else c.segs.forEach(function(q,qi){if(!q.v)return;var h=BH*q.v/L.max,y0=yb-h,col=stk?PRAMP[(q.g.ci||0)%5]:'var(--bar)',lb=aLabel(c.m,true)+(stk?', '+q.g.l:''),bx=x0+qi*(bwid+2);
+    else c.segs.forEach(function(q,qi){if(!q.v)return;var h=BH*q.v/L.max,y0=yb-h,col=stk?pcol(q.g.f.partner):oneCol(),lb=aLabel(c.m,true)+(stk?', '+q.g.l:''),bx=x0+qi*(bwid+2);
       s+=mark('scr',Object.assign({},q.g.f,{from:c.m,to:c.m}),q.v,lb+': '+n(q.v)+' women screened'+(stk?' (of '+n(c.scr)+' across the partners shown)':'')+'; '+n(c.pos)+' identified as carriers ('+pc(c.pos,c.scr)+')',
         '<rect x="'+bx+'" y="'+y0+'" width="'+bwid+'" height="'+Math.max(h,1)+'" rx="2" style="fill:'+col+'"/>')});
     s+='<text x="'+cx+'" y="'+(yb+17)+'" text-anchor="middle" font-size="'+fs+'" font-weight="600" fill="#333333">'+lab+'</text>'+(narrow?'':'<text x="'+cx+'" y="'+(yb+33)+'" text-anchor="middle" font-size="11" fill="#727272">'+(c.rep?n(c.scr):'')+'</text>')});
@@ -1118,7 +1120,7 @@ function combo(gr,W){
 }
 function comboLegend(gr){
   var stk=gr.by==='partner';
-  return (stk?gr.g.map(function(g){return '<span class="lg"><i style="background:'+PRAMP[(g.ci||0)%5]+'"></i>'+g.l+'</span>'}).join(''):'<span class="lg"><i style="background:var(--bar)"></i>Women screened</span>')+
+  return (stk?gr.g.map(function(g){return '<span class="lg"><i style="background:'+pcol(g.f.partner)+'"></i>'+g.l+'</span>'}).join(''):'<span class="lg"><i style="background:'+oneCol()+'"></i>Women screened</span>')+
     '<span class="lg"><i class="ln" style="background:var(--att)"></i>% of screened women identified as carriers</span><span class="lg">Left axis: women screened. Right axis: % identified as carriers.</span>';
 }
 /* Customize: partner picker for the combo chart only. Lists Program MIS Enabled partners in scope; state.cx holds the unticked ones. */
@@ -1187,7 +1189,7 @@ function chartsFor(tab,d){
     '<div class="cgrid one"><div class="panel cpan reveal czr"><div class="sec" style="--sa:var(--tab1)">Women screened by month and share identified as carriers</div>'+czBtn(gr)+'<div id="cmbh">'+cmbInner(gr,W)+'</div></div></div>';
   if(tab==='followup'){
     return '<div class="cgrid one">'+
-      cpanel('Partners of carrier women, by status','var(--tab2)',statusBar([{k:'pscr',l:'Partner screened',v:d.pscr,c:'var(--hg)'},{k:'gawt',l:'Awaiting partner test',v:d.gawt,c:'var(--ho)'},{k:'glost',l:'Partner lost to follow-up',v:d.glost,c:'var(--l4)'}],d.pos,W2))+'</div>';
+      cpanel('Carriers’ partners, by status','var(--tab2)',statusBar([{k:'pscr',l:'Partner screened',v:d.pscr,c:'var(--hg)'},{k:'gawt',l:'Awaiting partner test',v:d.gawt,c:'var(--ho)'},{k:'glost',l:'Partner lost to follow-up',v:d.glost,c:'var(--l4)'}],d.pos,W2))+'</div>';
   }
   return '<div class="cgrid one">'+cpanel('Outcome of affected fetuses','var(--l4)',d.aff?donut([{k:'mtp',l:'Medical termination of pregnancy',v:d.mtp,c:'var(--dec1)'},{k:'cont',l:'Continuing pregnancy',v:d.cont,c:'var(--dec2)'},{k:'und',l:'Undecided',v:d.und,c:'var(--g1)'},{k:'cltf',l:'Lost to follow-up',v:d.cltf,c:'var(--neg)'}],['affected fetuses'],1):'<div class="empty" style="padding:30px 0">No affected fetuses in this selection</div>')+'</div>'+
     '<div class="cgrid one">'+cpanel('From at-risk couple to termination of pregnancy','var(--aff1)',stepdown(d))+'</div>';
@@ -1379,7 +1381,7 @@ function dashboard(){
 /* hero: two rates for the active tab. Sentiment sets the colour: proc = neutral process (graphite), att = attention (orange), bad = failure (red), good = good outcome (plum, never green). */
 function heroFor(tb,d){
   var H=tb==='screening'?[['proc','scr',d.scr,d.reg,'of registered women were screened','registered women'],['att','pos',d.pos,d.scr,'of screened women were identified as carriers','screened women']]:
-    tb==='followup'?[['proc','pscr',d.pscr,d.pos,'of carrier women’s partners were screened','carrier women'],['att','riskH',d.riskH,d.pscr,'of partners screened here were an at-risk couple','partners screened here']]:
+    tb==='followup'?[['proc','pscr',d.pscr,d.pos,'of carriers’ partners were screened','carriers'],['att','riskH',d.riskH,d.pscr,'of partners screened here were an at-risk couple','partners screened here']]:
     [['bad','aff',d.aff,d.pnd,'of fetuses tested were affected','fetuses tested'],['good','mtp',d.mtp,d.aff,'opted for medical termination of pregnancy','affected fetuses']];
   return '<div class="hero'+(tb==='prenatal'?' pn':'')+'">'+H.map(function(h){return '<div class="hs '+h[0]+'" onclick="openD(\''+h[1]+'\')"><div class="big">'+cupc(h[2],h[3])+'</div><div class="t">'+h[4]+'</div><div class="hn">'+n(h[2])+' of '+n(h[3])+' '+h[5]+'</div></div>'}).join('')+'</div>';
 }

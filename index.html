@@ -17,8 +17,8 @@
   --good:#6C5289; --goodd:#54406C; --att:#C9690C; --attd:#B85900; --aff1:#B74B21; --aff2:#D9926B; --l4:#AC3031; --neg:#C74B47; --neg2:#6E2826;
   --dec1:#6C5289; --dec2:#9D86BA; --dec3:#8A8E93; --nr:#A5A5A5; --nrd:#767676;
   --rs0:#7A2A2A; --rs1:#AC3031; --rs2:#C96B66; --rs3:#DE9C97; --rs4:#C8A27F;
-  --bar:#118659; --pc0:#0E6B47; --pc1:#3FA27A; --pc2:#9FD3BC; --pc3:#0A4F34; --pc4:#66BB9A; --hg:#118659; --ho:#C9690C;
-  --att-t:#FCF6F0; --ty1:#D9661C; --ty2:#EDB02B; --ty3:#AC3031; --ty4:#BABABA; --tyd:#2B1700; --sp1:#515151; --sp2:#E3A868;
+  --bar:#515151; --pc0:#333333; --pc1:#808080; --pc2:#BABABA; --pc3:#515151; --pc4:#9A9A9A; --hg:#118659; --ho:#C9690C;
+  --att-t:#FCF6F0; --ty1:#D9661C; --ty2:#EDB02B; --ty3:#AC3031; --ty4:#BABABA; --tyd:#2B1700; --sp1:#118659; --sp2:#C9690C;
   --soft:color-mix(in srgb,var(--brand) 6%,#FFFFFF); --soft2:color-mix(in srgb,var(--brand) 10%,#FFFFFF); --brand-line:#D5D5D5;
   --ink-d:#404040; --navy:#404040;
   --ink:#232323; --ink-2:#404040; --ink-3:#727272; --line:#E7E7E7; --side:#FAFAFA; --bg:#FFFFFF;
@@ -684,7 +684,7 @@ svg.cmb .halo{paint-order:stroke;stroke:#FFFFFF;stroke-width:4px;stroke-linejoin
 .sdct .rsn{display:inline-flex;flex-wrap:wrap;gap:2px 14px;font-size:12px;color:var(--ink-2)}
 .sdct .dp{cursor:pointer;display:inline-flex;align-items:baseline;gap:5px;white-space:nowrap}.sdct .dp:hover{text-decoration:underline;text-underline-offset:2px}
 .sdct .rsn .dp i{display:inline-block;width:9px;height:9px;border-radius:2px;align-self:center}
-.czr{position:relative}
+.czr,.czr2{position:relative}
 .czw{position:absolute;top:20px;right:28px;z-index:20}
 .cz{font:inherit;font-size:13px;font-weight:600;color:var(--ink);background:#FFFFFF;border:1px solid #D1D1D1;border-radius:8px;height:32px;padding:0 14px;cursor:pointer}
 .cz:hover{background:#F9F9F9}
@@ -699,6 +699,50 @@ svg.cmb .halo{paint-order:stroke;stroke:#FFFFFF;stroke-width:4px;stroke-linejoin
 @media print{.czw{display:none}}
 .donut svg.dbg{width:190px;height:190px}
 @container (max-width:440px){.donut svg.dbg{width:160px;height:160px}}
+
+/* round 5 hygiene: one gap between every dot or swatch and its label, no hover underlines, hover tint instead */
+.dot{margin-right:7px;vertical-align:middle}
+.types .ty .lk{gap:0}
+.types .ty .lk .dot{margin-right:7px;flex:none}
+.ptab .dot{margin-right:8px}
+.strip .dot{margin-right:7px}
+table.pt .dot{margin-right:9px}
+.lg i,.clg .lg i{margin-right:0}.lg,.clg .lg{gap:7px}.clg .lg{margin-right:14px}
+.sdct .dp,.sdct .dp i{gap:6px}.sdct .rsn .dp i{margin-right:0}
+.st .gp[data-gk]:hover,.st:hover .go,.xr.ck:hover span,.rows .ck:hover span,.ptab .ck:hover,svg.hb .rw:hover .lb,.dl2 .lr:hover span.nm,.crumbs2 a:hover,table.pt tr.pr:hover .pn,svg.ch2 .rw:hover .lb,.types.rc .ty:hover .lk,.types.t4 .ty:hover .lk,.xln a:hover,.bkl a.bkr:hover span,.sdct .dp:hover{text-decoration:none}
+.types.rc .ty:hover,.types.t4 .ty:hover{background:#FAFAFA}
+.types.rc .ty,.types.t4 .ty{transition:background .2s}
+.xr .xl span{min-width:0}
+/* partner and reason drill block */
+table.bt{width:100%;border-collapse:collapse;font-size:14px}
+table.bt th{text-align:left;font-weight:600;color:var(--ink-2);font-size:12px;padding:10px 8px;border-bottom:1px solid var(--line);background:#FAFAFA}
+table.bt th.n,table.bt td.n{text-align:right;font-variant-numeric:tabular-nums}
+table.bt th:first-child,table.bt td:first-child{padding-left:22px}table.bt th:last-child,table.bt td:last-child{padding-right:22px}
+table.bt td{padding:11px 8px;border-bottom:1px solid #F4F4F4;vertical-align:middle}
+table.bt .pn{font-weight:600}
+table.bt tr.z{color:var(--ink-3)}table.bt tr.z b{font-weight:400}
+table.bt a.rxc{display:inline-flex;align-items:center;gap:6px;cursor:pointer;color:var(--ink);padding:2px 8px;border-radius:6px;border:1px solid #E1E1E1}
+table.bt a.rxc:hover,table.bt a.rxc.on{background:#F4F4F4}
+table.bt a.rxc .car{font-size:12px;color:var(--ink-3)}
+table.bt tr.rxr td{padding:6px 22px 6px 8px;font-size:13px;color:var(--ink-2);background:#FCFCFC;border-bottom:1px solid #F4F4F4}
+table.bt tr.rxr td:first-child{padding-left:44px}
+table.bt tr.tot td{font-weight:700;border-top:2px solid #D5D5D5;border-bottom:0;background:#FAFAFA}
+.types .ty .lk .dot{margin-top:.5em}
+.types.rc .ty .lk .dot{margin-top:0}
+.bkh2{font-size:12.5px;font-weight:600;color:var(--ink-2);padding:18px 22px 8px}
+
+.xl{align-items:flex-start;gap:10px}.xl span{padding-right:6px;line-height:1.35}.xl b,.xl em,.xl i{white-space:nowrap;line-height:1.35}.xl b{padding-top:0}
+.sdf:has(.sdn2){min-width:68px}
+.pfu .dets{align-items:stretch}
+.xb+.bkl{margin-top:14px;padding-top:10px;border-top:1px solid #F0F0F0}
+@media (max-width:720px){
+.tabs{gap:2px}.tabs a{padding:12px 7px;font-size:13.5px}
+.drawer .dh .t{padding-right:88px}
+.dl2 .lr .nm{white-space:normal;overflow:visible;text-overflow:clip}
+.czw{position:relative;top:auto;right:auto;margin:-4px 0 14px;display:flex;justify-content:flex-end}
+.czp{right:0;top:38px}
+.types.rc .ty .lk{white-space:normal;overflow:visible;text-overflow:clip;min-height:2.8em}
+}
 </style>
 </head>
 <body>
@@ -1031,7 +1075,7 @@ function cascade(items,W,H){
   return s+'</svg>';
 }
 /* combo chart: bars are women screened per month (left axis), the line is the share of screened women identified as carriers (right axis).
-   Elapsed months only. With two or more partners in scope the bars sit side by side per partner in a green ramp; with one partner the bars are a single series. */
+   Elapsed months only. With two or more partners in scope the bars sit side by side per partner in a graphite ramp; with one partner the bars are a single series. */
 function niceAxis(mx,k){var raw=Math.max(mx,1e-9)/k,p=Math.pow(10,Math.floor(Math.log10(raw))),f=raw/p,st=(f<=1?1:f<=2?2:f<=2.5?2.5:f<=5?5:10)*p;return {st:st,max:st*k}}
 var PRAMP=['var(--pc0)','var(--pc1)','var(--pc2)','var(--pc3)','var(--pc4)'];
 function combo(gr,W){
@@ -1069,16 +1113,18 @@ function comboLegend(gr){
     '<span class="lg"><i class="ln" style="background:var(--att)"></i>% of screened women identified as carriers</span><span class="lg">Left axis: women screened. Right axis: % identified as carriers.</span>';
 }
 /* Customize: partner picker for the combo chart only. Lists Program MIS Enabled partners in scope; state.cx holds the unticked ones. */
-function czSel(gr){var ex=state.cx||[],g=gr.g.map(function(x,i){return Object.assign({ci:i},x)}),k=g.filter(function(x){return ex.indexOf(x.f.partner)<0});return {by:'partner',g:k.length?k:g}}
+function czk(w){return w==='t'?'tx':'cx'}
+function czSel(gr,w){var ex=state[czk(w)]||[],g=gr.g.map(function(x,i){return Object.assign({ci:i},x)}),k=g.filter(function(x){return ex.indexOf(x.f.partner)<0});return {by:'partner',g:k.length?k:g}}
 function cmbInner(gr,W){var g2=gr.by==='partner'?czSel(gr):gr;return combo(g2,W)+'<div class="clg kk">'+comboLegend(g2)+'</div>'}
-function czBtn(gr){if(gr.by!=='partner')return '';var ex=state.cx||[];
-  return '<div class="czw"><button type="button" class="cz" id="czb" aria-haspopup="true" onclick="czToggle()">Customize</button><div class="czp" id="czp" hidden><div class="czh">Partners shown in this chart</div>'+
-    gr.g.map(function(x){return '<label class="czo"><input type="checkbox" data-p="'+x.f.partner+'"'+(ex.indexOf(x.f.partner)<0?' checked':'')+' onchange="czSet(this)"><span>'+x.l+'</span></label>'}).join('')+'<div class="czn">Program MIS Enabled partners only. This changes this chart only.</div></div></div>'}
-function czToggle(){var p=document.getElementById('czp');if(p)p.hidden=!p.hidden}
-function czSet(el){var gr=groups(),box=[].slice.call(document.querySelectorAll('#czp input')),ex=box.filter(function(b){return !b.checked}).map(function(b){return b.dataset.p});
+function typeInner(gr,d,W){return typeStack(gr.by==='partner'?czSel(gr,'t'):gr,d,W)}
+function czBtn(gr,w){if(gr.by!=='partner')return '';var ex=state[czk(w)]||[],sx=w==='t'?'_t':'';
+  return '<div class="czw"><button type="button" class="cz" id="czb'+sx+'" aria-haspopup="true" onclick="czToggle(\''+(w||'')+'\')">Customize</button><div class="czp" id="czp'+sx+'" hidden><div class="czh">Partners shown in this chart</div>'+
+    gr.g.map(function(x){return '<label class="czo"><input type="checkbox" data-p="'+x.f.partner+'"'+(ex.indexOf(x.f.partner)<0?' checked':'')+' onchange="czSet(this,\''+(w||'')+'\')"><span>'+x.l+'</span></label>'}).join('')+'<div class="czn">Program MIS Enabled partners only. This changes this chart only.</div></div></div>'}
+function czToggle(w){var p=document.getElementById('czp'+(w==='t'?'_t':''));if(p)p.hidden=!p.hidden}
+function czSet(el,w){var gr=groups(),box=[].slice.call(el.closest('.czp').querySelectorAll('input')),ex=box.filter(function(b){return !b.checked}).map(function(b){return b.dataset.p});
   if(ex.length>=box.length){el.checked=true;return}
-  state.cx=ex;var h=document.getElementById('cmbh');if(h)h.innerHTML=cmbInner(gr,chartW(960))}
-document.addEventListener('mousedown',function(e){var p=document.getElementById('czp');if(p&&!p.hidden&&!e.target.closest('.czw'))p.hidden=true});
+  state[czk(w)]=ex;if(w==='t'){var t=document.getElementById('tsh');if(t)t.innerHTML=typeInner(gr,agg(pick()),chartW(960))}else{var h=document.getElementById('cmbh');if(h)h.innerHTML=cmbInner(gr,chartW(960))}}
+document.addEventListener('mousedown',function(e){[].forEach.call(document.querySelectorAll('.czp'),function(p){if(!p.hidden&&!e.target.closest('.czw'))p.hidden=true})});
 /* ranked table: one row per partner (or city) with a thin inline bar for the share, number and the counts behind it */
 function ranked(rows,ref,k,dk){
   rows=rows.filter(function(r){return r.den>0}).map(function(r){r.rate=100*r.num/r.den;return r}).sort(function(a,b){return b.rate-a.rate});
@@ -1128,7 +1174,7 @@ function chartsFor(tab,d){
   TN=tab==='screening'?1:tab==='followup'?2:3;
   var gr=groups(),W=chartW(960),W2=chartW(1100);
   if(tab==='screening')return '<div class="cgrid one">'+
-    cpanel('Type of hemoglobinopathy, '+(gr.by==='partner'?'partner-wise':'city-wise'),'var(--att)',typeStack(gr,d,W))+'</div>'+
+    '<div class="panel cpan reveal czr2"><div class="sec" style="--sa:var(--att)">Type of hemoglobinopathy, '+(gr.by==='partner'?'partner-wise':'city-wise')+'</div>'+czBtn(gr,'t')+'<div id="tsh">'+typeInner(gr,d,W)+'</div></div></div>'+
     '<div class="cgrid one"><div class="panel cpan reveal czr"><div class="sec" style="--sa:var(--tab1)">Women screened by month and share identified as carriers</div>'+czBtn(gr)+'<div id="cmbh">'+cmbInner(gr,W)+'</div></div></div>';
   if(tab==='followup'){
     return '<div class="cgrid one">'+
@@ -1194,7 +1240,7 @@ var FSEL={glostA:function(x){return x.pa===LOST},glostB:function(x){return x.pa=
   pnd:function(x){return x.pnd==='Done'},cvs:function(x){return x.test==='CVS'},amn:function(x){return x.test==='Amniocentesis'},cord:function(x){return x.test==='Cordocentesis'},pndnr:function(x){return x.test==='Not available'},
   gcouns:function(x){return isAff(x)&&x.couns!=='Yes'},aff:isAff,unaff:function(x){return x.pnd==='Done'&&!isAff(x)},affT:function(x){return x.fr==='Major, Thal'},affS:function(x){return x.fr==='Major, Sickle'},
   couns:function(x){return isAff(x)&&x.couns==='Yes'},cont:function(x){return isAff(x)&&x.mtp!=='Yes'&&!x.lost&&!x.und},und:function(x){return x.und},undc:function(x){return x.und&&x.couns==='Yes'},cltf:function(x){return x.lost===true},mtp:function(x){return x.mtp==='Yes'},mtpT:function(x){return x.mtp==='Yes'&&x.fr==='Major, Thal'},mtpS:function(x){return x.mtp==='Yes'&&x.fr==='Major, Sickle'}};
-var FCOL={id:'ID',wc:'Woman code',p:'Partner',c:'City',m:'Registered on',ct:'Type of hemoglobinopathy',pa:'Partner advised testing',pt:'Partner screened',prs:'Reason',hr:'Partner screening result',pndp:'Prenatal diagnosis',reason:'Reason',fr:'Prenatal diagnosis result',couns:'Couple counselled',po:'Pregnancy outcome',dcs:'Couple\'s decision'};
+var FCOL={id:'ID',wc:'Woman code',p:'Partner',c:'City',m:'Registered on',ct:'Type of hemoglobinopathy',pa:'Partner advised testing',pt:'Partner screened',prs:'Reason not tested',hr:'Partner screening result',pndp:'Prenatal diagnosis',reason:'Reason',fr:'Prenatal diagnosis result',couns:'Couple counselled',po:'Pregnancy outcome',dcs:'Couple\'s decision'};
 var SR={thal:'Beta thalassemia carrier',sick:'Sickle cell carrier',scdd:'Sickle cell disease'};
 function fval(x,c){var v=fval0(x,c);return v===''||v==null?'Not available':v}
 function fval0(x,c){
@@ -1236,7 +1282,7 @@ function partnerVals(k,f){f=f||F;return scopePartners(f).map(function(p){return 
 function drawer(){
   var el=document.getElementById('drawer'),k=state.open;
   if(!k){el.innerHTML='';return}
-  var FF=Object.assign({},F,state.dx||{}),scr=M[k][2]==='s',col=M[k][1],sp=scopePartners(FF),single=sp.length===1,dp=single?sp[0]:state.dp,view=dp?'src':'partners',head,rows,val,tbl,unit;
+  var FF=Object.assign({},F,state.dx||{}),scr=M[k][2]==='s',col=M[k][1],sp=scopePartners(FF),single=sp.length===1,bk=/^(glost|glostA|glostB|gawt|gawtA|gawtB)$/.test(k),dp=bk?'all':(single?sp[0]:state.dp),view=dp?'src':'partners',head,rows,val,tbl,unit;
   var ov=state.dx||{},per=ov.from!=null&&ov.from===ov.to?aLabel(ov.from,true):periodText(),ctx=[TABN[TABOF[k]],per].concat(scopeText(FF)).join(' · ');
   var crumbs='';
   if(view==='partners'){
@@ -1266,7 +1312,8 @@ function drawer(){
     var pI=scr?1:2,cI=3;
     tbl='<table class="dt'+(scr?'':' fu')+'"><thead><tr>'+head.map(function(h,i){if(i===cI||(scr&&i===2))return '';if(i===pI)h='Partner, city';return '<th'+(i>=5&&scr?' class="n'+(i===hi?' hi':'')+'"':'')+'>'+h+'</th>'}).join('')+'</tr></thead><tbody>'+
       rows.map(function(r,ri){return '<tr style="animation-delay:'+Math.min(ri,14)*30+'ms">'+r.map(function(v,i){if(i===cI||(scr&&i===2))return '';if(i===pI)v=v+'<span class="cy">'+r[cI]+'</span>';return '<td'+(i>=5&&scr?' class="n'+(i===hi?' hi':'')+'"':'')+'>'+(typeof v==='number'?n(v):v)+'</td>'}).join('')+'</tr>'}).join('')+'</tbody></table>';
-    ctx=[TABN[TABOF[k]],per,one?P[dp].name:'All partners',FF.city||FF.st||'All cities'].join(' · ');
+    ctx=bk?[TABN[TABOF[k]],per].concat(scopeText(FF)).join(' · '):[TABN[TABOF[k]],per,one?P[dp].name:'All partners',FF.city||FF.st||'All cities'].join(' · ');
+    if(bk){tbl=bkBlock(k,FF)+'<div class="bkh2">Records, most recent first</div>'+tbl;crumbs='<div class="crumbs2"><span class="cur">Partner-wise breakup</span><span class="sep">·</span><span>Then every record in the bucket</span></div>'}else
     crumbs=single?'<div class="crumbs2"><span class="cur">'+P[dp].name+'</span><span class="sep">›</span><span>Records, most recent first</span></div>':
       '<div class="crumbs2"><a onclick="drillP(null)">‹ Partner-wise breakup</a><span class="sep">›</span><span class="cur">'+(one?P[dp].name:'All partners')+'</span><span class="sep">·</span><span>Records, most recent first</span></div>';
   }
@@ -1277,8 +1324,17 @@ function drawer(){
     '<div class="df"><span class="cnt">'+(view==='partners'?unit:n(rows.length)+' '+unit)+'</span><a onclick="openReport(\''+(scr?'screening':'followup')+'\',null)">Open full '+(scr?'Screening':'Follow-up')+' Report ›</a></div></div>';
   state.dl={name:M[k][0]+' '+ctx,head:head,rows:rows};
 }
+function bkBlock(k,FF){
+  var lost=/^glost/.test(k),sp=scopePartners(FF),tot=0,list=sp.map(function(p){var pf=Object.assign({},FF,{partner:p}),fs=FUR.filter(function(x){return match(x,pf)&&FSEL[k](x)});tot+=fs.length;return {p:p,v:fs.length,r:lost?rsnRows(FSEL[k],pf):null}}).sort(function(a,b){return b.v-a.v||P[a.p].name.localeCompare(P[b.p].name)});
+  state.rx=state.rx||{};
+  return '<table class="bt"><thead><tr><th>Partner</th><th class="n">'+M[k][0]+'</th></tr></thead><tbody>'+list.map(function(x){var z=!x.v,open=lost&&!z&&state.rx[x.p];
+    return '<tr class="bp'+(z?' z':'')+'"><td><span class="dot" style="background:'+P[x.p].c+'"></span><span class="pn">'+P[x.p].name+'</span></td><td class="n">'+(lost&&!z?'<a class="rxc'+(open?' on':'')+'" data-p="'+x.p+'" data-v="'+x.v+'" onclick="rxT(\''+x.p+'\')" title="Show reasons"><b>'+n(x.v)+'</b><span class="car">'+(open?'⌃':'⌄')+'</span></a>':'<b>'+n(x.v)+'</b>')+'</td></tr>'+
+      (open?x.r.map(function(r){return '<tr class="rxr" data-p="'+x.p+'"><td>'+r[0]+'</td><td class="n">'+n(r[1])+'</td></tr>'}).join(''):'')}).join('')+
+    '<tr class="tot"><td>All partners shown</td><td class="n">'+n(tot)+'</td></tr></tbody></table>';
+}
+function rxT(p){var d=document.querySelector('.drawer .db'),s=d?d.scrollTop:0;state.rx=state.rx||{};state.rx[p]=!state.rx[p];drawer();var d2=document.querySelector('.drawer .db');if(d2)d2.scrollTop=s}
 function drillP(p){state.dp=p;drawer()}
-function closeD(){state.open=null;state.dp=null;state.dx=null;drawer();markOpen()}
+function closeD(){state.rx={};state.open=null;state.dp=null;state.dx=null;drawer();markOpen()}
 /* export */
 function csvCell(v){v=v==null?'':String(v);return /[",\n]/.test(v)?'"'+v.replace(/"/g,'""')+'"':v}
 function saveCsv(name,head,rows){
@@ -1300,8 +1356,8 @@ function snapshot(){
   var done=function(){state.print=false;document.title=t;renderDash();window.removeEventListener('afterprint',done)};
   window.addEventListener('afterprint',done);setTimeout(function(){window.print()},60);
 }
-function openX(m,ov){state.open=m;state.dx=ov||null;state.dp=null;drawer();markOpen()}
-function openD(m){state.open=state.open===m?null:m;state.dp=null;state.dx=null;drawer();markOpen()}
+function openX(m,ov){state.rx={};state.open=m;state.dx=ov||null;state.dp=null;drawer();markOpen()}
+function openD(m){state.rx={};state.open=state.open===m?null:m;state.dp=null;state.dx=null;drawer();markOpen()}
 function markOpen(){[].forEach.call(document.querySelectorAll('.st'),function(e){e.classList.toggle('open',e.dataset.k===state.open)})}
 
 /* dashboard */
@@ -1318,10 +1374,10 @@ function heroFor(tb,d){
     [['bad','aff',d.aff,d.pnd,'of fetuses tested were affected','fetuses tested'],['good','mtp',d.mtp,d.aff,'opted for medical termination of pregnancy','affected fetuses']];
   return '<div class="hero">'+H.map(function(h){return '<div class="hs '+h[0]+'" onclick="openD(\''+h[1]+'\')"><div class="big">'+cupc(h[2],h[3])+'</div><div class="t">'+h[4]+'</div><div class="hn">'+n(h[2])+' of '+n(h[3])+' '+h[5]+'</div></div>'}).join('')+'</div>';
 }
-function rsnRows(f){var c={};FUR.forEach(function(x){if(match(x,F)&&f(x))c[x.prs]=(c[x.prs]||0)+1});return RSN.concat(['']).map(function(t){return [(t||'Not available'),c[t]||0]})}
+function rsnRows(f,ff){var c={};FUR.forEach(function(x){if(match(x,ff||F)&&f(x))c[x.prs]=(c[x.prs]||0)+1});return RSN.concat(['']).map(function(t){return [(t||'Not available'),c[t]||0]})}
 function bkRow(l,v,k,sub){var z=!(v>0);return '<'+(z||!k?'div':'a')+' class="bkr'+(sub?' sub':'')+(z?' z':'')+'"'+(!z&&k?' data-k="'+k+'" data-v="'+v+'" onclick="openD(\''+k+'\');event.stopPropagation()"':'')+'><span>'+l+'</span><b>'+n(v)+'</b></'+(z||!k?'div':'a')+'>'}
 function bkList(head,rows){return '<div class="xln bkl"><div class="bkh">'+head+'</div>'+rows.join('')+'</div>'}
-function bkLost(v,k,fs){return [bkRow('Lost to follow-up',v,k)].concat(rsnRows(fs).map(function(r){return bkRow(r[0],r[1],null,true)}))}
+function bkLost(v,k){return [bkRow('Lost to follow-up',v,k)]}
 function lnk(k,v,t){return '<a data-k="'+k+'" data-v="'+v+'" onclick="openD(\''+k+'\');event.stopPropagation()">'+n(v)+' '+t+'</a>'}
 function tabBody(tb,d){
   var h=heroFor(tb,d);
@@ -1334,8 +1390,8 @@ function tabBody(tb,d){
   } else if(tb==='followup'){
     var rl=bkList(n(d.risk)+' at-risk couples',[bkRow('Screened here',d.riskH,'riskH'),bkRow('Referred in',d.rin,'rin')]);
     var g1=d.pos-d.padv,g2=d.padv-d.pscr;
-    var l1=bkList(n(g1)+' of '+n(d.pos)+' partners',bkLost(d.glostA,'glostA',FSEL.glostA).concat([bkRow('Awaiting partner test',d.gawtA,'gawtA')]));
-    var l2=bkList(n(g2)+' of '+n(d.padv)+' partners',[bkRow('Awaiting partner test',d.gawtB,'gawtB')].concat(bkLost(d.glostB,'glostB',FSEL.glostB)));
+    var l1=bkList(n(g1)+' of '+n(d.pos)+' partners',bkLost(d.glostA,'glostA').concat([bkRow('Awaiting partner test',d.gawtA,'gawtA')]));
+    var l2=bkList(n(g2)+' of '+n(d.padv)+' partners',[bkRow('Awaiting partner test',d.gawtB,'gawtB')].concat(bkLost(d.glostB,'glostB')));
     h+='<div class="panel"><div class="sec" style="--sa:var(--tab2)">Partner screened and at-risk couples</div>'+stair([{k:'padv',line:l1},{k:'pscr',line:l2,tip:'Partner test done is Yes. Pending or blank counts as awaiting partner test. Lost to follow-up in either partner field counts as lost to follow-up.'},{k:'risk',line:rl}],d,[190,150,110])+'</div>';
   } else {
     var mnr=d.mtp-d.mtpT-d.mtpS,noP=d.risk-d.pnd;

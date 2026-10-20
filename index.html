@@ -4,6 +4,7 @@
 <meta charset="utf-8">
 <meta name="viewport" content="width=device-width, initial-scale=1">
 <meta name="color-scheme" content="light only">
+<!-- Round 9 / v3.2 (20 Oct 2026) -->
 <title>Program MIS Dashboard · Veha Foundation</title>
 <style>
 :root{
@@ -886,22 +887,22 @@ var COLS=['p','c','fy','m','reg','scr','thal','sick','oth','pscr','risk','dec','
 var AGGK=COLS.slice(4).concat(['nivf','gt12']);
 var TARGET=85000;
 var M={
-  reg:['Women registered','var(--tab1)','s'],nivf:['Registered ANC','var(--tab1)','s'],ivf:['Registered IVF','var(--tab2)','s'],
+  reg:['Women registered','var(--tab1)','s'],nivf:['ANC','var(--tab1)','s'],ivf:['IVF','var(--tab2)','s'],
   le12:['Registered before 12 weeks','var(--tab1)','s'],gt12:['Registered after 12 weeks','var(--tab2)','s'],
   scr:['Women screened','var(--tab1)','s'],pos:['Women identified as carriers','var(--att)','s'],
-  thal:['Beta thalassemia carrier','var(--ty1)','s'],sick:['Sickle cell carrier','var(--ty2)','s'],scdd:['Sickle cell disease','var(--ty3)','s'],oth:['Other hemoglobinopathies','var(--ty4)','s'],
+  thal:['Beta Thalassemia Carrier','var(--ty1)','s'],sick:['Sickle Cell Carrier','var(--ty2)','s'],scdd:['Sickle Cell Disease','var(--ty3)','s'],oth:['Other Hemoglobinopathies','var(--ty4)','s'],
   padv:['Partner advised testing','var(--att)','f'],pscr:['Partner screened','var(--tab2)','f'],risk:['At-risk couple','var(--aff1)','f'],
   dec:['Declined prenatal diagnosis','var(--neg)','f'],ltfu:['Lost to follow-up','var(--neg2)','f'],
-  pnd:['Prenatal diagnosis','var(--tab3)','f'],cvs:['Chorionic villus sampling (CVS)','var(--tab3)','f'],amn:['Amniocentesis','var(--tab2)','f'],pndnr:['Type of prenatal diagnosis, Not available','var(--nr)','f'],
+  pnd:['Prenatal diagnosis','var(--tab3)','f'],cvs:['Chorionic Villus Sampling (CVS)','var(--tab3)','f'],amn:['Amniocentesis','var(--tab2)','f'],pndnr:['Type of prenatal diagnosis, Not available','var(--nr)','f'],
   unaff:['Not affected by hemoglobinopathy','var(--good)','f'],aff:['Thalassemia major or sickle cell disease','var(--l4)','f'],affT:['Thalassemia major','var(--l4)','f'],affS:['Sickle cell disease','var(--aff1)','f'],
-  couns:['Couple counselled','var(--tab2)','f'],cont:['Affected fetus, continuing pregnancy','var(--dec2)','f'],cltf:['Affected fetus, lost to follow-up','var(--neg2)','f'],mtp:['Medical termination of pregnancy','var(--dec1)','f'],
-  mtpT:['Medical termination of pregnancy, thalassemia major','var(--l4)','f'],mtpS:['Medical termination of pregnancy, sickle cell disease','var(--aff1)','f']
+  couns:['Couple counselled','var(--tab2)','f'],cont:['Affected fetus, continuing pregnancy','var(--dec2)','f'],cltf:['Affected fetus, lost to follow-up','var(--neg2)','f'],mtp:['Medical Termination of Pregnancy','var(--dec1)','f'],
+  mtpT:['Medical Termination of Pregnancy, thalassemia major','var(--l4)','f'],mtpS:['Medical Termination of Pregnancy, sickle cell disease','var(--aff1)','f']
 };
 M.gscr=['Women not screened','var(--att)','s'];M.gcouns=['Couple not counselled','var(--aff1)','f'];
 M.gawt=['Awaiting partner test','var(--att)','f'];M.glost=['Partner lost to follow-up','var(--neg)','f'];M.riskH=['At-risk couple, screened here','var(--aff1)','f'];M.rin=['At-risk couple, referred in','var(--aff2)','f'];
 M.undc=['Affected fetus, couple undecided, counselled','var(--dec3)','f'];M.nrec=['At-risk couple, next step not recorded','var(--nr)','f'];M.cord=['Cordocentesis','var(--tab3)','f'];M.und=['Affected fetus, couple undecided','var(--dec3)','f'];
-var RSN=['Partner unavailable or migrated','Partner refused','Cost','Beyond gestational window','Other'];var RSNC=['var(--rs0)','var(--rs1)','var(--rs2)','var(--rs3)','var(--rs4)'];
-M.glostA=['Partner lost to follow-up, advised testing','var(--neg)','f'];M.glostB=['Partner lost to follow-up, partner screened','var(--neg)','f'];M.gawtA=['Awaiting partner test, advised testing pending','var(--att)','f'];M.gawtB=['Awaiting partner test, partner screened pending','var(--att)','f'];
+var RSN=['Partner unavailable or migrated','Partner refused (cost / religion / declined)','Others'];var RSNC=['var(--rs0)','var(--rs1)','var(--rs2)','var(--rs3)','var(--rs4)'];
+M.glostA=['Partner lost to follow-up','var(--neg)','f'];M.glostB=['Partner lost to follow-up / refused testing','var(--neg)','f'];M.gawtA=['Awaiting partner test','var(--att)','f'];M.gawtB=['Awaiting partner test, partner screened pending','var(--att)','f'];
 var TABN={screening:'Women screened',followup:'Partner screened',prenatal:'Prenatal testing'};
 var TABOF={};['reg','nivf','ivf','le12','gt12','scr','pos','thal','sick','scdd','oth'].forEach(function(k){TABOF[k]='screening'});
 ['padv','pscr','risk','riskH','rin','gawt','glost','gawtA','gawtB','glostA','glostB'].forEach(function(k){TABOF[k]='followup'});TABOF.gscr='screening';TABOF.gcouns='prenatal';
@@ -920,8 +921,8 @@ function n(x){return x==null?'':Number(x).toLocaleString('en-IN')}
 function pc(a,b){if(!b)return '0%';var r=100*a/b;return (r<10&&r%1?r.toFixed(1):Math.round(r))+'%'}
 function tip(t){return t?'<i class="tip" data-tip="'+t+'">i</i>':''}
 function obj(r){var o={};COLS.forEach(function(c,i){o[c]=r[i]});return o}
-var DATA=ROWS.map(obj);DATA.forEach(function(r){r.a=A(r.fy,r.m);r.nivf=r.reg-r.ivf;r.gt12=r.reg-r.le12});
-function match(r,f){return r.a>=f.from&&r.a<=f.to&&(!f.prog||P[r.p].prog===f.prog)&&(!f.partner||r.p===f.partner)&&(!f.st||ST[r.c]===f.st)&&(!f.city||r.c===f.city)}
+var DATA=ROWS.map(obj);DATA.forEach(function(r){r.lr1+=r.lr2;r.lr2=r.lr3+r.lr4;r.lr3=0;r.lr4=0;r.lr2+=r.lrn;r.lrn=0;r.a=A(r.fy,r.m);r.nivf=r.reg-r.ivf;r.gt12=r.reg-r.le12});
+function match(r,f){return r.a>=f.from&&r.a<=f.to&&(!f.prog||P[r.p].prog===f.prog)&&(!f.partner||r.p===f.partner)&&(!f.only||f.only.indexOf(r.p)>=0)&&(!f.st||ST[r.c]===f.st)&&(!f.city||r.c===f.city)}
 function pick(f){f=f||F;return DATA.filter(function(r){return match(r,f)})}
 function agg(rs){
   var a={};AGGK.forEach(function(k){a[k]=0});
@@ -1007,9 +1008,9 @@ function stair(stages,d,heights){
    Every mark carries data-v (the number its drill must show) and data-t (tooltip text), and opens the partner-first drill. */
 var TN=1;
 function tnum(){return 'fill:var(--tab'+TN+'d)'}
-function fjs(f){var o=[];for(var k in f){o.push(k+':'+(typeof f[k]==='number'?f[k]:"'"+String(f[k]).replace(/'/g,"\\'")+"'"))}return '{'+o.join(',')+'}'}
-function mark(k,f,v,label,inner,cls,extra){
-  return '<g class="'+(cls||'rw')+'" data-k="'+k+'" data-v="'+v+'" data-t="'+label+': '+n(v)+'"'+(extra||'')+(f?" data-f='"+JSON.stringify(f)+"'":'')+' onclick="'+(f?'openX(\''+k+'\','+fjs(f)+')':'openD(\''+k+'\')')+'">'+inner+'</g>';
+function fjs(f){var q=function(v){return "'"+String(v).replace(/'/g,"\\'")+"'"},o=[];for(var k in f){o.push(k+':'+(typeof f[k]==='number'?f[k]:Array.isArray(f[k])?'['+f[k].map(q).join(',')+']':q(f[k])))}return '{'+o.join(',')+'}'}
+function mark(k,f,v,label,inner,cls,extra,tipText){
+  return '<g class="'+(cls||'rw')+'" data-k="'+k+'" data-v="'+v+'" data-t="'+(tipText||label+': '+n(v))+'"'+(extra||'')+(f?" data-f='"+JSON.stringify(f)+"'":'')+' onclick="'+(f?'openX(\''+k+'\','+fjs(f)+')':'openD(\''+k+'\')')+'">'+inner+'</g>';
 }
 function sh(c,p){return 'color-mix(in srgb,'+c+' '+p+'%,#FFFFFF)'}
 var TYC={thal:'var(--ty1)',sick:'var(--ty2)',scdd:'var(--ty3)',oth:'var(--ty4)'};
@@ -1018,6 +1019,11 @@ function groups(){
   var sp=scopePartners(F);
   if(sp.length>1)return {by:'partner',g:sp.map(function(p){return {l:P[p].name,f:{partner:p}}})};
   return {by:'city',g:uniq(pick().map(function(r){return r.c})).sort().map(function(c){return {l:c,f:{city:c}}})};
+}
+/* type chart bars: one per programme (the client's Project) in the filters, always by project, even with one in scope */
+function typeGroups(){
+  var pr=uniq(DATA.filter(function(r){return (!F.prog||P[r.p].prog===F.prog)&&(!F.partner||r.p===F.partner)&&(!F.city||r.c===F.city)&&(!F.st||ST[r.c]===F.st)}).map(function(r){return P[r.p].prog}).filter(function(g){return g})).sort(function(a,b){return a.localeCompare(b)});
+  return {by:'programme',g:pr.map(function(g){return {l:g,f:{prog:g}}})};
 }
 function legendRows(items,tot){return '<div class="dl2">'+items.filter(function(x){return x.v>0}).map(function(x){return '<div class="lr"'+(x.k?' onclick="openD(\''+x.k+'\')"':' style="cursor:default"')+'><i style="background:'+x.c+'"></i><span class="nm" title="'+x.l+'">'+x.l+'</span><b>'+n(x.v)+'</b><em>'+pc(x.v,tot)+'</em></div>'}).join('')+'</div>'}
 function donut(items,cap,big){
@@ -1049,9 +1055,9 @@ function waffle(d){
    Every non-zero segment shows its number: inside when it fits, otherwise below the bar on a short leader. Zero draws nothing. */
 function chartW(max){var el=document.getElementById('dash'),w=(el&&el.clientWidth)||1000;return Math.max(300,Math.min(max||960,w-60))}
 function typeStack(gr,d,W){
-  var spec=[['thal','var(--ty1)'],['sick','var(--ty2)'],['scdd','var(--ty3)'],['oth','var(--ty4)']],narrow=W<560,LW=narrow?64:96,bw=W-LW,KS=spec.map(function(x){return x[0]}),DK={scdd:1},FS=narrow?11.5:12.5,body='',y=4;
+  var spec=[['thal','var(--ty1)'],['sick','var(--ty2)'],['scdd','var(--ty3)'],['oth','var(--ty4)']],narrow=W<560,LW=Math.min(narrow?110:260,Math.max(narrow?64:96,Math.ceil(gr.g.reduce(function(m,g){return Math.max(m,g.l.length)},0)*(narrow?6.6:7.4))+10)),bw=W-LW,KS=spec.map(function(x){return x[0]}),DK={scdd:1},FS=narrow?11.5:12.5,body='',y=4;
   gr.g.forEach(function(g){
-    var a=agg(pick(Object.assign({},F,g.f))),tot=KS.reduce(function(t,k){return t+a[k]},0),nm=g.l.length>(narrow?9:13)?g.l.slice(0,narrow?8:12)+'…':g.l;
+    var a=agg(pick(Object.assign({},F,g.f))),tot=KS.reduce(function(t,k){return t+a[k]},0),nm=g.l;
     body+='<text x="0" y="'+(y+20)+'" font-size="'+(narrow?12:13.5)+'" fill="#232323">'+nm+'</text>';
     if(!tot){body+='<rect x="'+LW+'" y="'+y+'" width="'+bw+'" height="30" rx="4" fill="#F4F4F4"/>';y+=44;return}
     var x0=LW,segs=[],outs=[];
@@ -1068,7 +1074,7 @@ function typeStack(gr,d,W){
       body+=mark(q.k,g.f,q.v,g.l+', '+M[q.k][0],inner)});
     y+=outs.length?58:44;
   });
-  return '<svg class="ch2 tstk" viewBox="0 0 '+W+' '+y+'" width="100%" role="img" aria-label="Type of hemoglobinopathy by '+gr.by+'">'+body+'</svg><div class="clg kk">'+spec.map(function(x){return '<span class="lg"><i style="background:'+x[1]+'"></i>'+M[x[0]][0]+'</span>'}).join('')+'</div>';
+  return '<svg class="ch2 tstk" viewBox="0 0 '+W+' '+y+'" width="100%" role="img" aria-label="Type of Hemoglobinopathies by Project">'+body+'</svg><div class="clg kk">'+spec.map(function(x){return '<span class="lg"><i style="background:'+x[1]+'"></i>'+M[x[0]][0]+'</span>'}).join('')+'</div>';
 }
 /* carriers’ partners by status: one stacked bar plus legend rows. The three statuses are mutually exclusive and sum to women identified as carriers.
    Zero segments draw nothing; the legend row still shows 0. */
@@ -1093,7 +1099,7 @@ function cascade(items,W,H){
   return s+'</svg>';
 }
 /* combo chart: bars are women screened per month (left axis), the line is the share of screened women identified as carriers (right axis).
-   Elapsed months only. With two or more partners in scope the bars sit side by side per partner in one fixed colour per partner; with one partner the bars are a single series. */
+   Elapsed months only. With two or more partners in scope each month is one bar stacked by partner in one fixed colour per partner; with one partner the bar is a single series. A line point drills to the month's carrier rate by project. */
 function niceAxis(mx,k){var raw=Math.max(mx,1e-9)/k,p=Math.pow(10,Math.floor(Math.log10(raw))),f=raw/p,st=(f<=1?1:f<=2?2:f<=2.5?2.5:f<=5?5:10)*p;return {st:st,max:st*k}}
 var PCOL={fogsi:'#A0624A',sion:'#7A5C99',wadia:'#AE6E95',cmc:'#8A8A8A',p5:'#9A8248'};
 function sbToggle(){document.querySelector('.desk').classList.toggle('sbc');if((location.hash||'#dashboard')==='#dashboard'&&document.getElementById('dash')&&!state.print)renderDash()}
@@ -1102,29 +1108,29 @@ function oneCol(){var sp=scopePartners(F);return sp.length===1?pcol(sp[0]):'var(
 function combo(gr,W){
   var months=[],a,last=Math.min(F.to,TODAY);for(a=F.from;a<=last;a++)months.push(a);
   if(!months.length)return '<div class="empty" style="padding:30px 0">No elapsed months in this period</div>';
-  var stk=gr.by==='partner',series=stk?gr.g:[{l:'Women screened',f:{},ci:0}],ns=series.length,narrow=W<560,multi=Math.floor((F.from-3)/12)!==Math.floor((last-3)/12);
+  var stk=gr.by==='partner',series=stk?gr.g:[{l:'Women screened',f:{},ci:0}],ns=series.length,narrow=W<560,multi=Math.floor((F.from-3)/12)!==Math.floor((last-3)/12),only=stk&&gr.part?{only:series.map(function(g){return g.f.partner})}:{};
   var colRows=function(m){var r=[];series.forEach(function(g){r=r.concat(pick(Object.assign({},F,g.f,{from:m,to:m})))});return r};
   var cols=months.map(function(m){
-    var segs=series.map(function(g){var rs=pick(Object.assign({},F,g.f,{from:m,to:m}));return {g:g,v:rs.reduce(function(s,r){return s+r.scr},0)}}),rr=colRows(m),ag=agg(rr);
+    var segs=series.map(function(g){var rs=pick(Object.assign({},F,g.f,{from:m,to:m}));return {g:g,v:rs.reduce(function(s,r){return s+r.scr},0),pos:rs.reduce(function(s,r){return s+r.thal+r.sick+r.oth+r.scdd},0)}}),rr=colRows(m),ag=agg(rr);
     return {m:m,segs:segs,scr:ag.scr,pos:ag.pos,rate:ag.scr?100*ag.pos/ag.scr:0,rep:rr.length>0}});
-  var mxS=Math.max.apply(null,cols.map(function(c){return Math.max.apply(null,c.segs.map(function(q){return q.v}).concat([0]))}).concat([1])),mxP=Math.max.apply(null,cols.map(function(c){return c.rate}).concat([0.5])),
+  var mxS=Math.max.apply(null,cols.map(function(c){return c.segs.reduce(function(t,q){return t+q.v},0)}).concat([1])),mxP=Math.max.apply(null,cols.map(function(c){return c.rate}).concat([0.5])),
     L=niceAxis(mxS/0.82,4),R=niceAxis(mxP*1.05,4),LM=narrow?40:58,RM=narrow?36:54,TOP=narrow?34:38,BH=narrow?210:260,BOT=narrow?34:50,H=TOP+BH+BOT,pw=W-LM-RM,slot=pw/months.length,
-    gw=Math.min(slot*.84,ns*(narrow?22:40)),bwid=Math.max(gw/ns-(ns>1?2:0),3),
+    bwid=Math.max(Math.min(slot*.6,narrow?28:56),3),
     yL=function(v){return TOP+BH-BH*v/L.max},yR=function(v){return TOP+BH-BH*v/R.max},fs=narrow?10.5:12,s='<svg class="ch2 cmb" viewBox="0 0 '+W+' '+H+'" width="100%" role="img" aria-label="Women screened per month and share identified as carriers">';
   var i;for(i=0;i<=4;i++){var gy=TOP+BH-BH*i/4;
     s+='<line x1="'+LM+'" x2="'+(W-RM)+'" y1="'+gy+'" y2="'+gy+'" stroke="'+(i?'#EEEEEE':'#D1D1D1')+'" stroke-width="1"/><text x="'+(LM-8)+'" y="'+(gy+4)+'" text-anchor="end" font-size="'+fs+'" fill="#727272">'+n(L.st*i)+'</text><text x="'+(W-RM+8)+'" y="'+(gy+4)+'" font-size="'+fs+'" fill="var(--attd)">'+(+(R.st*i).toFixed(2))+'%</text>'}
   s+='<text x="0" y="'+(TOP-18)+'" text-anchor="start" font-size="'+(narrow?10.5:11.5)+'" font-weight="600" fill="#333333">Women screened</text><text x="'+W+'" y="'+(TOP-18)+'" text-anchor="end" font-size="'+(narrow?10.5:11.5)+'" font-weight="600" fill="var(--attd)">'+(narrow?'% carriers':'% identified as carriers')+'</text>';
   cols.forEach(function(c,ci){
-    var cx=LM+ci*slot+slot/2,yb=TOP+BH,lab=MSS[c.m%12]+(multi?' '+String(Math.floor(c.m/12)).slice(2):''),x0=cx-(bwid*ns+(ns>1?2*(ns-1):0))/2;
+    var cx=LM+ci*slot+slot/2,yb=TOP+BH,lab=MSS[c.m%12]+(multi?' '+String(Math.floor(c.m/12)).slice(2):''),x0=cx-bwid/2,top=yb;
     if(!c.rep){s+='<g data-t="'+aLabel(c.m,true)+': Not available"><rect x="'+(cx-bwid/2)+'" y="'+(yb-3)+'" width="'+bwid+'" height="3" fill="#D1D1D1"/></g>'}
-    else c.segs.forEach(function(q,qi){if(!q.v)return;var h=BH*q.v/L.max,y0=yb-h,col=stk?pcol(q.g.f.partner):oneCol(),lb=aLabel(c.m,true)+(stk?', '+q.g.l:''),bx=x0+qi*(bwid+2);
-      s+=mark('scr',Object.assign({},q.g.f,{from:c.m,to:c.m}),q.v,lb+': '+n(q.v)+' women screened'+(stk?' (of '+n(c.scr)+' across the partners shown)':'')+'; '+n(c.pos)+' identified as carriers ('+pc(c.pos,c.scr)+')',
-        '<rect x="'+bx+'" y="'+y0+'" width="'+bwid+'" height="'+Math.max(h,1)+'" rx="2" style="fill:'+col+'"/>')});
+    else c.segs.forEach(function(q){if(!q.v)return;var h=BH*q.v/L.max,col=stk?pcol(q.g.f.partner):oneCol(),lb=aLabel(c.m,true)+(stk?', '+q.g.l:'');top-=h;
+      s+=mark('scr',Object.assign({},q.g.f,{from:c.m,to:c.m}),q.v,lb,'<rect x="'+x0+'" y="'+top+'" width="'+bwid+'" height="'+Math.max(h-(stk?1:0),1)+'"'+(stk?'':' rx="2"')+' style="fill:'+col+'"/>',null,null,
+        stk?lb+': '+n(q.v)+' women screened, '+n(q.pos)+' identified as carriers, carrier rate '+pc(q.pos,q.v):null)});
     s+='<text x="'+cx+'" y="'+(yb+17)+'" text-anchor="middle" font-size="'+fs+'" font-weight="600" fill="#333333">'+lab+'</text>'+(narrow?'':'<text x="'+cx+'" y="'+(yb+33)+'" text-anchor="middle" font-size="11" fill="#727272">'+(c.rep?n(c.scr):'')+'</text>')});
   var pts=cols.filter(function(c){return c.rep&&c.scr}).map(function(c){return {c:c,x:LM+cols.indexOf(c)*slot+slot/2,y:yR(c.rate)}});
   if(pts.length>1)s+='<path d="'+pts.map(function(p,i){return (i?'L':'M')+p.x+' '+p.y}).join(' ')+'" fill="none" style="stroke:var(--att)" stroke-width="2.5" stroke-linejoin="round" stroke-linecap="round"/>';
   pts.forEach(function(p){var c=p.c;
-    s+=mark('pos',{from:c.m,to:c.m},c.pos,aLabel(c.m,true)+': '+(c.rate<10&&c.rate%1?c.rate.toFixed(1):Math.round(c.rate))+'% of screened women identified as carriers ('+n(c.pos)+' of '+n(c.scr)+')',
+    s+=mark('pos',Object.assign({},only,{from:c.m,to:c.m,byProg:1}),c.pos,aLabel(c.m,true)+': '+(c.rate<10&&c.rate%1?c.rate.toFixed(1):Math.round(c.rate))+'% of screened women identified as carriers ('+n(c.pos)+' of '+n(c.scr)+')',
       '<circle cx="'+p.x+'" cy="'+p.y+'" r="'+(narrow?3.5:5)+'" style="fill:#FFFFFF;stroke:var(--att)" stroke-width="2.5"/>'+(slot>=44?'<text class="halo" x="'+p.x+'" y="'+(p.y-12)+'" text-anchor="middle" font-size="12" font-weight="700" style="fill:var(--attd)">'+c.rate.toFixed(1)+'%</text>':''))});
   return s+'</svg>';
 }
@@ -1135,16 +1141,17 @@ function comboLegend(gr){
 }
 /* Customize: partner picker for the combo chart only. Lists Program MIS Enabled partners in scope; state.cx holds the unticked ones. */
 function czk(w){return w==='t'?'tx':'cx'}
-function czSel(gr,w){var ex=state[czk(w)]||[],g=gr.g.map(function(x,i){return Object.assign({ci:i},x)}),k=g.filter(function(x){return ex.indexOf(x.f.partner)<0});return {by:'partner',g:k.length?k:g}}
+function czId(x){return x.f.partner||x.f.prog}
+function czSel(gr,w){var ex=state[czk(w)]||[],g=gr.g.map(function(x,i){return Object.assign({ci:i},x)}),k=g.filter(function(x){return ex.indexOf(czId(x))<0});return {by:gr.by,g:k.length?k:g,part:k.length<g.length}}
 function cmbInner(gr,W){var g2=gr.by==='partner'?czSel(gr):gr;return combo(g2,W)+'<div class="clg kk">'+comboLegend(g2)+'</div>'}
-function typeInner(gr,d,W){return typeStack(gr.by==='partner'?czSel(gr,'t'):gr,d,W)}
-function czBtn(gr,w){if(gr.by!=='partner')return '';var ex=state[czk(w)]||[],sx=w==='t'?'_t':'';
-  return '<div class="czw"><button type="button" class="cz" id="czb'+sx+'" aria-haspopup="true" onclick="czToggle(\''+(w||'')+'\')">Customize</button><div class="czp" id="czp'+sx+'" hidden><div class="czh">Partners shown in this chart</div>'+
-    gr.g.map(function(x){return '<label class="czo"><input type="checkbox" data-p="'+x.f.partner+'"'+(ex.indexOf(x.f.partner)<0?' checked':'')+' onchange="czSet(this,\''+(w||'')+'\')"><span>'+x.l+'</span></label>'}).join('')+'<div class="czn">Program MIS Enabled partners only. This changes this chart only.</div></div></div>'}
+function typeInner(gr,d,W){return typeStack(czSel(gr,'t'),d,W)}
+function czBtn(gr,w){if(gr.by!=='partner'&&gr.by!=='programme')return '';var pg=gr.by==='programme',ex=state[czk(w)]||[],sx=w==='t'?'_t':'';
+  return '<div class="czw"><button type="button" class="cz" id="czb'+sx+'" aria-haspopup="true" onclick="czToggle(\''+(w||'')+'\')">Customize</button><div class="czp" id="czp'+sx+'" hidden><div class="czh">'+(pg?'Projects shown in this chart':'Partners shown in this chart')+'</div>'+
+    gr.g.map(function(x){return '<label class="czo"><input type="checkbox" data-p="'+czId(x).replace(/"/g,'&quot;')+'"'+(ex.indexOf(czId(x))<0?' checked':'')+' onchange="czSet(this,\''+(w||'')+'\')"><span>'+x.l+'</span></label>'}).join('')+'<div class="czn">'+(pg?'Program MIS Enabled projects only.':'Program MIS Enabled partners only.')+' This changes this chart only.</div></div></div>'}
 function czToggle(w){var p=document.getElementById('czp'+(w==='t'?'_t':''));if(p)p.hidden=!p.hidden}
 function czSet(el,w){var gr=groups(),box=[].slice.call(el.closest('.czp').querySelectorAll('input')),ex=box.filter(function(b){return !b.checked}).map(function(b){return b.dataset.p});
   if(ex.length>=box.length){el.checked=true;return}
-  state[czk(w)]=ex;if(w==='t'){var t=document.getElementById('tsh');if(t)t.innerHTML=typeInner(gr,agg(pick()),chartW(960))}else{var h=document.getElementById('cmbh');if(h)h.innerHTML=cmbInner(gr,chartW(960))}}
+  state[czk(w)]=ex;if(w==='t'){var t=document.getElementById('tsh');if(t)t.innerHTML=typeInner(typeGroups(),agg(pick()),chartW(960))}else{var h=document.getElementById('cmbh');if(h)h.innerHTML=cmbInner(gr,chartW(960))}}
 document.addEventListener('mousedown',function(e){[].forEach.call(document.querySelectorAll('.czp'),function(p){if(!p.hidden&&!e.target.closest('.czw'))p.hidden=true})});
 /* ranked table: one row per partner (or city) with a thin inline bar for the share, number and the counts behind it */
 function ranked(rows,ref,k,dk){
@@ -1179,7 +1186,7 @@ function stepdown(d){
     {k:'pnd',l:'Prenatal diagnosis',v:d.pnd,c:'var(--tab3)',of:'at-risk couples',drop:[['dec',d.dec,'declined','var(--neg)'],['ltfu',d.ltfu,'lost to follow-up','var(--neg2)'],['nrec',d.nrec,'next step not recorded','var(--nr)']],dl:'no prenatal diagnosis'},
     {k:'aff',l:'Affected fetus',v:d.aff,c:'var(--l4)',of:'fetuses tested',drop:[['unaff',d.unaff,'not affected','var(--good)']],dl:'unaffected'},
     {k:'couns',l:'Couple counselled',v:d.couns,c:'var(--tab2)',of:'affected fetuses',drop:[['gcouns',d.gcouns,'not counselled','var(--dec3)']],dl:'not counselled'},
-    {k:'mtp',l:'Medical termination of pregnancy',v:d.mtp,c:'var(--dec1)',of:'couples counselled',drop:[['cont',d.cont,'continuing pregnancy','var(--dec2)'],['undc',d.undc,'undecided','var(--dec3)'],['cltf',d.cltf,'lost to follow-up','var(--neg2)']],dl:'did not terminate'}];
+    {k:'mtp',l:'Medical Termination of Pregnancy',v:d.mtp,c:'var(--dec1)',of:'couples counselled',drop:[['cont',d.cont,'continuing pregnancy','var(--dec2)'],['undc',d.undc,'undecided','var(--dec3)'],['cltf',d.cltf,'lost to follow-up','var(--neg2)']],dl:'did not terminate'}];
   var top=S[0].v;
   return '<div class="sd2">'+S.map(function(s,i){var prev=i?S[i-1].v:0,w=s.v?Math.max(100*s.v/top,1.6):0,pw=i?Math.max(100*prev/top,1.6):100,items=(s.drop||[]).filter(function(x){return x[1]>0}),dtot=prev-s.v,con='';
     if(i){var one=items.length===1?items[0]:null,
@@ -1193,15 +1200,15 @@ function stepdown(d){
 function cpanel(title,sa,body,lg){return '<div class="panel cpan reveal"><div class="sec" style="--sa:'+sa+'">'+title+'</div>'+body+(lg?'<div class="clg">'+lg+'</div>':'')+'</div>'}
 function chartsFor(tab,d){
   TN=tab==='screening'?1:tab==='followup'?2:3;
-  var gr=groups(),W=chartW(960),W2=chartW(1100);
+  var gr=groups(),tg=typeGroups(),W=chartW(960),W2=chartW(1100);
   if(tab==='screening')return '<div class="cgrid one">'+
-    '<div class="panel cpan reveal czr2"><div class="sec" style="--sa:var(--att)">Type of hemoglobinopathy, '+(gr.by==='partner'?'partner-wise':'city-wise')+'</div>'+czBtn(gr,'t')+'<div id="tsh">'+typeInner(gr,d,W)+'</div></div></div>'+
+    '<div class="panel cpan reveal czr2"><div class="sec" style="--sa:var(--att)">Type of Hemoglobinopathies by Project</div>'+czBtn(tg,'t')+'<div id="tsh">'+typeInner(tg,d,W)+'</div></div></div>'+
     '<div class="cgrid one"><div class="panel cpan reveal czr"><div class="sec" style="--sa:var(--tab1)">Women screened by month and share identified as carriers</div>'+czBtn(gr)+'<div id="cmbh">'+cmbInner(gr,W)+'</div></div></div>';
   if(tab==='followup'){
     return '<div class="cgrid one">'+
       cpanel('Carriers’ partners, by status','var(--tab2)',statusBar([{k:'pscr',l:'Partner screened',v:d.pscr,c:'var(--hg)'},{k:'gawt',l:'Awaiting partner test',v:d.gawt,c:'var(--ho)'},{k:'glost',l:'Partner lost to follow-up',v:d.glost,c:'var(--l4)'}],d.pos,W2))+'</div>';
   }
-  return '<div class="cgrid one">'+cpanel('Outcome of affected fetuses','var(--l4)',d.aff?donut([{k:'mtp',l:'Medical termination of pregnancy',v:d.mtp,c:'var(--dec1)'},{k:'cont',l:'Continuing pregnancy',v:d.cont,c:'var(--dec2)'},{k:'und',l:'Undecided',v:d.und,c:'var(--g1)'},{k:'cltf',l:'Lost to follow-up',v:d.cltf,c:'var(--neg)'}],['affected fetuses'],1):'<div class="empty" style="padding:30px 0">No affected fetuses in this selection</div>')+'</div>'+
+  return '<div class="cgrid one">'+cpanel('Outcome of affected fetuses','var(--l4)',d.aff?donut([{k:'mtp',l:'Medical Termination of Pregnancy',v:d.mtp,c:'var(--dec1)'},{k:'cont',l:'Continuing pregnancy',v:d.cont,c:'var(--dec2)'},{k:'und',l:'Undecided',v:d.und,c:'var(--g1)'},{k:'cltf',l:'Lost to follow-up',v:d.cltf,c:'var(--neg)'}],['affected fetuses'],1):'<div class="empty" style="padding:30px 0">No affected fetuses in this selection</div>')+'</div>'+
     '<div class="cgrid one">'+cpanel('From at-risk couple to termination of pregnancy','var(--aff1)',stepdown(d))+'</div>';
 }
 /* tooltip follows the cursor and hides when it leaves a mark */
@@ -1233,10 +1240,13 @@ var FUR=(function(){
       else if(i<nS+nB+nAP){x.pa='Yes';x.td='Pending'}
       else if(i<nS+nB+nAP+nA){x.pa=LOST;x.td=R()<.5?LOST:'Pending'}
     });
-    var rsn=[];for(var q=0;q<5;q++)for(var z=0;z<r['lr'+q];z++)rsn.push(RSN[q]);for(z=0;z<r.lrn;z++)rsn.push('');shuf(rsn,R);
+    var rsn=[];for(var q=0;q<3;q++)for(var z=0;z<r['lr'+q];z++)rsn.push(RSN[q]);for(z=0;z<r.lrn;z++)rsn.push('');shuf(rsn,R);
     var lostW=w.filter(function(x){return x.pa===LOST||x.td===LOST});lostW.forEach(function(x,i){x.prs=rsn[i]});
     var refs=[];for(q=0;q<r.rin;q++){var x=mk('Referred in','ref');x.ref=true;x.risk=true;x.pa='';x.td='';x.hr='Carrier';refs.push(x)}
     var risk=w.filter(function(x){return x.risk}).concat(refs);
+    /* couple's type for the at-risk drills: B x B = Beta Thalassemia; S x S or B x S = Sickle Cell; everything else = Other. Partner result is seeded from alt, since the mock carries the woman's type only. */
+    risk.forEach(function(x){var u=(x.alt*977)%1,wT=x.ref?(u<.5?'B':u<.8?'S':'O'):x.ct==='thal'?'B':(x.ct==='sick'||x.ct==='scdd')?'S':'O',pT=x.alt<.55?'B':x.alt<.8?'S':'O';
+      x.rt=wT==='B'&&pT==='B'?'thal':(wT==='S'&&pT!=='O')||(wT==='B'&&pT==='S')?'sick':'oth'});
     risk.forEach(function(x,i){x.pnd=i<r.pnd?'Done':i<r.pnd+r.dec?'Declined':i<r.pnd+r.dec+r.ltfu?'Lost':'Pending'});
     var pnd=risk.filter(function(x){return x.pnd==='Done'});shuf(pnd,R);
     pnd.forEach(function(x,i){x.test=i<r.cvs?'CVS':i<r.cvs+r.amn?'Amniocentesis':i<r.cvs+r.amn+r.cord?'Cordocentesis':'Not available';x.fr=i<r.affT?'Major, Thal':i<r.affT+r.affS?'Major, Sickle':'Minor or normal'});
@@ -1253,26 +1263,26 @@ var FUR=(function(){
   });
   return out;
 })();
-var CT={thal:'Beta thalassemia carrier',sick:'Sickle cell carrier',oth:'Other hemoglobinopathy',scdd:'Sickle cell disease'};
+var CT={thal:'Beta Thalassemia Carrier',sick:'Sickle Cell Carrier',oth:'Other Hemoglobinopathies',scdd:'Sickle Cell Disease'};
 var isL=function(x){return x.pa===LOST||x.td===LOST},isAff=function(x){return x.fr.indexOf('Major')===0};
 var FSEL={glostA:function(x){return x.pa===LOST},glostB:function(x){return x.pa==='Yes'&&x.td===LOST},gawtA:function(x){return !x.ref&&x.pa==='Pending'},gawtB:function(x){return x.pa==='Yes'&&x.td==='Pending'},padv:function(x){return x.pa==='Yes'},pscr:function(x){return x.td==='Yes'},gawt:function(x){return !x.ref&&!isL(x)&&x.td!=='Yes'},glost:isL,
-  lr0:function(x){return isL(x)&&x.prs===RSN[0]},lr1:function(x){return isL(x)&&x.prs===RSN[1]},lr2:function(x){return isL(x)&&x.prs===RSN[2]},lr3:function(x){return isL(x)&&x.prs===RSN[3]},lr4:function(x){return isL(x)&&x.prs===RSN[4]},lrn:function(x){return isL(x)&&x.prs===''},
+  lr0:function(x){return isL(x)&&x.prs===RSN[0]},lr1:function(x){return isL(x)&&x.prs===RSN[1]},lr2:function(x){return isL(x)&&x.prs===RSN[2]},lrn:function(x){return isL(x)&&x.prs===''},
   risk:function(x){return x.risk},riskH:function(x){return x.risk&&!x.ref},rin:function(x){return x.ref},dec:function(x){return x.pnd==='Declined'},ltfu:function(x){return x.pnd==='Lost'},nrec:function(x){return x.pnd==='Pending'},
   pnd:function(x){return x.pnd==='Done'},cvs:function(x){return x.test==='CVS'},amn:function(x){return x.test==='Amniocentesis'},cord:function(x){return x.test==='Cordocentesis'},pndnr:function(x){return x.test==='Not available'},
   gcouns:function(x){return isAff(x)&&x.couns!=='Yes'},aff:isAff,unaff:function(x){return x.pnd==='Done'&&!isAff(x)},affT:function(x){return x.fr==='Major, Thal'},affS:function(x){return x.fr==='Major, Sickle'},
   couns:function(x){return isAff(x)&&x.couns==='Yes'},cont:function(x){return isAff(x)&&x.mtp!=='Yes'&&!x.lost&&!x.und},und:function(x){return x.und},undc:function(x){return x.und&&x.couns==='Yes'},cltf:function(x){return x.lost===true},mtp:function(x){return x.mtp==='Yes'},mtpT:function(x){return x.mtp==='Yes'&&x.fr==='Major, Thal'},mtpS:function(x){return x.mtp==='Yes'&&x.fr==='Major, Sickle'}};
 var FCOL={id:'ID',wc:'Woman code',p:'Partner',c:'City',m:'Registered on',ct:'Type of hemoglobinopathy',pa:'Partner advised testing',pt:'Partner screened',prs:'Reason not tested',hr:'Partner screening result',pndp:'Prenatal diagnosis',reason:'Reason',fr:'Prenatal diagnosis result',couns:'Couple counselled',po:'Pregnancy outcome',dcs:'Couple\'s decision'};
-var SR={thal:'Beta thalassemia carrier',sick:'Sickle cell carrier',scdd:'Sickle cell disease'};
+var SR={thal:'Beta Thalassemia Carrier',sick:'Sickle Cell Carrier',scdd:'Sickle Cell Disease'};
 function fval(x,c){var v=fval0(x,c);return v===''||v==null?'Not available':v}
 function fval0(x,c){
   if(c==='p')return P[x.p].name;
   if(c==='m'){var y=FY[x.fy].y+(x.m>8?1:0),mo=(x.m+3)%12+1;return (x.dd<10?'0':'')+x.dd+'-'+(mo<10?'0':'')+mo+'-'+y}
-  if(c==='ct')return x.ref?'Screened elsewhere':SR[x.ct]||'Other hemoglobinopathies';
+  if(c==='ct')return x.ref?'Screened elsewhere':SR[x.ct]||'Other Hemoglobinopathies';
   if(c==='pa')return x.ref?'':x.pa;
   if(c==='pt')return x.ref?'':x.td;
   if(c==='prs')return x.prs;
-  if(c==='hr')return x.ref?'Referred in':x.hs!=='Yes'?'':x.risk?(SR[x.ct]||'Other hemoglobinopathies'):'Normal';
-  if(c==='pndp')return x.pnd==='Declined'?'Declined':x.pnd==='Lost'?LOST:x.pnd==='Pending'?'Next step not recorded':x.pnd==='Done'?(x.test==='CVS'?'Chorionic villus sampling (CVS)':x.test==='Amniocentesis'?'Amniocentesis':x.test==='Cordocentesis'?'Cordocentesis':'Not available'):'';
+  if(c==='hr')return x.ref?'Referred in':x.hs!=='Yes'?'':x.risk?(SR[x.ct]||'Other Hemoglobinopathies'):'Normal';
+  if(c==='pndp')return x.pnd==='Declined'?'Declined':x.pnd==='Lost'?LOST:x.pnd==='Pending'?'Next step not recorded':x.pnd==='Done'?(x.test==='CVS'?'Chorionic Villus Sampling (CVS)':x.test==='Amniocentesis'?'Amniocentesis':x.test==='Cordocentesis'?'Cordocentesis':'Not available'):'';
   if(c==='reason')return x.pnd==='Declined'?'Refused':x.pnd==='Lost'?LOST:'';
   if(c==='fr')return x.fr==='Major, Thal'?'Thalassemia major':x.fr==='Major, Sickle'?'Sickle cell disease':x.fr?(x.alt<.6?'Carrier':'Normal'):'';
   if(c==='couns')return x.couns;
@@ -1290,8 +1300,8 @@ function fcols(k){
   return base.concat(['pndp','fr','couns','po','dcs']);
 }
 function inScope(x,ms){return match(x,F)&&(!ms||ms.indexOf(x.a)>=0)}
-var SCOLR=[['reg','Registered'],['nivf','Registered ANC'],['ivf','Registered IVF'],['le12','Registered before 12 weeks'],['gt12','Registered after 12 weeks']];
-var SCOLS=[['scr','Screened'],['thal','Beta thalassemia carrier'],['sick','Sickle cell carrier'],['scdd','Sickle cell disease'],['oth','Other hemoglobinopathies'],['pos','Women identified as carriers']];
+var SCOLR=[['reg','Registered'],['nivf','ANC'],['ivf','IVF'],['le12','Registered before 12 weeks'],['gt12','Registered after 12 weeks']];
+var SCOLS=[['scr','Screened'],['thal','Beta Thalassemia Carrier'],['sick','Sickle Cell Carrier'],['scdd','Sickle Cell Disease'],['oth','Other Hemoglobinopathies'],['pos','Women identified as carriers']];
 function scol(k){if(k==='gscr')return [['reg','Women registered'],['scr','Women screened'],['gscr','Women not screened']];return /^(reg|nivf|ivf|le12|gt12)$/.test(k)?SCOLR:SCOLS}
 
 /* drill-down: indicator -> partner breakup (Partner, Value, Share) -> source records with identifiers + download.
@@ -1303,15 +1313,31 @@ function partnerVals(k,f){f=f||F;return scopePartners(f).map(function(p){return 
 function drawer(){
   var el=document.getElementById('drawer'),k=state.open;
   if(!k){el.innerHTML='';return}
-  var FF=Object.assign({},F,state.dx||{}),scr=M[k][2]==='s',col=M[k][1],sp=scopePartners(FF),single=sp.length===1,bk=/^(glost|glostA|glostB|gawt|gawtA|gawtB)$/.test(k),dp=bk?'all':(single?sp[0]:state.dp),view=dp?'src':'partners',head,rows,val,tbl,unit;
+  var FF=Object.assign({},F,state.dx||{}),scr=M[k][2]==='s',col=M[k][1],sp=scopePartners(FF),single=sp.length===1,bk=/^(glost|glostA|glostB|gawt|gawtA|gawtB)$/.test(k),dp=bk?'all':(single&&k!=='pos'?sp[0]:state.dp),view=dp?'src':'partners',head,rows,val,tbl,unit;
+  if(k==='pos'&&FF.byProg)view='rate';
   var ov=state.dx||{},per=ov.from!=null&&ov.from===ov.to?aLabel(ov.from,true):periodText(),ctx=[TABN[TABOF[k]],per].concat(scopeText(FF)).join(' · ');
   var crumbs='';
-  if(view==='partners'){
-    var pv=partnerVals(k,FF),tot=pv.reduce(function(a,x){return a+x.v},0);val=tot;
-    head=['Partner',M[k][0],'Share of total'];rows=pv.map(function(x){return [P[x.p].name,x.v,pc(x.v,tot)]});
-    tbl='<table class="pt"><thead><tr><th>Partner</th><th class="n">'+M[k][0]+'</th><th class="n">Share of total</th><th></th></tr></thead><tbody>'+
-      pv.map(function(x,i){var z=!x.v;return '<tr class="pr'+(z?' z':'')+'" style="animation-delay:'+i*40+'ms"'+(z?'':' onclick="drillP(\''+x.p+'\')"')+'><td><span class="dot" style="background:'+P[x.p].c+'"></span> <span class="pn">'+P[x.p].name+'</span><span class="pg3">'+P[x.p].prog+'</span></td><td class="n"><b>'+n(x.v)+'</b></td><td class="n"><div class="sb2"><u><i style="width:'+(tot?100*x.v/tot:0)+'%;background:'+col+'"></i></u><span>'+pc(x.v,tot)+'</span></div></td><td class="n go2">'+(z?'':'›')+'</td></tr>'}).join('')+
-      '<tr class="tot"><td>All partners shown</td><td class="n">'+n(tot)+'</td><td class="n">100%</td><td></td></tr></tbody></table>';
+  if(view==='rate'){
+    var rr=pick(FF),pg=uniq(rr.map(function(r){return P[r.p].prog}).filter(function(g){return g})).sort(function(a,b){return a.localeCompare(b)}),rt=function(a){return a.scr?(100*a.pos/a.scr).toFixed(1)+'%':'0%'},
+      pr=pg.map(function(g){return {g:g,a:agg(rr.filter(function(r){return P[r.p].prog===g}))}}),all=agg(rr),cl=function(a){return [a.scr,a.pos,rt(a)]};
+    val=all.pos;head=['Project','Women screened',M.pos[0],'Carrier rate'];
+    rows=pr.map(function(x){return [x.g].concat(cl(x.a))}).concat([['Overall'].concat(cl(all))]);
+    tbl='<table class="pt"><thead><tr>'+head.map(function(h,i){return '<th'+(i?' class="n"':'')+'>'+h+'</th>'}).join('')+'</tr></thead><tbody>'+
+      pr.map(function(x,i){return '<tr class="pr" style="animation-delay:'+i*40+'ms"><td><span class="pn">'+x.g+'</span></td>'+cl(x.a).map(function(v){return '<td class="n">'+(typeof v==='number'?n(v):v)+'</td>'}).join('')+'</tr>'}).join('')+
+      '<tr class="tot"><td>Overall</td>'+cl(all).map(function(v){return '<td class="n">'+(typeof v==='number'?n(v):v)+'</td>'}).join('')+'</tr></tbody></table>';
+    unit=pr.length+(pr.length===1?' project':' projects');
+    crumbs='<div class="crumbs2"><span class="cur">Carrier rate by project</span></div>';
+  } else if(view==='partners'){
+    var pv=partnerVals(k,FF),tot=pv.reduce(function(a,x){return a+x.v},0),isRk=k==='risk'||k==='riskH',ex=[],tt={thal:0,sick:0,oth:0},ta={pos:0,scr:0};val=tot;
+    pv.forEach(function(x){x.a=agg(pick(Object.assign({},FF,{partner:x.p})));ta.pos+=x.a.pos;ta.scr+=x.a.scr;
+      if(isRk){x.t={thal:0,sick:0,oth:0};FUR.forEach(function(r){if(match(r,Object.assign({},FF,{partner:x.p}))&&FSEL[k](r))x.t[r.rt]++});for(var q in tt)tt[q]+=x.t[q]}});
+    if(k==='pos')ex=[['Carrier rate',function(x){return pc(x.a.pos,x.a.scr)},pc(ta.pos,ta.scr)]];
+    if(isRk)ex=[['Beta Thalassemia',function(x){return x.t.thal},tt.thal],['Sickle Cell',function(x){return x.t.sick},tt.sick],['Other Hemoglobinopathies',function(x){return x.t.oth},tt.oth]];
+    var tl=k==='pos'?'Overall':'All partners shown',xc=function(v){return '<td class="n">'+(typeof v==='number'?n(v):v)+'</td>'};
+    head=['Partner',M[k][0]].concat(ex.map(function(e){return e[0]}),['Share of total']);rows=pv.map(function(x){return [P[x.p].name,x.v].concat(ex.map(function(e){return e[1](x)}),[pc(x.v,tot)])});
+    tbl='<table class="pt"><thead><tr><th>Partner</th><th class="n">'+M[k][0]+'</th>'+ex.map(function(e){return '<th class="n">'+e[0]+'</th>'}).join('')+'<th class="n">Share of total</th><th></th></tr></thead><tbody>'+
+      pv.map(function(x,i){var z=!x.v;return '<tr class="pr'+(z?' z':'')+'" style="animation-delay:'+i*40+'ms"'+(z?'':' onclick="drillP(\''+x.p+'\')"')+'><td><span class="dot" style="background:'+P[x.p].c+'"></span> <span class="pn">'+P[x.p].name+'</span><span class="pg3">'+P[x.p].prog+'</span></td><td class="n"><b>'+n(x.v)+'</b></td>'+ex.map(function(e){return xc(e[1](x))}).join('')+'<td class="n"><div class="sb2"><u><i style="width:'+(tot?100*x.v/tot:0)+'%;background:'+col+'"></i></u><span>'+pc(x.v,tot)+'</span></div></td><td class="n go2">'+(z?'':'›')+'</td></tr>'}).join('')+
+      '<tr class="tot"><td>'+tl+'</td><td class="n">'+n(tot)+'</td>'+ex.map(function(e){return xc(e[2])}).join('')+'<td class="n">100%</td><td></td></tr></tbody></table>';
     unit=pv.length+' partner'+(pv.length===1?'':'s');
     crumbs='<div class="crumbs2"><span class="cur">Partner-wise breakup</span><span class="sep">›</span><span>Select a partner to see its records</span><a class="all" onclick="drillP(\'all\')">View all partners\' records ›</a></div>';
   } else {
@@ -1342,7 +1368,7 @@ function drawer(){
   el.innerHTML='<div class="scrim" onclick="closeD()"></div><div class="drawer wide" style="--dc:'+col+'"><div class="dh"><div class="t">'+ctx+'</div><h3>'+M[k][0]+' <b>'+n(val)+'</b></h3>'+
     '<a class="ib dlb" onclick="csvDrawer()" data-tt="Download CSV" aria-label="Download CSV"><svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"><path d="M12 4v11"/><path d="M7 10l5 5 5-5"/><path d="M5 19h14"/></svg></a><span class="cl" onclick="closeD()">✕</span>'+crumbs+'</div>'+
     '<div class="db">'+(empty?'<div class="empty">No entries for this selection</div>':tbl)+'</div>'+
-    '<div class="df">'+(bk?'':'<span class="cnt">'+(view==='partners'?unit:n(rows.length)+' '+unit)+'</span>')+'<a onclick="openReport(\''+(scr?'screening':'followup')+'\',null)">Open full '+(scr?'Screening':'Follow-up')+' Report ›</a></div></div>';
+    '<div class="df">'+(bk?'':'<span class="cnt">'+(view!=='src'?unit:n(rows.length)+' '+unit)+'</span>')+'<a onclick="openReport(\''+(scr?'screening':'followup')+'\',null)">Open full '+(scr?'Screening':'Follow-up')+' Report ›</a></div></div>';
   state.dl={name:M[k][0]+' '+ctx,head:head,rows:rows};
 }
 function bkBlock(k,FF){
@@ -1364,7 +1390,7 @@ function saveCsv(name,head,rows){
   document.body.appendChild(a);a.click();setTimeout(function(){URL.revokeObjectURL(a.href);a.remove()},500);
 }
 function csvDrawer(){if(state.dl)saveCsv(state.dl.name,state.dl.head,state.dl.rows)}
-var ALLC=[['reg','Women registered'],['nivf','Registered ANC'],['ivf','Registered IVF'],['le12','Registered before 12 weeks'],['gt12','Registered after 12 weeks'],['scr','Women screened'],['pos','Women identified as carriers'],['thal','Beta thalassemia carrier'],['sick','Sickle cell carrier'],['scdd','Sickle cell disease (screening)'],['oth','Other hemoglobinopathies'],['padv','Partner advised testing'],['pscr','Partner screened'],['gawt','Awaiting partner test'],['glost','Partner lost to follow-up'],['lr0','Partner lost to follow-up, reason: '+RSN[0]],['lr1','Partner lost to follow-up, reason: '+RSN[1]],['lr2','Partner lost to follow-up, reason: '+RSN[2]],['lr3','Partner lost to follow-up, reason: '+RSN[3]],['lr4','Partner lost to follow-up, reason: '+RSN[4]],['lrn','Partner lost to follow-up, reason Not available'],['risk','At-risk couple'],['riskH','At-risk couple, screened here'],['rin','At-risk couple, referred in'],['dec','Declined prenatal diagnosis'],['ltfu','Lost to follow-up'],['nrec','At-risk couple, next step not recorded'],['pnd','Prenatal diagnosis'],['cvs','Chorionic villus sampling (CVS)'],['amn','Amniocentesis'],['cord','Cordocentesis'],['aff','Thalassemia major or sickle cell disease'],['affT','Prenatal diagnosis: thalassemia major'],['affS','Prenatal diagnosis: sickle cell disease'],['couns','Couple counselled'],['mtp','Medical termination of pregnancy'],['cont','Affected fetus, continuing pregnancy'],['und','Affected fetus, couple undecided'],['cltf','Affected fetus, lost to follow-up'],['mtpT','Medical termination of pregnancy, thalassemia major'],['mtpS','Medical termination of pregnancy, sickle cell disease']];
+var ALLC=[['reg','Women registered'],['nivf','ANC'],['ivf','IVF'],['le12','Registered before 12 weeks'],['gt12','Registered after 12 weeks'],['scr','Women screened'],['pos','Women identified as carriers'],['thal','Beta Thalassemia Carrier'],['sick','Sickle Cell Carrier'],['scdd','Sickle Cell Disease (screening)'],['oth','Other Hemoglobinopathies'],['padv','Partner advised testing'],['pscr','Partner screened'],['gawt','Awaiting partner test'],['glost','Partner lost to follow-up'],['lr0','Partner lost to follow-up, reason: '+RSN[0]],['lr1','Partner lost to follow-up, reason: '+RSN[1]],['lr2','Partner lost to follow-up, reason: '+RSN[2]],['lrn','Partner lost to follow-up, reason Not available'],['risk','At-risk couple'],['riskH','At-risk couple, screened here'],['rin','At-risk couple, referred in'],['dec','Declined prenatal diagnosis'],['ltfu','Lost to follow-up'],['nrec','At-risk couple, next step not recorded'],['pnd','Prenatal diagnosis'],['cvs','Chorionic Villus Sampling (CVS)'],['amn','Amniocentesis'],['cord','Cordocentesis'],['aff','Thalassemia major or sickle cell disease'],['affT','Prenatal diagnosis: thalassemia major'],['affS','Prenatal diagnosis: sickle cell disease'],['couns','Couple counselled'],['mtp','Medical Termination of Pregnancy'],['cont','Affected fetus, continuing pregnancy'],['und','Affected fetus, couple undecided'],['cltf','Affected fetus, lost to follow-up'],['mtpT','Medical Termination of Pregnancy, thalassemia major'],['mtpS','Medical Termination of Pregnancy, sickle cell disease']];
 function csvDash(){
   var rs=pick().slice().sort(function(a,b){return a.a-b.a||a.p.localeCompare(b.p)||a.c.localeCompare(b.c)});
   saveCsv('Program MIS '+[periodText()].concat(scopeText()).join(' '),['Month','Partner','Programme','City'].concat(ALLC.map(function(c){return c[1]})),
@@ -1391,11 +1417,11 @@ function dashboard(){
 /* hero: two rates for the active tab. Sentiment sets the colour: proc = neutral process (graphite), att = attention (orange), bad = failure (red), good = good outcome (plum, never green). */
 function heroFor(tb,d){
   var H=tb==='screening'?[['proc','scr',d.scr,d.reg,'of registered women were screened','registered women'],['att','pos',d.pos,d.scr,'of screened women were identified as carriers','screened women']]:
-    tb==='followup'?[['proc','pscr',d.pscr,d.pos,'of carriers’ partners were screened','carriers'],['att','riskH',d.riskH,d.pscr,'of partners screened here were an at-risk couple','partners screened here']]:
-    [['bad','aff',d.aff,d.pnd,'of fetuses tested were affected','fetuses tested'],['good','mtp',d.mtp,d.aff,'opted for medical termination of pregnancy','affected fetuses']];
+    tb==='followup'?[['proc','pscr',d.pscr,d.pos,'Partners of carriers screened','carriers'],['att','riskH',d.riskH,d.pscr,'At-risk couples identified','partners screened here']]:
+    [['bad','aff',d.aff,d.pnd,'of fetuses tested were affected','fetuses tested'],['good','mtp',d.mtp,d.aff,'opted for Medical Termination of Pregnancy','affected fetuses']];
   return '<div class="hero'+(tb==='prenatal'?' pn':'')+'">'+H.map(function(h){return '<div class="hs '+h[0]+'" onclick="openD(\''+h[1]+'\')"><div class="big">'+cupc(h[2],h[3])+'</div><div class="t">'+h[4]+'</div><div class="hn">'+n(h[2])+' of '+n(h[3])+' '+h[5]+'</div></div>'}).join('')+'</div>';
 }
-function rsnRows(f,ff){var c={};FUR.forEach(function(x){if(match(x,ff||F)&&f(x))c[x.prs]=(c[x.prs]||0)+1});return RSN.concat(['']).map(function(t){return [(t||'Not available'),c[t]||0]})}
+function rsnRows(f,ff){var c={};FUR.forEach(function(x){if(match(x,ff||F)&&f(x))c[x.prs]=(c[x.prs]||0)+1});return RSN.concat(c['']>0?['']:[]).map(function(t){return [(t||'Not available'),c[t]||0]})}
 function bkRow(l,v,k,sub){var z=!(v>0);return '<'+(z||!k?'div':'a')+' class="bkr'+(sub?' sub':'')+(z?' z':'')+'"'+(!z&&k?' data-k="'+k+'" data-v="'+v+'" onclick="openD(\''+k+'\');event.stopPropagation()"':'')+'><span>'+l+'</span><b>'+n(v)+'</b></'+(z||!k?'div':'a')+'>'}
 function bkList(head,rows){return '<div class="xln bkl">'+(head?'<div class="bkh">'+head+'</div>':'')+rows.join('')+'</div>'}
 function bkLost(v,k){return [bkRow('Lost to follow-up',v,k)]}
@@ -1417,7 +1443,7 @@ function tabBody(tb,d){
   } else {
     var mnr=d.mtp-d.mtpT-d.mtpS,noP=d.risk-d.pnd;
     var nl=bkList('',[bkRow('Declined',d.dec,'dec'),bkRow('Lost to follow-up',d.ltfu,'ltfu'),bkRow('Next step not recorded',d.nrec,'nrec'),'<div class="bkr tt"><span>No prenatal diagnosis</span><b>'+n(noP)+'</b></div>']);
-    var st=[{k:'pnd',rt:'Type of prenatal diagnosis',rows:[['Chorionic villus sampling (CVS)',d.cvs,'cvs','var(--tab3)'],['Amniocentesis',d.amn,'amn','var(--tab2)'],['Cordocentesis',d.cord,'cord','var(--tab1d)'],d.pndnr>0?['Not available',d.pndnr,'pndnr','var(--nr)']:null],line:nl},
+    var st=[{k:'pnd',rt:'Type of prenatal diagnosis',rows:[['Chorionic Villus Sampling (CVS)',d.cvs,'cvs','var(--tab3)'],['Amniocentesis',d.amn,'amn','var(--tab2)'],['Cordocentesis',d.cord,'cord','var(--tab1d)'],d.pndnr>0?['Not available',d.pndnr,'pndnr','var(--nr)']:null],line:nl},
       {k:'aff',rt:'Type of hemoglobinopathy',rows:[['Thalassemia major',d.affT,'affT','var(--l4)'],['Sickle cell disease',d.affS,'affS','var(--aff1)']]},{k:'couns',gap:'gcouns',gl:'not counselled'},
       {k:'mtp',rt:'Type of hemoglobinopathy',rows:[['Thalassemia major',d.mtpT,'mtpT','var(--l4)'],['Sickle cell disease',d.mtpS,'mtpS','var(--aff1)'],mnr>0?['Not available',mnr,null,'var(--nr)']:null]}];
     var hs=st.map(function(_,i){return 200-i*Math.round(80/(st.length-1))});
@@ -1452,8 +1478,8 @@ function openReport(kind,m,p,c){state.report=kind;state.month=m==null?null:(m.le
 function renderReport(){
   var kind=state.report,rs=pick().filter(function(r){return (state.month==null||state.month.indexOf(r.a)>=0)&&(!state.rf||(r.p===state.rf.p&&r.c===state.rf.c))});
   rs.sort(function(a,b){return a.a-b.a||a.p.localeCompare(b.p)||a.c.localeCompare(b.c)});
-  var S=kind==='screening'?[['reg','Women registered'],['nivf','Registered ANC'],['ivf','Registered IVF'],['le12','Registered before 12 weeks'],['gt12','Registered after 12 weeks'],['scr','Women screened'],['thal','Beta thalassemia carrier'],['sick','Sickle cell carrier'],['scdd','Sickle cell disease'],['oth','Other hemoglobinopathies'],['pos','Women identified as carriers']]
-    :[['padv','Partner advised testing'],['pscr','Partner screened'],['gawt','Awaiting partner test'],['glost','Partner lost to follow-up'],['risk','At-risk couple'],['riskH','At-risk couple, screened here'],['rin','At-risk couple, referred in'],['dec','Declined prenatal diagnosis'],['ltfu','Lost to follow-up'],['nrec','Next step not recorded'],['pnd','Prenatal diagnosis'],['cvs','Chorionic villus sampling (CVS)'],['amn','Amniocentesis'],['cord','Cordocentesis'],['affT','Thalassemia major'],['affS','Sickle cell disease'],['couns','Couple counselled'],['cont','Continuing pregnancy'],['und','Undecided'],['cltf','Affected fetus, lost to follow-up'],['mtpT','Medical termination of pregnancy, thalassemia major'],['mtpS','Medical termination of pregnancy, sickle cell disease']];
+  var S=kind==='screening'?[['reg','Women registered'],['nivf','ANC'],['ivf','IVF'],['le12','Registered before 12 weeks'],['gt12','Registered after 12 weeks'],['scr','Women screened'],['thal','Beta Thalassemia Carrier'],['sick','Sickle Cell Carrier'],['scdd','Sickle Cell Disease'],['oth','Other Hemoglobinopathies'],['pos','Women identified as carriers']]
+    :[['padv','Partner advised testing'],['pscr','Partner screened'],['gawt','Awaiting partner test'],['glost','Partner lost to follow-up'],['risk','At-risk couple'],['riskH','At-risk couple, screened here'],['rin','At-risk couple, referred in'],['dec','Declined prenatal diagnosis'],['ltfu','Lost to follow-up'],['nrec','Next step not recorded'],['pnd','Prenatal diagnosis'],['cvs','Chorionic Villus Sampling (CVS)'],['amn','Amniocentesis'],['cord','Cordocentesis'],['affT','Thalassemia major'],['affS','Sickle cell disease'],['couns','Couple counselled'],['cont','Continuing pregnancy'],['und','Undecided'],['cltf','Affected fetus, lost to follow-up'],['mtpT','Medical Termination of Pregnancy, thalassemia major'],['mtpS','Medical Termination of Pregnancy, sickle cell disease']];
   document.getElementById('r-title').textContent=kind==='screening'?'Screening Report':'Follow-up Report';
   document.getElementById('r-chips').innerHTML=[state.month!=null?(state.month.length>1?'Period = '+aLabel(state.month[0])+' to '+aLabel(state.month[state.month.length-1]):'Month = '+aLabel(state.month[0],true)):'Period = '+periodText(),F.prog&&!state.rf?'Programme = '+F.prog:'',(state.rf||F.partner)?'Partner = '+P[state.rf?state.rf.p:F.partner].full:'',(state.rf||F.city)?'City = '+(state.rf?state.rf.c:F.city):F.st?'State = '+F.st:''].filter(function(x){return x}).map(function(c){return '<span>'+c+'</span>'}).join('')+'<span style="background:#F4F4F4;color:#404040">+ Filter</span>';
   var tot=agg(rs),cell=function(o,k){return o[k]!=null?o[k]:agg([o])[k]};

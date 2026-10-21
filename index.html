@@ -1244,9 +1244,9 @@ var FUR=(function(){
     var lostW=w.filter(function(x){return x.pa===LOST||x.td===LOST});lostW.forEach(function(x,i){x.prs=rsn[i]});
     var refs=[];for(q=0;q<r.rin;q++){var x=mk('Referred in','ref');x.ref=true;x.risk=true;x.pa='';x.td='';x.hr='Carrier';refs.push(x)}
     var risk=w.filter(function(x){return x.risk}).concat(refs);
-    /* couple's type for the at-risk drills: B x B = Beta Thalassemia; S x S or B x S = Sickle Cell; everything else = Other. Partner result is seeded from alt, since the mock carries the woman's type only. */
-    risk.forEach(function(x){var u=(x.alt*977)%1,wT=x.ref?(u<.5?'B':u<.8?'S':'O'):x.ct==='thal'?'B':(x.ct==='sick'||x.ct==='scdd')?'S':'O',pT=x.alt<.55?'B':x.alt<.8?'S':'O';
-      x.rt=wT==='B'&&pT==='B'?'thal':(wT==='S'&&pT!=='O')||(wT==='B'&&pT==='S')?'sick':'oth'});
+    /* couple's type for the at-risk drills follows the woman's own type only: Beta thalassemia = Beta Thalassemia; Sickle cell (carrier or disease) = Sickle Cell; any other = Other Hemoglobinopathies. Referred-in women carry no type of their own, so they count as Other Hemoglobinopathies. */
+    risk.forEach(function(x){var wT=x.ref?'O':x.ct==='thal'?'B':(x.ct==='sick'||x.ct==='scdd')?'S':'O';
+      x.rt=wT==='B'?'thal':wT==='S'?'sick':'oth'});
     risk.forEach(function(x,i){x.pnd=i<r.pnd?'Done':i<r.pnd+r.dec?'Declined':i<r.pnd+r.dec+r.ltfu?'Lost':'Pending'});
     var pnd=risk.filter(function(x){return x.pnd==='Done'});shuf(pnd,R);
     pnd.forEach(function(x,i){x.test=i<r.cvs?'CVS':i<r.cvs+r.amn?'Amniocentesis':i<r.cvs+r.amn+r.cord?'Cordocentesis':'Not available';x.fr=i<r.affT?'Major, Thal':i<r.affT+r.affS?'Major, Sickle':'Minor or normal'});
